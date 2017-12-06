@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "eqeqeq": "warn",
+    "curly": "warn",
+    "no-extra-semi": "warn",
+    "semi": "warn",
+    "indent": [ "warn", 4 ],
+    "valid-jsdoc": [
+      1,
+      {
+        "prefer": {
+          "returns": "return",
+          "property": "prop"
+        },
+        "requireReturn": false
+      }
+    ]
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "jQuery": true
+  }
+}
