@@ -6,16 +6,29 @@ paths.css = "dist/css/";
 paths.toMin = ['dist/css/*.css', '!dist/css/*.min.css'];
 paths.sass =  "scss/**/*.scss";
 paths.js =  "dist/js/";
-paths.jsSrc = "js/src/**/*.js";
+paths.jsAll = "js/src/**/*.js";
+paths.jsSrc = "js/src/popup.js";
+paths.stcuiSrc = "js/src/stc-ui/**/*.js";
 paths.tests = "js/tests/";
 
 var gulp = require("gulp"),
     sass = require("gulp-sass"),
+    concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     rename = require("gulp-rename"),
     eslint = require("gulp-eslint"),
     qunit = require("gulp-qunit"),
     uglify = require("gulp-uglify");
+
+/**
+ * Concatenate javascript files
+ */
+gulp.task("concat", function() {
+    return gulp.src(paths.stcuiSrc)
+        .pipe(concat('stc-ui.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.js));
+});
 
 /**
  * eslint task for all javascript files
@@ -57,8 +70,8 @@ gulp.task('sass:watch', function () {
  * Watch JS files 
  */
 gulp.task('scripts:watch', function () {
-    gulp.watch(paths.jsSrc, ['eslint']);
-    gulp.watch(paths.jsSrc, ['test']);
+    gulp.watch(paths.jsAll, ['eslint']);
+    gulp.watch(paths.jsAll, ['test']);
 });
 
 /**
@@ -74,7 +87,7 @@ gulp.task('cssmin', function() {
 /**
  * QUnit tests
  */
-gulp.task('test', ['cssmin'], function() {
+gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
     return gulp.src(paths.tests + 'index.html')
         .pipe(qunit());
 });
