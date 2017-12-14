@@ -73,6 +73,23 @@ var stc = stc || {};
     };
     
     /**
+     * Checks if a given object already exists or waits for the relevant event
+     * before firing a callback function.
+     * 
+     * @param {object} object The object to validate..
+     * @param {type} event The event to listen for in case the object doesn't exist.
+     * @param {type} callback The callback function to execute.
+     */
+    util.waitForObjectOrEvent = function(object, event, callback) {
+        if(object) {
+            callback();
+        }
+        else {
+            window.addEventListener(event, callback);
+        }
+    };
+    
+    /**
      * Parses a given URL to extract its attributes.
      * 
      * @param {string} url The URL to be parsed.

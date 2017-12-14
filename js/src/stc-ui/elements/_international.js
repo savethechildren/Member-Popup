@@ -156,25 +156,50 @@ var stc = stc || {};
     /**
      * Translates a string from English into another language if the string exists
      * @param {string} original The original string to translate
-     * @param {string} lang The two-letter language code to translate into, defaults to current page language
-     * @return {string} The translated string if it exists or the original string
+     * @param {string} [lang] The two-letter language code to translate into, defaults to current page language
+     * @param {string} [interpol] An optional interpolation object of key/value pairs.
+     * @return {string} The translated and interpolated string if it exists or the original string
      */
-    geo.t = function(original, lang) {
+    geo.t = function(original, lang, interpol) {
         lang = lang || geo.pageLanguage;
         if(!lang || lang === "") {
-            return original;
+            return geo.interpolate(original, interpol);
         }
         //try to get language localized strings object
         var strings = geo.strings[lang];
         if(!strings || typeof strings !== 'object') {
-            return original;
+            return geo.interpolate(original, interpol);
         }
         if(!strings[original] || strings[original] === "") {
-            return original;
+            return geo.interpolate(original, interpol);
         }
         else {
-            return strings[original];
+            return geo.interpolate(strings[original], interpol);
         }
+    };
+    
+    /**
+     * Interpolation method to substitute tokens.
+     * 
+     * @param {string} original The original string containing the tokens.
+     * @param {type} interpol the interpolation object of key/value pairs.
+     * @return {string} The resulting interpolated string.
+     */
+    geo.interpolate = function(original, interpol) {
+        if(!interpol) {
+            return original;
+        }
+        var final = original;
+        for (var key in interpol) {
+            // skip loop if the property is from prototype
+            if (!interpol.hasOwnProperty(key)) {
+                continue;
+            }
+            var obj = interpol[key];
+            var re = new RegExp('%{' + key + '}', 'g');
+            final = final.replace(re, obj);
+        }
+        return final;
     };
     
     /* Initialise some variables on page load */

@@ -25,7 +25,9 @@ var gulp = require("gulp"),
  */
 gulp.task("concat", function() {
     return gulp.src(paths.stcuiSrc)
-        .pipe(concat('stc-ui.min.js'))
+        .pipe(concat('stc-ui.js'))
+        .pipe(gulp.dest(paths.js))
+        .pipe(rename('stc-ui.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.js));
 });
@@ -36,17 +38,10 @@ gulp.task("concat", function() {
 gulp.task('eslint', function () {
     return gulp.src(paths.jsSrc)
         .pipe(eslint({
-            configFile: "js/eslint.config.json"
+            //configFile: "js/eslint.config.json"
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
-});
-
-gulp.task('uglify', function () {
-    return gulp.src(paths.jsSrc)
-        .pipe(rename('popup.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(paths.js));
 });
 
 /**
@@ -54,8 +49,8 @@ gulp.task('uglify', function () {
  */
 gulp.task('sass', function () {
     return gulp.src('scss/popup.scss')
-      .pipe(sass().on('error', sass.logError))
-      .pipe(gulp.dest(paths.css));
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest(paths.css));
 });
 
 /**
@@ -79,15 +74,15 @@ gulp.task('scripts:watch', function () {
  */
 gulp.task('cssmin', function() {
     return gulp.src(paths.toMin)
-      .pipe(cssmin())
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(gulp.dest(paths.css));
+        .pipe(cssmin())
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest(paths.css));
 });
 
 /**
  * QUnit tests
  */
-gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
+gulp.task('test', ['cssmin', 'concat'], function() {
     return gulp.src(paths.tests + 'index.html')
         .pipe(qunit());
 });
@@ -96,6 +91,6 @@ gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
 /**
  * Build scripts
  */
-gulp.task("build", ['cssmin', 'uglify', 'test']);
+gulp.task("build", ['cssmin', 'test']);
 
 gulp.task('default', ['cssmin']);

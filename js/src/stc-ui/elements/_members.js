@@ -365,7 +365,7 @@ var stc = stc || {};
     /**
      * Gets the user Member country object if it exists
      */ 
-    window.addEventListener("countryIsSet", function(e) {
+    stc.util.waitForObjectOrEvent(stc.geo.country, "countryIsSet", function() {
         geo.memberCountry = geo.members[geo.country];
         //check for mapped countries and reset user country if applicable
         if(typeof geo.memberCountry !== "object") {
