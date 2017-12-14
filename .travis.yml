@@ -1,0 +1,16 @@
+sudo: false
+dist: trusty
+language: node_js
+git:
+  depth: 3
+node_js:
+  - "4"
+  - "7"
+install:
+  - npm install
+cache:
+  directories:
+    - node_modules
+before_script:
+  - npm install -g gulp-cli
+script: gulp build
