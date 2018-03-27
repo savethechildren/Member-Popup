@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Test</title>
+    <script>
+        var stc = stc || {}; stc.popupOrigin = "GB";
+        (function() {
+            var stcp = document.createElement('script'); stcp.async = true; stcp.defer = true; stcp.src = "test.js";
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(stcp, s);
+        })();
+    </script>
+</head>
+<body>
+    <div id="popupContainer"></div>
+</body>
+</html>

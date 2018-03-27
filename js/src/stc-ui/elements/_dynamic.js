@@ -9,7 +9,7 @@ var stc = stc || {};
      * @param {string} src The URL of the script to load.
      * @param {function} callback The callback function called upon load.
      */
-    stc.util.addScript = function (src, callback) {
+    util.addScript = function (src, callback) {
         var s = document.createElement("script");
         s.src = src;
         s.async = false;
@@ -24,7 +24,7 @@ var stc = stc || {};
      * @param {string} href The URL of the stylesheet to load.
      * @param {function} callback The callback function called upon load.
      */
-    stc.util.addCSS = function (href, callback) {
+    util.addCSS = function (href, callback) {
         var s = document.createElement("link");
         s.setAttribute("rel", "stylesheet");
         s.setAttribute("type", "text/css");

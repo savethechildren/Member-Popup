@@ -165,7 +165,7 @@ var stc = stc || {};
         },
         "NL": {
             "iso": "NL",
-            "title": "Netherlands",
+            "title": "The Netherlands",
             "url": "https://www.savethechildren.nl",
             "url_donate": "https://www.savethechildren.nl/help-mee/donee",
             "mappedCountries": ["BE"],
@@ -189,7 +189,7 @@ var stc = stc || {};
         },
         "PH": {
             "iso": "PH",
-            "title": "Philippines",
+            "title": "The Philippines",
             "url": "http://www.savethechildren.org.ph",
             "url_donate": "https://donate.savethechildren.org.ph",
             "mappedCountries": [],
@@ -278,105 +278,4 @@ var stc = stc || {};
         return true;
     };
     
-    /**
-     * Hides page content and attempts to redirect visitors to a Member website.
-     */
-    geo.goToMemberSiteOnLoad = function() {
-        stc.util.hideOnLoad();
-        //wait for load event as well so that GA is available.
-        stc.util.listenToMultiEvents(['load','countryIsSet'], 'redirectOnLoad',function() {
-            if(!geo.goToMemberSite(null, {replace: true, eventAction: 'Redirect'})) {
-                stc.util.unhide();
-            }
-        });
-    };
-    
-    /**
-     * Adds Member country select options to a given drop-down
-     * @param {object} select The select element to add options to
-     * @param {string} attribute The Member object attribute to use as the option value paramater
-     */
-    geo.addMembersSelectOptions = function(select, attribute) {
-        if(select[0].nodeName === "SELECT") {
-            $.each(geo.members, function(i,v) {
-                if(attribute && !v[attribute]) {
-                    return true;
-                }
-                var value = v[attribute] || i;
-                var option = $('<option>' + v.title + '</option>').attr({"value": value, "data-geo": i});
-                $(select).append(option);
-            });
-        }
-        //run the geo selection
-        geo.swapGeoAlternatives(geo.country);
-        //if the value is a url, then add an onchange redirect behaviour 
-        if(/url/.test(attribute)) {
-            $(select).on('change', function() {
-                stc.util.goToURL($(this).val(), {eventLabel: $(this).find('option:selected').attr('data-geo') + " - " + $(this).val()});
-            }).closest('form').on('submit', function(e) {
-                e.preventDefault();
-                stc.util.goToURL($(select).val());
-            });
-        }
-    };
-    
-    /**
-     * Creates a modal window suggesting the visitor goes to the relevant Member country website.
-     * @param {stc.member} [member = geo.countryMember] 
-     *   The Member country to suggest to the visitor. Defaults to the current Member country if set.
-     * @param {HTMLElement} [element = body]
-     *   The HTML element to place the modal window in. Defaults to body.
-     * @param {int} [days = 1]
-     *   The number of days to remember the visitor's choice (if they choose to stay). Defaults to 1 day.
-     */
-    geo.suggestMemberSite = function(member, element, days) {
-        member = member || geo.memberCountry;
-        element = element || $('body');
-        if(days !== 0 ) {
-            days = days || 1;
-        }
-        if(typeof member !== "undefined" && typeof member.url !== "undefined" && stc.util.getCookie('stc_suggest_denied') !== "1") {
-            var modal = $('<div/>').attr({id:'memberSuggestModal', class: 'modal fade', role: 'dialog', 'tab-index': '-1'})
-                .append($('<div/>').attr({class:'modal-dialog', role: 'document'})
-                    .append($('<div/>').attr({class:'modal-content'})
-                        .append($('<div/>').attr({class:'modal-header'})
-                            .append($('<button/>').attr({type:'button', class:'close', 'data-dismiss':'modal', 'aria-label':'Close'})
-                                .append($('<span/>').attr('aria-hidden', 'true').html('&times;'))
-                            )
-                        )
-                        .append($('<div/>').attr({class:'modal-body text-center'})
-                            .append($('<h4/>').text('Welcome, ' + member.title + ' friend!'))
-                            .append('<p>Good news, Save the Children has a website in ' + ($.inArray(member.iso, ['GB','US','NL']) > -1 ? "the " : "") + member.title + '.<br/>Do you wish to visit our ' + member.title + ' website?</p>')
-                        )
-                        .append($('<div/>').attr({class:'modal-footer'})
-                            .append($('<button/>').attr({type:'button', class:'btn btn-default', 'data-dismiss':'modal'}).html('Stay on global page'))
-                            .append($('<a>').attr({href:member.url, class:'btn btn-primary'}).html('Go to ' + member.title))
-                        )
-                    )
-                );
-            $(element).append($(modal).modal().on('hidden.bs.modal', function (e) {
-                if(days > 0) {
-                    stc.util.setCookie("stc_suggest_denied", "1", days);
-                }
-            })); 
-        }
-    };
-
-    /**
-     * Gets the user Member country object if it exists
-     */ 
-    stc.util.waitForObjectOrEvent(stc.geo.country, "countryIsSet", function() {
-        geo.memberCountry = geo.members[geo.country];
-        //check for mapped countries and reset user country if applicable
-        if(typeof geo.memberCountry !== "object") {
-            $.each(geo.members, function(i,v) {
-                if($.inArray(geo.country, v.mappedCountries) > -1) {
-                    geo.memberCountry = v;
-                    geo.setUserCountry(v.iso);
-                    return false;
-                }
-            });
-        }
-    });
-    
-}(stc.geo = stc.geo || {}, jQuery));
+}(stc.geo = stc.geo || {}));

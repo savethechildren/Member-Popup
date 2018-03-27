@@ -33,6 +33,18 @@ gulp.task("concat", function() {
 });
 
 /**
+ * Uglify main javascript file
+ */
+gulp.task("uglify", function() {
+    return gulp.src(paths.jsSrc)
+        .pipe(concat('popup.js'))
+        .pipe(gulp.dest(paths.js))
+        .pipe(rename('popup.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.js));
+});
+
+/**
  * eslint task for all javascript files
  */
 gulp.task('eslint', function () {
@@ -82,7 +94,7 @@ gulp.task('cssmin', function() {
 /**
  * QUnit tests
  */
-gulp.task('test', ['cssmin', 'concat'], function() {
+gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
     return gulp.src(paths.tests + 'index.html')
         .pipe(qunit());
 });

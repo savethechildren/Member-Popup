@@ -1,5 +1,5 @@
 var stc = stc || {};
-(function(util, $){
+(function(util){
     
     /**
      * Uses detectmobilebrowsers.com regex to detect mobile browsers
@@ -171,34 +171,6 @@ var stc = stc || {};
     };
     
     /**
-     * Adds utm code from the current URL to any given URL;
-     * 
-     * @param {string} url The URL to add utm code to.
-     * @return {string} The updated URL.
-     */
-    util.forwardUTM = function(url) {
-        var params = util.parseURLParams();
-        if(jQuery.isEmptyObject(params)) {
-            return url;
-        }
-        var urlParsingNode = util.loadURLNode(url);
-        
-        var queryString = "";
-        $.each(params, function(i,v) {
-            if(/^utm_/.test(i)) {    
-                queryString += "&" + i + "=" + v;
-            }
-        });
-        if(urlParsingNode.search) {
-            urlParsingNode.search += queryString;
-        }
-        else {
-            urlParsingNode.search = "?" + queryString.substr(1);
-        }
-        return urlParsingNode.href; 
-    };
-    
-    /**
      * Adds UTM tracking code to a given URL.
      * 
      * @param {string} url The URL to add tracking to.
@@ -236,7 +208,7 @@ var stc = stc || {};
         url = util.parseURL(url);
         if(url.search && url.search.length > 0) {
             var uriParameters = url.search.split('&');
-            $.each(uriParameters, function(i,v) {
+            uriParameters.forEach(function(v) {
                 var parameter = v.split('=');
                 if(parameter.length === 2) {
                     parsedParameters[parameter[0]] = decodeURIComponent(parameter[1]);
@@ -268,22 +240,6 @@ var stc = stc || {};
         }
     };
     
-    /**
-     * Hides the HTML body on the page when the page loads. 
-     * Use when redirecting users.
-     */
-    util.hideOnLoad = function() {
-        $('body').hide();
-    };
-    
-    /**
-     * Shows the HTML body if the page content needs to be displayed. 
-     * Use when redirecting users is not possible and content must appear.
-     */
-    util.unhide = function() {
-        $('body').show();
-    };
-    
     /* checks if the browser is Internet Explorer */
     util.msie = ~window.navigator.userAgent.indexOf('MSIE ') 
             || ~window.navigator.userAgent.indexOf('Trident/');
@@ -302,7 +258,7 @@ var stc = stc || {};
         }
         stcEventsNumber = stcEventsNumber = [];
         stcEventsNumber[name] = stcEventsNumber[name] || 0;
-        $.each(events, function(i,v) {
+        events.forEach(function(v) {
             window.addEventListener(v, function() {
                 stcEventsNumber[name] += 1;
                 if(stcEventsNumber[name] === events.length) {
@@ -312,16 +268,41 @@ var stc = stc || {};
             });
         });
     };
+
+    util.jsonp = function(src, options){
+        var callback_name = options.callbackName || 'callback',
+            on_success = options.onSuccess || function(){},
+            on_timeout = options.onTimeout || function(){},
+            timeout = options.timeout || 10; // sec
+    
+        var timeout_trigger = window.setTimeout(function(){
+            window[callback_name] = function(){};
+            on_timeout();
+        }, timeout * 1000);
+    
+        window[callback_name] = function(data){
+            window.clearTimeout(timeout_trigger);
+            on_success(data);
+        }
+    
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.src = src;
+    
+        document.getElementsByTagName('head')[0].appendChild(script);
+    };
     
     /* send a ready event that can be used by inline scripts */
-    $(function() { 
+    (function() { 
         stc.util.createEvent("stcReady"); 
-    });
+    })();
     
     /* remove no-js class */
-    $('body').removeClass("no-js");
+    var a = document.getElementsByTagName("html")[0];
+    a.className&&(a.className=a.className.replace(/no-js\s?/, ''));
     
-}(stc.util = stc.util || {}, jQuery));
+}(stc.util = stc.util || {}));
 
 
 /* polyfill fix for custom event in Internet Explorer */

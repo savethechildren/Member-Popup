@@ -15,7 +15,6 @@ stc.util.popup = function(current) {
             //stc is ready, listen to countryIsSet event.
             stc.util.waitForObjectOrEvent(stc.geo.country, 'countryIsSet', function() {
                 console.log('country is set');
-                console.log(stc.geo.memberCountry);
                 //let's check the user is in a member country different from the current one.
                 if($.inArray(stc.geo.country, countries) === -1 && stc.geo.memberCountry && stc.util.getCookie('stc_suggest_denied') !== "1") {
                     console.log('display popup to ' + stc.geo.memberCountry.iso);
@@ -31,7 +30,7 @@ stc.util.popup = function(current) {
     }
     catch(e) {
         //jQuery not loaded, let's add it.
-        stc.util.addScript("https://code.jquery.com/jquery-3.2.1.min.js", function() {
+        stc.util.addScript("zzhttps://code.jquery.com/jquery-3.2.1.min.js", function() {
             //try again now we have jQuery available.
             stc.util.popup(current);
         });
@@ -53,6 +52,20 @@ stc.util.addCSS = function (href, callback) {
     s.setAttribute("href", href);		
     s.onload = callback;
     document.getElementsByTagName("head").item(0).appendChild(s);
+}; 
+
+stc.util.pmsAddScript = function(src) {
+    return new Promise(function(resolve, reject) {
+        var s = document.createElement("script");
+        s.src = src;
+        s.async = false;
+        s.onload = function() {
+            console.log(stc.util);
+            resolve();
+        };
+        s.onrerror = reject("Could not load script");
+        document.body.appendChild(s);
+    });
 };
 
 stc.util.popupMemberSite = function(member, days) {

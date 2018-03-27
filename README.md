@@ -4,7 +4,7 @@ This project aims to create a shared script and stylesheet to display a geo-redi
 
 
 ## Status
-[![Build Status](https://travis-ci.org/savethechildren/member-popup.svg?branch=master)](https://travis-ci.org/savethechildren/ui)
+[![Build Status](https://travis-ci.org/savethechildren/member-popup.svg?branch=master)](https://travis-ci.org/savethechildren/member-popup)
 
 
 ## Quick start

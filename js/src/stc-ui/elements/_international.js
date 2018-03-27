@@ -1,47 +1,10 @@
 var stc = stc || {};
-(function(geo, $){
-
-    /**
-     * Replaces an element with the relevant culture's alternative
-     * @param {String} country_code two-letter country ISO code 
-     */
-    geo.swapGeoAlternatives = function(country_code) {
-        $('.stc-geo-alt').each(function(i,v) {
-            if($(v).attr('data-geo') === country_code) {
-                $(v).siblings().filter('.stc-geo-alt').addClass('hidden');
-                $(v).removeClass('hidden');
-            }
-        });
-
-        //select default country in drop-down
-        $('select.stc-geo-select option').removeAttr('selected');
-        $('select.stc-geo-select option').each(function(i,v) {
-            if($(this).attr('data-geo') === country_code) {
-                $(this).attr('selected','selected');
-                return false;
-            }
-        });
-    }; 
-    
-    /**
-     * Changes the href attribute of a given link to a country-specific link.
-     * @param {HTMLelement} linkElement The link element to modify.
-     * @param {object} countryLinks The list of country links in a JSON object. 
-     *   The object should have an iso  as key and url as value: {GB: '#urltoGB'}
-     * @return {Boolean} False if no country set or invalid input.
-     */
-    geo.changeCountryLink = function(linkElement, countryLinks) {
-        if(!geo.country || geo.country === "" || !countryLinks[geo.country]) {
-            return false;
-        }
-        $(linkElement).attr('href', countryLinks[geo.country]);
-    };
+(function(geo){
 
     /**
      * Locate the visitor by IP.
      * 
      * @desc Uses Skype API to retrieve user's country ISO code and set a country cookie.
-     * Falls back to using CloudFlare geo location service exposed on www.savethechildren.net
      * 
      * @return {string} 2-letter country ISO code (if set)
      */
@@ -49,59 +12,25 @@ var stc = stc || {};
         stc.geo.country = "";
         stc.geo.country = stc.util.getCookie('stc_country'); 
         if(typeof stc.geo.country === 'undefined' || stc.geo.country === ""){
-            $.ajax({
-                url: 'https://apps.skype.com/countrycode',
-                timeout: 3000,
-                jsonp: "jsoncallback",
-                dataType: "jsonp"})
-                .done(function(json){
+            stc.util.jsonp('https://apps.skype.com/countrycode?jsoncallback=handleStuff', {
+                callbackName: 'handleStuff',
+                onSuccess: function(json){
                     stc.geo.country = json.country_code;
                     stc.util.setCookie('stc_country', stc.geo.country, 2);
                     stc.util.createEvent('countryIsSet');
-                })
-                //use CloudFlare fallback if Skype fails
-                .fail(function(){
-                    $.getJSON('https://www.savethechildren.net/webservices/geo/ajax.php?callback=?',
-                        function(json){
-                            stc.geo.country = json.country;
-                            stc.util.setCookie('stc_country', stc.geo.country, 2);
-                            stc.util.createEvent('countryIsSet');
-                        });
-                });
+                },
+                onTimeout: function(){
+                    console.log('timeout!');
+                },
+                timeout: 5
+            });
         }
         else {
-            jQuery(function($) {
+            (function($) {
                 stc.util.createEvent('countryIsSet');
-            });
+            })();
         }
         return stc.geo.country;
-    };
-    
-    /**
-     * Gets the user language based on browser settings
-     * Uses https://ajaxhttpheaders.appspot.com to get accurate settings
-     * @return {string} two-letter language code
-     */
-    geo.getUserLanguage = function() {
-        geo.userLanguage = stc.util.getCookie('stc_user_language');
-        if (typeof geo.userLanguage === 'undefined' || geo.userLanguage === "") {
-            $.ajax({
-                url: "https://ajaxhttpheaders.appspot.com",
-                dataType: 'jsonp',
-                success: function (headers) {
-                    language = headers['Accept-Language'].substr(0, 2).toLowerCase();
-                    geo.userLanguage = language;
-                    stc.util.setCookie('stc_user_language', geo.userLanguage, 2);
-                    stc.util.createEvent('userLanguageIsSet');
-                    return geo.userLanguage;
-                }
-            });
-        }
-        else {
-            stc.util.createEvent('userLanguageIsSet');
-            return geo.userLanguage;
-        }
-        return geo.userLanguage;
     };
     
     /**
@@ -137,79 +66,17 @@ var stc = stc || {};
         return true;
     };
 
-    /**
-     * Gets the language of the page
-     * @return {string} two-letter language code
-     */
-    geo.pageLanguage = document.documentElement.lang.substr(0,2).toLowerCase();
-    
-    /**
-     * Declare empty array to hold translation strings
-     */
-    geo.strings = geo.strings || {};
-    
-    // Declare current page language translation strings obejct
-    if(geo.pageLanguage && geo.pageLanguage !== "") {
-        geo.strings[geo.pageLanguage] = geo.strings[geo.pageLanguage] || {};
-    }
-    
-    /**
-     * Translates a string from English into another language if the string exists
-     * @param {string} original The original string to translate
-     * @param {string} [lang] The two-letter language code to translate into, defaults to current page language
-     * @param {string} [interpol] An optional interpolation object of key/value pairs.
-     * @return {string} The translated and interpolated string if it exists or the original string
-     */
-    geo.t = function(original, lang, interpol) {
-        lang = lang || geo.pageLanguage;
-        if(!lang || lang === "") {
-            return geo.interpolate(original, interpol);
-        }
-        //try to get language localized strings object
-        var strings = geo.strings[lang];
-        if(!strings || typeof strings !== 'object') {
-            return geo.interpolate(original, interpol);
-        }
-        if(!strings[original] || strings[original] === "") {
-            return geo.interpolate(original, interpol);
-        }
-        else {
-            return geo.interpolate(strings[original], interpol);
-        }
-    };
-    
-    /**
-     * Interpolation method to substitute tokens.
-     * 
-     * @param {string} original The original string containing the tokens.
-     * @param {type} interpol the interpolation object of key/value pairs.
-     * @return {string} The resulting interpolated string.
-     */
-    geo.interpolate = function(original, interpol) {
-        if(!interpol) {
-            return original;
-        }
-        var final = original;
-        for (var key in interpol) {
-            // skip loop if the property is from prototype
-            if (!interpol.hasOwnProperty(key)) {
-                continue;
-            }
-            var obj = interpol[key];
-            var re = new RegExp('%{' + key + '}', 'g');
-            final = final.replace(re, obj);
-        }
-        return final;
-    };
+    geo.members = ["AU", "CA", "CH", "CO", "DE", 
+        "DK", "DO", "ES", "FI", "FJ", "GB", "GT", 
+        "HK", "HN", "ID", "IN", "IS", "IT", "JO", 
+        "JP", "KR", "LT", "MX", "NL", "NO", "NZ", 
+        "PH", "RO", "SE", "SZ", "US", "ZA"
+    ];
     
     /* Initialise some variables on page load */
-    $(function() {
-        geo.locate();
+    (function() {
         geo.setUserLanguage();
-    });
-    
-    window.addEventListener("countryIsSet", function(e) { 
-        stc.geo.swapGeoAlternatives(stc.geo.country);
-    });
+        geo.locate();
+    })();
 
-}(stc.geo = stc.geo || {}, jQuery));
+}(stc.geo = stc.geo || {}));
