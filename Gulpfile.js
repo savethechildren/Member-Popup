@@ -6,7 +6,8 @@ paths.css = "dist/css/";
 paths.toMin = ['dist/css/*.css', '!dist/css/*.min.css'];
 paths.sass =  "scss/**/*.scss";
 paths.js =  "dist/js/";
-paths.jsAll = "js/src/**/*.js";
+paths.jsInit = "js/src/init/**/*.js";
+paths.jsPopup = "js/src/popup/**/*.js";
 paths.jsSrc = "js/src/popup.js";
 paths.stcuiSrc = "js/src/stc-ui/**/*.js";
 paths.tests = "js/tests/";
@@ -23,11 +24,20 @@ var gulp = require("gulp"),
 /**
  * Concatenate javascript files
  */
-gulp.task("concat", function() {
-    return gulp.src(paths.stcuiSrc)
-        .pipe(concat('stc-ui.js'))
+gulp.task("concatInit", function() {
+    return gulp.src(paths.jsInit)
+        .pipe(concat('stc-popup-init.js'))
         .pipe(gulp.dest(paths.js))
-        .pipe(rename('stc-ui.min.js'))
+        .pipe(rename('stc-popup-init.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.js));
+});
+
+gulp.task("concatPopup", function() {
+    return gulp.src(paths.jsPopup)
+        .pipe(concat('stc-popup.js'))
+        .pipe(gulp.dest(paths.js))
+        .pipe(rename('stc-popup.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.js));
 });
@@ -60,7 +70,7 @@ gulp.task('eslint', function () {
  * Compile SASS to CSS 
  */
 gulp.task('sass', function () {
-    return gulp.src('scss/popup.scss')
+    return gulp.src('scss/stc-popup.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest(paths.css));
 });
@@ -70,15 +80,14 @@ gulp.task('sass', function () {
  */
 gulp.task('sass:watch', function () {
     gulp.watch(paths.sass, ['sass']);
-    gulp.watch(paths.toMin, ['cssmin']);
 }); 
 
 /**
  * Watch JS files 
  */
 gulp.task('scripts:watch', function () {
-    gulp.watch(paths.jsAll, ['eslint']);
-    gulp.watch(paths.jsAll, ['test']);
+    gulp.watch(paths.jsInit, ['concatInit']);
+    gulp.watch(paths.jsPopup, ['concatPopup']);
 });
 
 /**

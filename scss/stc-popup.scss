@@ -1,0 +1,62 @@
+/*.stc-inter-popup {
+  @import 'bootstrap/variables';
+  @import 'bootstrap/mixins';
+  @import 'bootstrap/modals';
+  @import 'bootstrap/buttons';
+  @import 'bootstrap/close';
+}*/
+
+.stc-popup-modal {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.6s, visibility 0.6s;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 99999999999;
+  overflow: scroll;
+  .stc-popup-modal-inner {
+    overflow: hidden;
+    padding: 40px;
+    position: relative;
+    background: #fff;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100%;
+    @media (min-width: 40.0625em) {
+      width: 600px;
+      height: auto;
+      min-height: auto;
+      margin: 10% auto;
+    }
+  }
+  &.on {
+    opacity: 1;
+    visibility: visible;
+  }
+  .stc-popup-modal-close {
+    top: 0;
+    right: 10px;
+    position: absolute;
+    font-size: 35px;
+    cursor: pointer;
+    color: #333232;
+    font-weight: 900;
+    &:before {
+      font-family: Arial,sans-serif;
+      content: "\D7";
+    }
+  }
+  * {
+    box-sizing: border-box;
+  }
+  .stc-popup-modal-content {
+    iframe {
+      border: 0;
+    }
+  }
+}
+ 

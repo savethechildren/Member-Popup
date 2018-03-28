@@ -17,6 +17,21 @@
             "type": "gulp",
             "task": "uglify",
             "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "concatInit",
+            "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "sass:watch",
+            "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "sass",
+            "problemMatcher": []
         }
     ]
 }
