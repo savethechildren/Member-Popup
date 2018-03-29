@@ -5,7 +5,7 @@ stc.util.addCSS('dist/css/stc-popup.css', function() {
 
     //try to load iframe
     console.log("Loading frame: " + Math.round(Date.now()/1000));
-    stc.util.loadIframe('https://misc/brand_2016/?from=' + 
+    stc.util.loadIframe('https://misc/member-popup/page/index.html?from=' + 
     stc.popupOrigin + '&to=' + stc.geo.country + 
     '&lng=' + stc.geo.userLanguage, document.getElementsByClassName('stc-popup-modal-content')[0], function() {
         console.log('iFrame is ready: ' + Math.round(Date.now()/1000));

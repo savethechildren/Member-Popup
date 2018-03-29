@@ -1,12 +1,5 @@
-/*.stc-inter-popup {
-  @import 'bootstrap/variables';
-  @import 'bootstrap/mixins';
-  @import 'bootstrap/modals';
-  @import 'bootstrap/buttons';
-  @import 'bootstrap/close';
-}*/
-
 .stc-popup-modal {
+  line-height: 1.15;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.6s, visibility 0.6s;
@@ -59,4 +52,3 @@
     }
   }
 }
- 

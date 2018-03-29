@@ -112,6 +112,6 @@ gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
 /**
  * Build scripts
  */
-gulp.task("build", ['cssmin', 'test']);
+gulp.task("build", ['cssmin']);
 
 gulp.task('default', ['cssmin']);

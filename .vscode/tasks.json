@@ -32,6 +32,11 @@
             "type": "gulp",
             "task": "sass",
             "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "cssmin",
+            "problemMatcher": []
         }
     ]
 }

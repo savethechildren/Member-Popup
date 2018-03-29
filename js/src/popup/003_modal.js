@@ -8,7 +8,13 @@ var stc = stc || {};
     };
 
     modal.init = function() {
-        var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal' );
+        var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
+        divmodal.addEventListener("click", function(event) {
+            if(event.currentTarget !== event.target) {
+                return false;
+            }
+            modal.close();
+        }, false);
         var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal' );
         var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close');
         closeBT.addEventListener("click", modal.close, false);
@@ -16,6 +22,13 @@ var stc = stc || {};
         innerModal.appendChild(closeBT);
         var content = stc.util.newDOMElement('div','stc-popup-modal-content');
         innerModal.appendChild(content);
+
+        //close modal on esc key
+        window.addEventListener('keyup', function(e) {
+            if (e.keyCode === 27) {
+                modal.close();
+            }
+        }, false); 
 
         divmodal.appendChild(innerModal);
 
@@ -32,7 +45,7 @@ var stc = stc || {};
         modal.element.className = modal.element.className.replace(' on', '');
     };
 
-    modal.close = function() {
+    modal.close = function(event) {
         modal.hide();
         //todo: add cookie to remember choice stc.util.setCookie('stc_popup_closed', '1', 2);
     };
