@@ -4,12 +4,24 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Save the Children - Redirect</title>
     <link href="https://misc/stc-ui/dist/css/stc-ui.css" rel="stylesheet" />
+    <script src="js/members.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.6.0/iframeResizer.contentWindow.min.js"></script>
     </head>
     <body>
         <div class="">
             <div class="popup-container">
                 <div id="popup" class="popup" lng="" target="US">
-                    <h1>Welcome</h1>
+                    <h1>Welcome, visitor from {country}!</h1>
+                    <div class="content" id="popup-content">
+                        <p>Just so you know, charity: water has expanded into {country} 
+                            which means that donations from taxpayers are now worth 
+                            25% more through Gift Aid (at no cost to you).</p>
+                    </div>
+                    <div class="actions">
+                        <a href="#" class="btn btn-default btn-lg" id="popup-stay">Stay in {origin}</a>
+                        <a href="#" class="btn btn-primary btn-lg" id="popup-continue">Continue to {country}</a>
+                    </div>
                 </div>
             </div>
         </div>

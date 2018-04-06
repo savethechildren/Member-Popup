@@ -20,11 +20,13 @@ var stc = stc || {};
 
     util.loadIframe = function(url, container, callback) {
         var ifrm = document.createElement("iframe");
+        ifrm.id = "stc-popup-iframe";
         ifrm.setAttribute("src", url);
         ifrm.style.width = "100%";
         ifrm.style.height = "100%";  
         ifrm.onload = callback;
         container.appendChild(ifrm);
+        iFrameResize({heightCalculationMethod:'max'}, '#stc-popup-iframe');
     };
 
     util.addCSS = function (href, callback) {

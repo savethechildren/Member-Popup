@@ -37,6 +37,11 @@
             "type": "gulp",
             "task": "cssmin",
             "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "concatPopup",
+            "problemMatcher": []
         }
     ]
 }

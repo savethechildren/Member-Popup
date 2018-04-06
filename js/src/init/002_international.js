@@ -20,7 +20,7 @@ var stc = stc || {};
                     stc.util.createEvent('countryIsSet');
                 },
                 onTimeout: function(){
-                    console.log('timeout!');
+                    //do nothing
                 },
                 timeout: 5
             });
