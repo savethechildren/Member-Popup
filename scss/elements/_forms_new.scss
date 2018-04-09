@@ -1,0 +1,157 @@
+.form-control {
+  border: 1px solid $gray-light;
+  border-width: 0 0 1px;
+  @include box-shadow(none);
+  border-radius: none;
+  padding: 6px;
+  background: none;
+  &:focus {
+    @include box-shadow(none);
+    border-bottom-width: 2px;
+    border-bottom-color: $stc-black;
+  }
+}
+
+.form-group {
+  margin-bottom: 30px;
+}
+
+.input-group-addon {
+  padding: 6px 0;
+  background: none;
+  border: none;
+  &:first-child {
+    position: absolute;
+    bottom: -7px;
+    left: -10px;
+  }
+}
+
+.input-lg {
+  border-radius: none;
+}
+.input-group-lg>.form-control, .input-group-lg>.input-group-addon, .input-group-lg>.input-group-btn>.btn, .input-lg {
+  font-size: $font-size-h2;
+  font-family: $font-family-header;
+  line-height: 1;
+  padding: 2px 16px;
+  height: 43px;
+}
+
+.input-group {
+  .form-control {
+    padding-left: 20px;
+  }
+}
+  
+form {
+  .stc-radio-tabs {
+    width: 100%;
+    list-style: none;
+    margin: $padding-large-vertical * 2 0;
+    padding: 0;
+    border: 1px solid $stc-biscuit;
+    border-width: 1px;
+    @extend .clearfix;
+    overflow: hidden;
+    border-radius: $border-radius-base;
+    li {
+      width: (100% / 2);
+      float: left;
+      border: 1px solid $stc-biscuit;
+      border-width: 0 0 0 1px;
+      &:first-child {
+        border: 0;
+      }
+      label {
+        cursor: pointer;
+        margin: 0;
+        display: block;
+        width: 100%;
+        line-height: 2.5;
+        text-align: center;
+        color: $gray-light;
+        font-family: $font-family-header;
+        text-transform: uppercase;
+        font-weight: normal;
+      }
+      input[type="radio"] { 
+        & + label {
+          @include transition-property(background-color, color);
+          @include transition-duration(250ms);
+        }
+        &:hover + label {
+          color: $stc-black;
+        }
+        &:checked + label {
+          background: $stc-red;
+          color: $body-bg;
+        }
+      }
+    }
+    @for $i from 3 through 6 {
+      &.stc-rt-num-#{$i} {
+        li {
+          width: (100% / $i);
+        }
+      }
+    }
+    &.stc-rt-lg {
+      li {
+        label {
+          font-size: $font-size-h2;
+        }
+      }
+    }
+    &.stc-rt-sm {
+      li {
+        label {
+          font-size: $font-size-small;
+        }
+      }
+    }
+    &.stc-rt-3 {
+      li {
+        width: (100% / 3);
+      }
+    }
+  }
+  
+  label {
+    font-weight: normal;
+  }
+  input, select {
+    border-left: 3px solid;
+    transition: border-color .5s ease-out;
+    &:invalid, &:invalid:focus {
+      border-bottom-color: $stc-red;
+    }
+    &:valid:focus {
+      border-bottom-color: $stc-black;
+    }
+    &:optional {
+    }
+  }
+  
+  .secure-panel {
+    background: $stc-biscuit-lighter;
+    border: 1px dotted $gray-light;
+    border-width: 1px 0;
+    span.help-block {
+      color: $gray-light;
+    }
+    @media only screen and (min-width : $screen-md-min) {
+      margin: 0;
+    }
+  }
+  
+  @media only screen and (min-width : $screen-md-min) {
+    
+    .stc-form-bg {
+      background-color: lighten($stc-biscuit, 18%);
+    }
+    .btn-group-justified {
+      width: auto;
+    }
+  }
+}

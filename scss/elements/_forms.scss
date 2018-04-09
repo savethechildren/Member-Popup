@@ -1,0 +1,116 @@
+form {
+  .form-control, .input-group-addon {
+    border-color: $stc-biscuit;
+  }
+  .stc-radio-tabs {
+    width: 100%;
+    list-style: none;
+    margin: $padding-large-vertical * 2 0;
+    padding: 0;
+    border: 1px solid $stc-biscuit;
+    border-width: 1px;
+    @extend .clearfix;
+    overflow: hidden;
+    border-radius: $border-radius-base;
+    li {
+      width: (100% / 2);
+      float: left;
+      border: 1px solid $stc-biscuit;
+      border-width: 0 0 0 1px;
+      &:first-child {
+        border: 0;
+      }
+      label {
+        cursor: pointer;
+        margin: 0;
+        display: block;
+        width: 100%;
+        line-height: 2.5;
+        text-align: center;
+        color: darken($stc-biscuit, 10%);
+        font-family: $font-family-header;
+        text-transform: uppercase;
+        font-weight: normal;
+      }
+      input[type="radio"] { 
+        & + label {
+          @include transition-property(background-color, color);
+          @include transition-duration(250ms);
+        }
+        &:hover + label {
+          color: $stc-black;
+        }
+        &:checked + label {
+          background: $stc-red;
+          color: $body-bg;
+        }
+      }
+    }
+    @for $i from 3 through 6 {
+      &.stc-rt-num-#{$i} {
+        li {
+          width: (100% / $i);
+        }
+      }
+    }
+    &.stc-rt-lg {
+      li {
+        label {
+          font-size: $font-size-h2;
+        }
+      }
+    }
+    &.stc-rt-sm {
+      li {
+        label {
+          font-size: $font-size-small;
+        }
+      }
+    }
+    &.stc-rt-3 {
+      li {
+        width: (100% / 3);
+      }
+    }
+  }
+  
+  .input-group * {
+    font-size: $font-size-h2;
+    font-family: $font-family-header;
+  }
+  label {
+    font-weight: normal;
+  }
+  input, select {
+    border-left: 3px solid;
+    transition: border-color .5s ease-out;
+    &:invalid {
+      border-left-color: $stc-red;
+    }
+    &:valid {
+      border-left-color: $brand-success;
+    }
+    &:optional {
+      border-left-color: $stc-biscuit;
+    }
+  }
+  
+  .secure-panel {
+    background: $stc-biscuit-light;
+    margin: 0 -15px;
+    padding: 1px 15px 15px;
+    span.help-block {
+      color: $gray-light;
+    }
+  }
+  
+  @media only screen and (min-width : $screen-md-min) {
+    
+    .stc-form-bg {
+      background-color: lighten($stc-biscuit, 18%);
+    }
+    .btn-group-justified {
+      width: auto;
+    }
+  }
+}

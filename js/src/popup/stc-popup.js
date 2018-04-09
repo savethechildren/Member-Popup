@@ -1,14 +1,18 @@
-stc.util.addCSS('dist/css/stc-popup.css', function() {
+stc.util.addCSS('dist/css/stc-popup.min.css', function() {
     console.log('CSS ready');
     //initiate modal
     stc.modal.init();
+    
 
-    //try to load iframe
-    console.log("Loading frame: " + Math.round(Date.now()/1000));
-    stc.util.loadIframe('https://misc/member-popup/page/index.html?from=' + 
-    stc.popupOrigin + '&to=' + stc.geo.country + 
-    '&lng=' + stc.geo.userLanguage, document.getElementsByClassName('stc-popup-modal-content')[0], function() {
-        console.log('iFrame is ready: ' + Math.round(Date.now()/1000));
-        stc.modal.show();
+    //wait for web fonts to be loaded before displaying the popup
+    WebFont.load({
+        custom: {
+            families: ['Gill Sans Infant', 'Trade Gothic LT'],
+        },
+        active: function() {
+            console.log('fonts ready');
+            stc.modal.show(); 
+        }
     });
-}); 
+
+});

@@ -1,0 +1,61 @@
+$font-family-header: "Trade Gothic LT", $font-family-sans-serif;
+$font-family-base: "Gill Sans Infant", $font-family-sans-serif;
+
+h1 {
+  font-family: $font-family-header;
+  font-weight: 400;
+  font-size: 36px;
+  @media (min-width: $screen-md-min) { font-size: 48px; }
+  @media (min-width: $screen-lg-min) { font-size: $font-size-h1; }
+  &.lead {
+    background: $body-bg;
+    padding: 0.1em 0.2em;
+    display: inline-block;
+    border-radius: 4px;
+    line-height: 90%;
+  }
+}
+h2, h3, h4 {
+  font-family: $font-family-header;
+  font-weight: 400;
+  line-height: 1.2;
+  span {
+    color: $stc-red;
+  }
+}
+h2 {
+  text-transform: uppercase;
+}
+
+.stc-icon { 
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  path {
+    fill: $stc-red;
+    @include transition-property(fill);
+    @include transition-duration(250ms);
+    transition-timing-function: ease;
+  }
+  &.stc-gray path {
+    fill: $stc-biscuit;
+  }
+}
+
+.urgent {
+  color: $stc-red;
+}
+
+.cap {
+  text-transform: uppercase;
+}
+
+a {
+  @include transition-property(color);
+  @include transition-duration(250ms);
+  transition-timing-function: ease;
+}
+
+.text-red {
+  color: $stc-red;
+}

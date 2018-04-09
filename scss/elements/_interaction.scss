@@ -1,0 +1,25 @@
+.stc-loader {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  text-align: center;
+  background-color: rgba(255,255,255,0.8);
+  color: $stc-red;
+  z-index: 99;
+  .stc-loader-inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4em;
+    width: 4em;
+    margin: auto;
+  }
+}

@@ -1,0 +1,12 @@
+.btn {
+  font-family: $font-family-header;
+  text-transform: uppercase;
+  &.btn-empty {
+    border-color: $body-bg;
+    color: $body-bg;
+    &:hover, &:active {
+      background-color: $body-bg;
+      color: $stc-red;
+    }
+  }
+}

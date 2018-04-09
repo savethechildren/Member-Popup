@@ -1,4 +1,12 @@
+@import 'fonts';
+
 .stc-popup-modal {
+  //import styles
+  @import 'variables';
+  @import 'bootstrap';
+  @import 'typography';
+  @import 'elements/buttons';
+
   line-height: 1.15;
   visibility: hidden;
   opacity: 0;

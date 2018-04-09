@@ -1,0 +1,37 @@
+/* fonts */
+@font-face{
+    font-family:"Gill Sans Infant";
+    src:url("../fonts/GillSansInfantStd-Regular.eot?#iefix");
+    src:url("../fonts/GillSansInfantStd-Regular.eot?#iefix") format("eot"),url("../fonts/GillSansInfantStd-Regular.woff") format("woff"),url("../fonts/GillSansInfantStd-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face{
+    font-family:"Gill Sans Infant";
+    src:url("../fonts/GillSansInfantStd-Bold.eot?#iefix");
+    src:url("../fonts/GillSansInfantStd-Bold.eot?#iefix") format("eot"),url("../fonts/GillSansInfantStd-Bold.woff") format("woff"),url("../fonts/GillSansInfantStd-Bold.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+  } 
+  @font-face{
+    font-family:"Gill Sans Infant";
+    src:url("../fonts/GillSansInfantStd-Italic.eot?#iefix");
+    src:url("../fonts/GillSansInfantStd-Italic.eot?#iefix") format("eot"),url("../fonts/GillSansInfantStd-Italic.woff") format("woff"),url("../fonts/GillSansInfantStd-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+  } 
+  @font-face{
+    font-family:"Gill Sans Infant";
+    src:url("../fonts/GillSansInfantStd-BoldIt.eot?#iefix");
+    src:url("../fonts/GillSansInfantStd-BoldIt.eot?#iefix") format("eot"),url("../fonts/GillSansInfantStd-BoldIt.woff") format("woff"),url("../fonts/GillSansInfantStd-BoldIt.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+  } 
+  @font-face{
+      font-family:"Trade Gothic LT";
+      src:url("../fonts/TradeGothicW02-BoldCn20.eot?#iefix");
+      src:url("../fonts/TradeGothicW02-BoldCn20.eot?#iefix") format("eot"),
+          url("../fonts/TradeGothicW02-BoldCn20.woff2") format("woff2"),
+          url("../fonts/TradeGothicW02-BoldCn20.woff") format("woff"),
+          url("../fonts/TradeGothicW02-BoldCn20.ttf") format("truetype");
+  }

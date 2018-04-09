@@ -1,0 +1,46 @@
+.stc-yt {
+  position: relative;
+  background: $gray-base;
+  iframe {
+    z-index: 1;
+    display: none;
+  }
+  a {
+    color: $gray-base;
+    @extend .fa-play-circle;
+    &:before {
+      bottom: 0;
+      color: #fff;
+      font-family: FontAwesome;
+      font-size: 100px;
+      height: 100px;
+      line-height: normal;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 86px;
+      z-index: 3;
+      opacity: 0.7;
+      text-shadow: 0px 0px 3px rgba(0,0,0,0.6);
+      @include transition(opacity .25s cubic-bezier(0.0,0.0,0.2,1));
+    }
+    &:hover, &:focus {
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+  .stc-yt-poster {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: auto;
+  }
+}

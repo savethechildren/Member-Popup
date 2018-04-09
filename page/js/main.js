@@ -15,4 +15,8 @@ window.addEventListener("DOMContentLoaded", function() {
     console.log(popup);
     popup.innerHTML = popup.innerHTML.replace(/{country}/g, shortTitle);
     popup.innerHTML = popup.innerHTML.replace(/{origin}/g, fromMember['shortTitle']);
+    popup.getElementsByTagName('h1')[0].text = toMember['popupTitle'];
+    document.getElementById('popup-content').innerHTML = '<p>' + toMember['popupText'] + '</p>';
+    document.getElementById('popup-continue').text = toMember['popupGoBtn'];
+    document.getElementById('popup-continue').setAttribute('href', toMember['url']);
 });

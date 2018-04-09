@@ -1,0 +1,45 @@
+/* colors */
+$stc-black: #222221;
+$gray-dark: #222221;
+$stc-orange: #FC4C02;
+$stc-red: #DA291C;
+$stc-plum: #9A3324;
+$stc-biscuit: #D1CCBD;
+$stc-biscuit-light: lighten($stc-biscuit, 15%);
+$stc-biscuit-lighter: lighten($stc-biscuit, 18%);
+$stc-teal: #009CA6;
+$stc-mustard: #F2A900;
+$stc-red-gradient: #761706;
+$stc-light-gray: lighten($stc-black, 82%);
+
+$stc-black-overlay: rgba(25,25,25,0.85);
+$stc-white-overlay: rgba(255,255,255,0.85);
+$stc-trans-white: rgba(255,255,255,0.4);
+@mixin stc-gradient($angle: 45deg) {
+	@include gradient-directional($stc-red 40%, $stc-red-gradient 100%, $angle);
+}
+
+$base-duration: 250ms;
+$base-timing: ease;
+
+/* overrides */ 
+$brand-primary: $stc-red;
+$link-color: $stc-red;
+$link-hover-color: $stc-plum;
+$link-hover-decoration: none;
+$btn-border-radius-base: 4px;
+$gray-lighter: $stc-biscuit-lighter;
+
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-h1: floor(($font-size-base * 4)); // 64px
+$font-size-h2: floor(($font-size-base * 1.5)); // 24px
+$font-size-h3: floor(($font-size-base * 1.25)); // 20px
+
+$grid-float-breakpoint: 992px;
+
+
+$font-size-page-h1: $font-size-base * 3;
+
+$font-family-header: "Trade Gothic LT","Helvetica Neue",Helvetica,Arial,sans-serif;
+$font-family-base: "Gill Sans Infant","Helvetica Neue",Helvetica,Arial,sans-serif;
