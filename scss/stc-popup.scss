@@ -6,7 +6,6 @@
   @import 'bootstrap';
   @import 'typography';
   @import 'elements/buttons';
-
   line-height: 1.15;
   visibility: hidden;
   opacity: 0;
@@ -55,8 +54,23 @@
     box-sizing: border-box;
   }
   .stc-popup-modal-content {
+  font-family: $font-family-base;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.3em;
     iframe {
       border: 0;
     }
+    h1 {
+      font-size: 30px;
+      margin-bottom: 1em;
+    }
+    .stc-popup-modal-actions {
+       margin-top: 2em;
+       a.btn {
+         margin: 0.5em;
+       }
+    }
   }
+
 }

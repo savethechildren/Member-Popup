@@ -84,7 +84,6 @@ var stc = stc || {};
         closeBT.setAttribute("title", "Close");
         innerModal.appendChild(closeBT);
         var content = stc.util.newDOMElement('div','stc-popup-modal-content');
-        innerModal.appendChild(content);
 
         //close modal on esc key
         window.addEventListener('keyup', function(e) {
@@ -93,17 +92,28 @@ var stc = stc || {};
             }
         }, false); 
 
+        innerModal.appendChild(content);
+
         divmodal.appendChild(innerModal);
+        
 
         document.getElementsByTagName('body')[0].appendChild(divmodal);
 
         modal.element = divmodal;
         
         //add inner content HTML
-        content.innerHTML = '<h1></h1>' +
+        content.innerHTML = '<h1></h1>' + 
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"></div>' +
             '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-default btn-lg" id="stc-popup-stay">Stay here</a>' +
             '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Continue to {country}</a></div>';
+
+        var toMember = stc.geo.members[stc.geo.country];
+        var fromMember = stc.geo.members[stc.popupOrigin];
+        content.innerHTML = content.innerHTML.replace(/{country}/g, toMember['shortTitle']);
+        content.innerHTML = content.innerHTML.replace(/{origin}/g, fromMember['shortTitle']);
+        content.getElementsByTagName('h1')[0].innerHTML = toMember['popupTitle'];
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popupText'] + '</p>';
+        document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
     }; 
 
     modal.show = function() {
@@ -365,8 +375,8 @@ var stc = stc || {};
             "iso": "GB",
             "title": "United Kingdom",
             "shortTitle": "the UK",
-            "popupTitle": "Welcome, visitor from the U.K.",
-            "popupText": "You've come to our international site but...",
+            "popupTitle": "Welcome, visitor from the UK",
+            "popupText": "You've come to our international site which contains information about our global programmes. We also have a website for Save the Children UK where you can find information on fundraising, volunteering and other ways to give.",
             "popupGoBtn": "Go to the UK",
             "url": "http://www.savethechildren.org.uk",
             "urlDonate": "https://secure.savethechildren.org.uk/donate",
@@ -396,6 +406,28 @@ var stc = stc || {};
         }
     };
 }(stc.geo = stc.geo || {}));
+stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.css', function() {
+    console.log('CSS ready');
+    //initiate modal
+    stc.modal.init();
+    
+    //wait for web fonts to be loaded before displaying the popup
+    WebFont.load({
+        custom: {
+            families: ['Gill Sans Infant', 'Trade Gothic LT'],
+        },
+        active: function() {
+            console.log('fonts ready');
+            stc.modal.show(); 
+        },
+        //in case of timeout or other error still show popup
+        inactive: function() {
+            console.log('error loading fonts');
+            stc.modal.show(); 
+        }
+    });
+
+});
 /*
  * Copyright 2016 Small Batch, Inc.
  *
@@ -429,22 +461,3 @@ var Aa={latin:"BESbswy","latin-ext":"\u00e7\u00f6\u00fc\u011f\u015f",cyrillic:"\
 Da=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra|ultra)-?)?bold|black|heavy|l|r|b|[1-9]00)?(n|i|normal|italic)?$/;
 function Ea(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var k=d[1];g=[];if(k)for(var k=k.split(","),h=k.length,m=0;m<h;m++){var l;l=k[m];if(l.match(/^[\w-]+$/)){var n=Da.exec(l.toLowerCase());if(null==n)l="";else{l=n[2];l=null==l||""==l?"n":Ca[l];n=n[1];if(null==n||""==n)n="4";else var r=Ba[n],n=r?r:isNaN(n)?"4":n.substr(0,1);l=[l,n].join("")}}else l="";l&&g.push(l)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=Aa[d[0]])&&(a.c[e]=d))}a.c[e]||(d=Aa[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new H(e,f[d]))}};function Fa(a,b){this.c=a;this.a=b}var Ga={Arimo:!0,Cousine:!0,Tinos:!0};Fa.prototype.load=function(a){var b=new C,c=this.c,d=new va(this.a.api,z(c),this.a.text),e=this.a.families;xa(d,e);var f=new za(e);Ea(f);A(c,ya(d),D(b));F(b,function(){a(f.a,f.c,Ga)})};function Ha(a,b){this.c=a;this.a=b}Ha.prototype.load=function(a){var b=this.a.id,c=this.c.m;b?B(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],k=b[f+1],h=0;h<k.length;h++)e.push(new H(g,k[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(m){}a(e)}},2E3):a([])};function Ia(a,b){this.c=a;this.f=b;this.a=[]}Ia.prototype.load=function(a){var b=this.f.id,c=this.c.m,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,k=c.fonts.length;g<k;++g){var h=c.fonts[g];d.a.push(new H(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},B(this.c,z(this.c)+(this.f.api||"//f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new pa(window);Y.a.c.custom=function(a,b){return new ua(b,a)};Y.a.c.fontdeck=function(a,b){return new Ia(b,a)};Y.a.c.monotype=function(a,b){return new sa(b,a)};Y.a.c.typekit=function(a,b){return new Ha(b,a)};Y.a.c.google=function(a,b){return new Fa(b,a)};var Z={load:p(Y.load,Y)};"function"===typeof define&&define.amd?define(function(){return Z}):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
-
-stc.util.addCSS('dist/css/stc-popup.min.css', function() {
-    console.log('CSS ready');
-    //initiate modal
-    stc.modal.init();
-    
-
-    //wait for web fonts to be loaded before displaying the popup
-    WebFont.load({
-        custom: {
-            families: ['Gill Sans Infant', 'Trade Gothic LT'],
-        },
-        active: function() {
-            console.log('fonts ready');
-            stc.modal.show(); 
-        }
-    });
-
-});

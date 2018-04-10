@@ -907,7 +907,19 @@
       content: "\D7"; }
   .stc-popup-modal * {
     box-sizing: border-box; }
-  .stc-popup-modal .stc-popup-modal-content iframe {
-    border: 0; }
+  .stc-popup-modal .stc-popup-modal-content {
+    font-family: "Gill Sans Infant", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.3em; }
+    .stc-popup-modal .stc-popup-modal-content iframe {
+      border: 0; }
+    .stc-popup-modal .stc-popup-modal-content h1 {
+      font-size: 30px;
+      margin-bottom: 1em; }
+    .stc-popup-modal .stc-popup-modal-content .stc-popup-modal-actions {
+      margin-top: 2em; }
+      .stc-popup-modal .stc-popup-modal-content .stc-popup-modal-actions a.btn {
+        margin: 0.5em; }
 
 /*# sourceMappingURL=stc-popup.css.map */
