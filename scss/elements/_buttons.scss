@@ -1,6 +1,7 @@
 .btn {
   font-family: $font-family-header;
   text-transform: uppercase;
+  width: auto;
   &.btn-empty {
     border-color: $body-bg;
     color: $body-bg;

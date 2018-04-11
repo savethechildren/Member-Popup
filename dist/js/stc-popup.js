@@ -66,10 +66,6 @@ var stc = stc || {};
 
     modal.element = null;
 
-    modal.load = function(url) {
-        
-    };
-
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
         divmodal.addEventListener("click", function(event) {
@@ -114,19 +110,37 @@ var stc = stc || {};
         content.getElementsByTagName('h1')[0].innerHTML = toMember['popupTitle'];
         document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popupText'] + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
+        document.getElementById('stc-popup-continue').text = toMember['popupGoBtn'];
+        document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
     }; 
 
     modal.show = function() {
         modal.element.className += " on";
+        //reset body overflow
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     };
 
     modal.hide = function() {
         modal.element.className = modal.element.className.replace(' on', '');
+        //reset body overflow
+        document.getElementsByTagName('body')[0].style.overflow = 'auto';
     };
 
     modal.close = function(event) {
         modal.hide();
         //todo: add cookie to remember choice stc.util.setCookie('stc_popup_closed', '1', 2);
+        //add event in GA
+        if(stc.analytics && stc.analytics.isOn()) {
+            stc.analytics.sendEvent('Member popup', 'Stay', 'Stay');
+        }
+    };
+
+    modal.trackOutbound = function(e) {
+        e.preventDefault();
+        if(stc.analytics && stc.analytics.isOn()) {
+            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - ' + e.target);
+            window.location = e.target;
+        }
     };
     
 }(stc.modal = stc.modal || {}));
@@ -374,10 +388,9 @@ var stc = stc || {};
         "GB": {
             "iso": "GB",
             "title": "United Kingdom",
-            "shortTitle": "the UK",
             "popupTitle": "Welcome, visitor from the UK",
             "popupText": "You've come to our international site which contains information about our global programmes. We also have a website for Save the Children UK where you can find information on fundraising, volunteering and other ways to give.",
-            "popupGoBtn": "Go to the UK",
+            "popupGoBtn": "Continue to the UK",
             "url": "http://www.savethechildren.org.uk",
             "urlDonate": "https://secure.savethechildren.org.uk/donate",
             "mappedCountries": ["IE"],
@@ -386,10 +399,9 @@ var stc = stc || {};
         "US": {
             "iso": "US",
             "title": "United States",
-            "shortTitle": "the US",
             "popupTitle": "Welcome, visitor from the U.S.",
-            "popupText": "You've come to our international site but...",
-            "popupGoBtn": "Go to the U.S.",
+            "popupText": "You've come to our international site, which contains information about our global programs. We also have a brand new U.S. website, where you can sponsor a child and find other ways to give.",
+            "popupGoBtn": "Continue to the U.S.",
             "url": "http://www.savethechildren.org",
             "urlDonate": "https://secure.savethechildren.org/site/c.8rKLIXMGIpI4E/b.8102415/k.1377/Please_Give_Monthly_to_Save_the_Children/apps/ka/sd/donor.asp",
             "mappedCountries": [],
@@ -398,7 +410,6 @@ var stc = stc || {};
         "XX": {
             "iso": "XX",
             "title": "International",
-            "shortTitle": "International",
             "url": "http://www.savethechildren.net",
             "urlDonate": "https://donate.savethechildren.org/donatep",
             "mappedCountries": [],
@@ -406,26 +417,60 @@ var stc = stc || {};
         }
     };
 }(stc.geo = stc.geo || {}));
+var stc = stc || {};
+(function(analytics){
+    analytics.isOn = function() {
+        return (window.ga && ga.create ? true : false);
+    };
+
+    /**
+     * Sends an event to GA.
+     * 
+     * @param {type} category The event category.
+     * @param {type} action The action to record.
+     * @param {type} [label] The event label.
+     * @return {undefined}
+     */
+    analytics.sendEvent = function (category, action, label) {
+        if(!category || !action || !label) {
+            return false;
+        }
+        ga('send', {
+            hitType: 'event',
+            eventCategory: category,
+            eventAction: action,
+            eventLabel: (label ? label : ''),
+            hitCallback: analytics.callback
+        });
+    };
+
+}(stc.analytics = stc.analytics || {}));
+
 stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.css', function() {
     console.log('CSS ready');
     //initiate modal
     stc.modal.init();
     
     //wait for web fonts to be loaded before displaying the popup
-    WebFont.load({
-        custom: {
-            families: ['Gill Sans Infant', 'Trade Gothic LT'],
-        },
-        active: function() {
-            console.log('fonts ready');
-            stc.modal.show(); 
-        },
-        //in case of timeout or other error still show popup
-        inactive: function() {
-            console.log('error loading fonts');
-            stc.modal.show(); 
-        }
-    });
+    if(typeof WebFont !== 'undefined') {
+        WebFont.load({
+            custom: {
+                families: ['Gill Sans Infant', 'Trade Gothic LT'],
+            },
+            active: function() {
+                console.log('fonts ready');
+                stc.modal.show(); 
+            },
+            //in case of timeout or other error still show popup
+            inactive: function() {
+                console.log('error loading fonts');
+                stc.modal.show(); 
+            }
+        });
+    } else {
+        stc.modal.show();
+        return false;
+    }
 
 });
 /*

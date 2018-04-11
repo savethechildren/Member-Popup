@@ -241,10 +241,9 @@ var stc = stc || {};
         "GB": {
             "iso": "GB",
             "title": "United Kingdom",
-            "shortTitle": "the UK",
             "popupTitle": "Welcome, visitor from the UK",
             "popupText": "You've come to our international site which contains information about our global programmes. We also have a website for Save the Children UK where you can find information on fundraising, volunteering and other ways to give.",
-            "popupGoBtn": "Go to the UK",
+            "popupGoBtn": "Continue to the UK",
             "url": "http://www.savethechildren.org.uk",
             "urlDonate": "https://secure.savethechildren.org.uk/donate",
             "mappedCountries": ["IE"],
@@ -253,10 +252,9 @@ var stc = stc || {};
         "US": {
             "iso": "US",
             "title": "United States",
-            "shortTitle": "the US",
             "popupTitle": "Welcome, visitor from the U.S.",
-            "popupText": "You've come to our international site but...",
-            "popupGoBtn": "Go to the U.S.",
+            "popupText": "You've come to our international site, which contains information about our global programs. We also have a brand new U.S. website, where you can sponsor a child and find other ways to give.",
+            "popupGoBtn": "Continue to the U.S.",
             "url": "http://www.savethechildren.org",
             "urlDonate": "https://secure.savethechildren.org/site/c.8rKLIXMGIpI4E/b.8102415/k.1377/Please_Give_Monthly_to_Save_the_Children/apps/ka/sd/donor.asp",
             "mappedCountries": [],
@@ -265,7 +263,6 @@ var stc = stc || {};
         "XX": {
             "iso": "XX",
             "title": "International",
-            "shortTitle": "International",
             "url": "http://www.savethechildren.net",
             "urlDonate": "https://donate.savethechildren.org/donatep",
             "mappedCountries": [],

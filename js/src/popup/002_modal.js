@@ -3,10 +3,6 @@ var stc = stc || {};
 
     modal.element = null;
 
-    modal.load = function(url) {
-        
-    };
-
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
         divmodal.addEventListener("click", function(event) {
@@ -51,19 +47,37 @@ var stc = stc || {};
         content.getElementsByTagName('h1')[0].innerHTML = toMember['popupTitle'];
         document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popupText'] + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
+        document.getElementById('stc-popup-continue').text = toMember['popupGoBtn'];
+        document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
     }; 
 
     modal.show = function() {
         modal.element.className += " on";
+        //reset body overflow
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     };
 
     modal.hide = function() {
         modal.element.className = modal.element.className.replace(' on', '');
+        //reset body overflow
+        document.getElementsByTagName('body')[0].style.overflow = 'auto';
     };
 
     modal.close = function(event) {
         modal.hide();
         //todo: add cookie to remember choice stc.util.setCookie('stc_popup_closed', '1', 2);
+        //add event in GA
+        if(stc.analytics && stc.analytics.isOn()) {
+            stc.analytics.sendEvent('Member popup', 'Stay', 'Stay');
+        }
+    };
+
+    modal.trackOutbound = function(e) {
+        e.preventDefault();
+        if(stc.analytics && stc.analytics.isOn()) {
+            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - ' + e.target);
+            window.location = e.target;
+        }
     };
     
 }(stc.modal = stc.modal || {}));

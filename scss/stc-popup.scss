@@ -22,7 +22,7 @@
     overflow: hidden;
     padding: 40px;
     position: relative;
-    background: #fff;
+    background: $body-bg;
     margin: 0 auto;
     width: 100%;
     min-height: 100%;
@@ -54,16 +54,17 @@
     box-sizing: border-box;
   }
   .stc-popup-modal-content {
-  font-family: $font-family-base;
-  text-align: center;
-  font-size: 18px;
-  line-height: 1.3em;
+    font-family: $font-family-base;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.3em;
     iframe {
       border: 0;
     }
     h1 {
       font-size: 30px;
       margin-bottom: 1em;
+      text-transform: none;
     }
     .stc-popup-modal-actions {
        margin-top: 2em;
@@ -72,5 +73,13 @@
        }
     }
   }
-
+  .btn {
+    &.btn-negative {
+      border-color: $stc-red;
+      &:hover, &:focus {
+        border-color: $stc-red-gradient;
+        color: $stc-plum;
+      }
+    }
+  }
 }
