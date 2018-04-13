@@ -21,7 +21,6 @@ stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.css', function() {
         });
     } else {
         stc.modal.show();
-        return false;
     }
 
 });

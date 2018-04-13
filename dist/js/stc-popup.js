@@ -61,6 +61,7 @@ var stc = stc || {};
     };
     
 }(stc.util = stc.util || {}));
+
 var stc = stc || {};
 (function(modal, $){
 
@@ -89,10 +90,7 @@ var stc = stc || {};
         }, false); 
 
         innerModal.appendChild(content);
-
         divmodal.appendChild(innerModal);
-        
-
         document.getElementsByTagName('body')[0].appendChild(divmodal);
 
         modal.element = divmodal;
@@ -100,7 +98,7 @@ var stc = stc || {};
         //add inner content HTML
         content.innerHTML = '<h1></h1>' + 
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-default btn-lg" id="stc-popup-stay">Stay here</a>' +
+            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay here</a>' +
             '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Continue to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
@@ -417,10 +415,33 @@ var stc = stc || {};
         }
     };
 }(stc.geo = stc.geo || {}));
+
 var stc = stc || {};
 (function(analytics){
+
+    /**
+     * The list of available tracker names.
+     */
+    analytics.trackers = [];
+
+    /**
+     * Checks that Google Analyutics is initialized 
+     * and sets the avilable tracker names.
+     * @return {bool} True if GA is available or false.
+     */
     analytics.isOn = function() {
-        return (window.ga && ga.create ? true : false);
+        if (window.ga && ga.create) {
+            var gaTrackers = ga.getAll();
+            gaTrackers.forEach(function(v) {
+                if(v.get('trackingId') !== "") {
+                    analytics.trackers.push(v.get('name'));
+                }
+            });
+            return true;
+        }
+        else {
+            return false;
+        }
     };
 
     /**
@@ -435,13 +456,15 @@ var stc = stc || {};
         if(!category || !action || !label) {
             return false;
         }
-        ga('send', {
-            hitType: 'event',
-            eventCategory: category,
-            eventAction: action,
-            eventLabel: (label ? label : ''),
-            hitCallback: analytics.callback
-        });
+        analytics.trackers.forEach(function(v) {
+            ga(v + '.' + 'send', {
+                hitType: 'event',
+                eventCategory: category,
+                eventAction: action,
+                eventLabel: (label ? label : ''),
+                hitCallback: analytics.callback
+            });
+        });        
     };
 
 }(stc.analytics = stc.analytics || {}));
@@ -469,10 +492,10 @@ stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.css', function() {
         });
     } else {
         stc.modal.show();
-        return false;
     }
 
 });
+
 /*
  * Copyright 2016 Small Batch, Inc.
  *

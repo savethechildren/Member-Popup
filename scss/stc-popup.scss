@@ -41,15 +41,20 @@
     top: 0;
     right: 10px;
     position: absolute;
-    font-size: 35px;
+    font-size: 36px;
     cursor: pointer;
-    color: #333232;
-    font-weight: 900;
+    color: $stc-black;
+    font-weight: 200;
     &:before {
-      font-family: Arial,sans-serif;
+      font-family: $font-family-base,Arial,sans-serif;
       content: "\D7";
     }
-  }
+    &:hover {
+      &:before {
+        font-weight: 800;
+      }
+    }
+  } 
   * {
     box-sizing: border-box;
   }
@@ -76,9 +81,13 @@
   .btn {
     &.btn-negative {
       border-color: $stc-red;
+      box-shadow: inset 0 0 0 1px $stc-red;
+      background-color: $body-bg;
       &:hover, &:focus {
-        border-color: $stc-red-gradient;
+        border-color: darken($stc-red, 10%);
+        box-shadow: inset 0 0 0 1px darken($stc-red, 10%);
         color: $stc-plum;
+        background-color: $body-bg;
       }
     }
   }

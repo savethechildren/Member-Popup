@@ -1,7 +1,29 @@
 var stc = stc || {};
 (function(analytics){
+
+    /**
+     * The list of available tracker names.
+     */
+    analytics.trackers = [];
+
+    /**
+     * Checks that Google Analyutics is initialized 
+     * and sets the avilable tracker names.
+     * @return {bool} True if GA is available or false.
+     */
     analytics.isOn = function() {
-        return (window.ga && ga.create ? true : false);
+        if (window.ga && ga.create) {
+            var gaTrackers = ga.getAll();
+            gaTrackers.forEach(function(v) {
+                if(v.get('trackingId') !== "") {
+                    analytics.trackers.push(v.get('name'));
+                }
+            });
+            return true;
+        }
+        else {
+            return false;
+        }
     };
 
     /**
@@ -16,13 +38,15 @@ var stc = stc || {};
         if(!category || !action || !label) {
             return false;
         }
-        ga('send', {
-            hitType: 'event',
-            eventCategory: category,
-            eventAction: action,
-            eventLabel: (label ? label : ''),
-            hitCallback: analytics.callback
-        });
+        analytics.trackers.forEach(function(v) {
+            ga(v + '.' + 'send', {
+                hitType: 'event',
+                eventCategory: category,
+                eventAction: action,
+                eventLabel: (label ? label : ''),
+                hitCallback: analytics.callback
+            });
+        });        
     };
 
 }(stc.analytics = stc.analytics || {}));

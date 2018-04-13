@@ -26,10 +26,7 @@ var stc = stc || {};
         }, false); 
 
         innerModal.appendChild(content);
-
         divmodal.appendChild(innerModal);
-        
-
         document.getElementsByTagName('body')[0].appendChild(divmodal);
 
         modal.element = divmodal;
@@ -37,7 +34,7 @@ var stc = stc || {};
         //add inner content HTML
         content.innerHTML = '<h1></h1>' + 
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-default btn-lg" id="stc-popup-stay">Stay here</a>' +
+            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay here</a>' +
             '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Continue to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
