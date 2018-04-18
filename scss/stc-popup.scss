@@ -49,11 +49,6 @@
       font-family: $font-family-base,Arial,sans-serif;
       content: "\D7";
     }
-    &:hover {
-      &:before {
-        font-weight: 800;
-      }
-    }
   } 
   * {
     box-sizing: border-box;

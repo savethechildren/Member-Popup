@@ -39,12 +39,10 @@ var stc = stc || {};
 
         var toMember = stc.geo.members[stc.geo.country];
         var fromMember = stc.geo.members[stc.popupOrigin];
-        content.innerHTML = content.innerHTML.replace(/{country}/g, toMember['shortTitle']);
-        content.innerHTML = content.innerHTML.replace(/{origin}/g, fromMember['shortTitle']);
-        content.getElementsByTagName('h1')[0].innerHTML = toMember['popupTitle'];
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popupText'] + '</p>';
+        content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popup']['text'] + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = toMember['popupGoBtn'];
+        document.getElementById('stc-popup-continue').text = toMember['popup']['btn'];
         document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
     }; 
 
@@ -62,19 +60,25 @@ var stc = stc || {};
 
     modal.close = function(event) {
         modal.hide();
-        //todo: add cookie to remember choice stc.util.setCookie('stc_popup_closed', '1', 2);
+        //todo: add cookie to remember choice for X days stc.util.setCookie('stc_popup_closed', '1', 14);
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', 'Stay', 'Stay');
+            stc.analytics.sendEvent('Member popup', 'Stay', stc.geo.country + ' - Stay');
         }
     };
 
     modal.trackOutbound = function(e) {
         e.preventDefault();
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - ' + e.target);
+            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - Go', function() {
+                window.location = e.target;
+            });      
+            //1 second timeout fallback in case ga event doesn't call back
+            window.setTimeout(function() { window.location = e.target; }, 1000);
+        }
+        else {
             window.location = e.target;
         }
     };
-    
+
 }(stc.modal = stc.modal || {}));

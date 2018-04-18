@@ -6,8 +6,8 @@ var stc = stc || {};
      * before firing a callback function.
      * 
      * @param {object} object The object to validate..
-     * @param {type} event The event to listen for in case the object doesn't exist.
-     * @param {type} callback The callback function to execute.
+     * @param {string} event The event to listen for in case the object doesn't exist.
+     * @param {function} callback The callback function to execute.
      */
     util.waitForObjectOrEvent = function(object, event, callback) {
         if(object) {
@@ -16,17 +16,6 @@ var stc = stc || {};
         else {
             window.addEventListener(event, callback);
         }
-    };
-
-    util.loadIframe = function(url, container, callback) {
-        var ifrm = document.createElement("iframe");
-        ifrm.id = "stc-popup-iframe";
-        ifrm.setAttribute("src", url);
-        ifrm.style.width = "100%";
-        ifrm.style.height = "100%";  
-        ifrm.onload = callback;
-        container.appendChild(ifrm);
-        iFrameResize({heightCalculationMethod:'max'}, '#stc-popup-iframe');
     };
 
     util.addCSS = function (href, callback) {
@@ -103,12 +92,10 @@ var stc = stc || {};
 
         var toMember = stc.geo.members[stc.geo.country];
         var fromMember = stc.geo.members[stc.popupOrigin];
-        content.innerHTML = content.innerHTML.replace(/{country}/g, toMember['shortTitle']);
-        content.innerHTML = content.innerHTML.replace(/{origin}/g, fromMember['shortTitle']);
-        content.getElementsByTagName('h1')[0].innerHTML = toMember['popupTitle'];
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popupText'] + '</p>';
+        content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popup']['text'] + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = toMember['popupGoBtn'];
+        document.getElementById('stc-popup-continue').text = toMember['popup']['btn'];
         document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
     }; 
 
@@ -126,21 +113,27 @@ var stc = stc || {};
 
     modal.close = function(event) {
         modal.hide();
-        //todo: add cookie to remember choice stc.util.setCookie('stc_popup_closed', '1', 2);
+        //todo: add cookie to remember choice for X days stc.util.setCookie('stc_popup_closed', '1', 14);
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', 'Stay', 'Stay');
+            stc.analytics.sendEvent('Member popup', 'Stay', stc.geo.country + ' - Stay');
         }
     };
 
     modal.trackOutbound = function(e) {
         e.preventDefault();
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - ' + e.target);
+            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - Go', function() {
+                window.location = e.target;
+            });      
+            //1 second timeout fallback in case ga event doesn't call back
+            window.setTimeout(function() { window.location = e.target; }, 1000);
+        }
+        else {
             window.location = e.target;
         }
     };
-    
+
 }(stc.modal = stc.modal || {}));
 
 var stc = stc || {};
@@ -149,269 +142,177 @@ var stc = stc || {};
         "AU": {
             "iso": "AU",
             "title": "Australia",
-            "url": "http://www.savethechildren.org.au",
-            "urlDonate": "https://www.savethechildren.org.au/donate/today",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.au"
         },
         "CA": {
             "iso": "CA",
             "title": "Canada",
-            "url": "http://www.savethechildren.ca",
-            "urlDonate": "https://support.savethechildren.ca/DonatetoChildren",
-            "mappedCountries": [],
-            "supportedLanguages": ["en", "fr"]
+            "url": "http://www.savethechildren.ca"
         },
         "CO": {
             "iso": "CO",
             "title": "Colombia",
-            "url": "https://www.savethechildren.org.co",
-            "urlDonate": "https://www.savethechildren.org.co/donar",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.org.co"
         },
         "DK": {
             "iso": "DK",
             "title": "Denmark",
-            "url": "http://www.redbarnet.dk",
-            "urlDonate": "https://redbarnet.dk/stoet",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.redbarnet.dk"
         },
         "DO": {
             "iso": "DO",
             "title": "Dominican Republic",
-            "url": "http://savethechildren.org.do",
-            "urlDonate": "http://savethechildren.org.do",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://savethechildren.org.do"
         },
         "FJ": {
             "iso": "FJ",
             "title": "Fiji",
-            "url": "http://www.savethechildren.org.fj",
-            "urlDonate": "http://www.savethechildren.org.fj/donate-now",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.fj"
         },
         "FI": {
             "iso": "FI",
             "title": "Finland",
-            "url": "http://www.pelastakaalapset.fi",
-            "urlDonate": "https://www.pelastakaalapset.fi/auta-lapsia/lahjoita/#/kertalahjoitus",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.pelastakaalapset.fi"
         },
         "DE": {
             "iso": "DE",
             "title": "Germany",
-            "url": "http://www.savethechildren.de",
-            "urlDonate": "https://spenden.savethechildren.de",
-            "mappedCountries": ["AT"],
-            "supportedLanguages": []
+            "popup": {
+                "title": "Welcome, visitor from Germany",
+                "text": "You've come to our international website, which contains information about our global programs. We also have a website for Save the Children Germany, where you can sponsor a child and find other ways to give.",
+                "btn": "Continue to Germany"
+            },
+            "url": "http://www.savethechildren.de"
         },
         "GT": {
             "iso": "GT",
             "title": "Guatemala",
-            "url": "http://www.savethechildren.org.gt",
-            "urlDonate": "http://savethechildren.org.gt/como-ayudar",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.gt"
         },
         "HN": {
             "iso": "HN",
             "title": "Honduras",
-            "url": "http://www.savethechildrenhonduras.org",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildrenhonduras.org"
         },
         "HK": {
             "iso": "HK",
             "title": "Hong Kong",
-            "url": "http://www.savethechildren.org.hk",
-            "urlDonate": "https://savethechildren.org.hk/monthlygiving.aspx",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.hk"
         },
         "IS": {
             "iso": "IS",
             "title": "Iceland",
-            "url": "http://www.barnaheill.is",
-            "urlDonate": "http://www.barnaheill.is/Borninogthu/Einstaklingar/heillavinur",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.barnaheill.is"
         },
         "IN": {
             "iso": "IN",
             "title": "India",
-            "url": "http://www.savethechildren.in",
-            "urlDonate": "https://support.savethechildren.in/#donate-form ",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.in"
         },
         "ID": {
             "iso": "ID",
             "title": "Indonesia",
-            "url": "https://www.stc.or.id",
-            "urlDonate": "https://www.stc.or.id/donate",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "https://www.stc.or.id"
         },
         "IT": {
             "iso": "IT",
             "title": "Italy",
-            "url": "http://www.savethechildren.it",
-            "urlDonate": "https://www.savethechildren.it/dona-ora",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.it"
         },
         "JP": {
             "iso": "JP",
             "title": "Japan",
-            "url": "http://www.savechildren.or.jp",
-            "urlDonate": "http://www.savechildren.or.jp/contribute",
-            "mappedCountries": [],
-            "supportedLanguages": []
-        },
-        "JO": {
-            "iso": "JO",
-            "title": "Jordan",
-            "url": "http://jordan.savethechildren.net",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savechildren.or.jp"
         },
         "KR": {
             "iso": "KR",
             "title": "Korea",
-            "url": "http://www.sc.or.kr",
-            "urlDonate": "https://m.sc.or.kr/support/supportMonth.do",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.sc.or.kr"
         },
         "LT": {
             "iso": "LT",
             "title": "Lithuania",
             "url": "https://www.gelbekitvaikus.lt",
-            "urlDonate": "https://www.gelbekitvaikus.lt/paaukok",
-            "mappedCountries": [],
-            "supportedLanguages": []
         },
         "MX": {
             "iso": "MX",
             "title": "Mexico",
-            "url": "https://www.savethechildren.mx",
-            "urlDonate": "https://www.savethechildren.mx/donar",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.mx"
         },
         "NL": {
             "iso": "NL",
             "title": "Netherlands",
-            "url": "https://www.savethechildren.nl",
-            "urlDonate": "https://www.savethechildren.nl/help-mee/donee",
-            "mappedCountries": ["BE"],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.nl"
         },
         "NZ": {
             "iso": "NZ",
             "title": "New Zealand",
-            "url": "http://www.savethechildren.org.nz",
-            "urlDonate": "https://savethechildren.org.nz/how-to-help/donate",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.nz"
         },
         "NO": {
             "iso": "NO",
             "title": "Norway",
-            "url": "http://www.reddbarna.no",
-            "urlDonate": "https://www.reddbarna.no/gi",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.reddbarna.no"
         },
         "PH": {
             "iso": "PH",
             "title": "Philippines",
-            "url": "http://www.savethechildren.org.ph",
-            "urlDonate": "https://donate.savethechildren.org.ph",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.ph"
         },
         "RO": {
             "iso": "RO",
             "title": "Romania",
-            "url": "http://www.salvaticopiii.ro",
-            "urlDonate": "http://www.salvaticopiii.ro/?id2=doneaza",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.salvaticopiii.ro"
         },
         "ZA": {
             "iso": "ZA",
             "title": "South Africa",
-            "url": "http://www.savethechildren.org.za",
-            "urlDonate": "https://www.savethechildren.org.za/donate",
-            "mappedCountries": ["ZW", "NA"],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.org.za"
         },
         "ES": {
             "iso": "ES",
             "title": "Spain",
-            "url": "http://www.savethechildren.es",
-            "urlDonate": "https://www.savethechildren.es/colaborar-ong/hazte-socio-y-cambia-la-vida-de-los-ninos-y-ninas-mas-vulnerables",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.es"
         },
         "SZ": {
             "iso": "SZ",
             "title": "Swaziland",
-            "url": "http://www.savethechildren.org.sz",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "http://www.savethechildren.org.sz"
         },
         "SE": {
             "iso": "SE",
             "title": "Sweden",
-            "url": "http://www.rb.se",
-            "urlDonate": "https://www.raddabarnen.se/stod-oss/manadsgivare/#steg1",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "https://www.raddabarnen.se"
         },
         "CH": {
             "iso": "CH",
             "title": "Switzerland",
-            "url": "http://www.savethechildren.ch",
-            "urlDonate": "https://www.savethechildren.ch/de/online_spenden/spenden_neu.cfm",
-            "mappedCountries": ["LI"],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.ch"
         },
         "GB": {
             "iso": "GB",
             "title": "United Kingdom",
-            "popupTitle": "Welcome, visitor from the UK",
-            "popupText": "You've come to our international site which contains information about our global programmes. We also have a website for Save the Children UK where you can find information on fundraising, volunteering and other ways to give.",
-            "popupGoBtn": "Continue to the UK",
-            "url": "http://www.savethechildren.org.uk",
-            "urlDonate": "https://secure.savethechildren.org.uk/donate",
-            "mappedCountries": ["IE"],
-            "supportedLanguages": []
+            "popup": {
+                "title": "Welcome, visitor from the UK",
+                "text": "You've come to our international website which contains information about our global programmes. We also have a website for Save the Children UK where you can find information on fundraising, volunteering and other ways to give.",
+                "btn": "Continue to the UK"
+            },
+            "url": "https://www.savethechildren.org.uk"
         },
         "US": {
             "iso": "US",
             "title": "United States",
-            "popupTitle": "Welcome, visitor from the U.S.",
-            "popupText": "You've come to our international site, which contains information about our global programs. We also have a brand new U.S. website, where you can sponsor a child and find other ways to give.",
-            "popupGoBtn": "Continue to the U.S.",
-            "url": "http://www.savethechildren.org",
-            "urlDonate": "https://secure.savethechildren.org/site/c.8rKLIXMGIpI4E/b.8102415/k.1377/Please_Give_Monthly_to_Save_the_Children/apps/ka/sd/donor.asp",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "popup": {
+                "title": "Welcome, visitor from the U.S.",
+                "text": "You've come to our international website, which contains information about our global programs. We also have a brand new U.S. website, where you can sponsor a child and find other ways to give.",
+                "btn": "Continue to the U.S."
+            },
+            "url": "https://www.savethechildren.org"
         },
         "XX": {
             "iso": "XX",
             "title": "International",
-            "url": "http://www.savethechildren.net",
-            "urlDonate": "https://donate.savethechildren.org/donatep",
-            "mappedCountries": [],
-            "supportedLanguages": []
+            "url": "https://www.savethechildren.net"
         }
     };
 }(stc.geo = stc.geo || {}));
@@ -425,8 +326,8 @@ var stc = stc || {};
     analytics.trackers = [];
 
     /**
-     * Checks that Google Analyutics is initialized 
-     * and sets the avilable tracker names.
+     * Checks that Google Analytics is initialized 
+     *   and sets the available tracker names.
      * @return {bool} True if GA is available or false.
      */
     analytics.isOn = function() {
@@ -447,12 +348,13 @@ var stc = stc || {};
     /**
      * Sends an event to GA.
      * 
-     * @param {type} category The event category.
-     * @param {type} action The action to record.
-     * @param {type} [label] The event label.
-     * @return {undefined}
+     * @param {string} category The event category.
+     * @param {string} action The action to record.
+     * @param {string} [label] The event label.
+     * @param {function} callback The callback event if needed
+     * @return {bool} False if not needed.
      */
-    analytics.sendEvent = function (category, action, label) {
+    analytics.sendEvent = function (category, action, label, callback) {
         if(!category || !action || !label) {
             return false;
         }
@@ -462,14 +364,14 @@ var stc = stc || {};
                 eventCategory: category,
                 eventAction: action,
                 eventLabel: (label ? label : ''),
-                hitCallback: analytics.callback
+                hitCallback: (callback ? callback : '')
             });
         });        
     };
 
 }(stc.analytics = stc.analytics || {}));
 
-stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.css', function() {
+stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.min.css', function() {
     console.log('CSS ready');
     //initiate modal
     stc.modal.init();

@@ -906,8 +906,6 @@
     .stc-popup-modal .stc-popup-modal-close:before {
       font-family: "Gill Sans Infant", "Helvetica Neue", Helvetica, Arial, sans-serif, Arial, sans-serif;
       content: "\D7"; }
-    .stc-popup-modal .stc-popup-modal-close:hover:before {
-      font-weight: 800; }
   .stc-popup-modal * {
     box-sizing: border-box; }
   .stc-popup-modal .stc-popup-modal-content {

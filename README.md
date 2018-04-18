@@ -13,5 +13,4 @@ This project aims to create a shared script and stylesheet to display a geo-redi
 
 ## Built With
 - [Bootstrap CSS](http://getbootstrap.com)
-- [jQuery](https://jquery.com/)
 - [stc-ui](https://github.com/savethechildren/ui)

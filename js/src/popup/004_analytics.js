@@ -7,8 +7,8 @@ var stc = stc || {};
     analytics.trackers = [];
 
     /**
-     * Checks that Google Analyutics is initialized 
-     * and sets the avilable tracker names.
+     * Checks that Google Analytics is initialized 
+     *   and sets the available tracker names.
      * @return {bool} True if GA is available or false.
      */
     analytics.isOn = function() {
@@ -29,12 +29,13 @@ var stc = stc || {};
     /**
      * Sends an event to GA.
      * 
-     * @param {type} category The event category.
-     * @param {type} action The action to record.
-     * @param {type} [label] The event label.
-     * @return {undefined}
+     * @param {string} category The event category.
+     * @param {string} action The action to record.
+     * @param {string} [label] The event label.
+     * @param {function} callback The callback event if needed
+     * @return {bool} False if not needed.
      */
-    analytics.sendEvent = function (category, action, label) {
+    analytics.sendEvent = function (category, action, label, callback) {
         if(!category || !action || !label) {
             return false;
         }
@@ -44,7 +45,7 @@ var stc = stc || {};
                 eventCategory: category,
                 eventAction: action,
                 eventLabel: (label ? label : ''),
-                hitCallback: analytics.callback
+                hitCallback: (callback ? callback : '')
             });
         });        
     };

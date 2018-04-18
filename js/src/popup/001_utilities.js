@@ -6,8 +6,8 @@ var stc = stc || {};
      * before firing a callback function.
      * 
      * @param {object} object The object to validate..
-     * @param {type} event The event to listen for in case the object doesn't exist.
-     * @param {type} callback The callback function to execute.
+     * @param {string} event The event to listen for in case the object doesn't exist.
+     * @param {function} callback The callback function to execute.
      */
     util.waitForObjectOrEvent = function(object, event, callback) {
         if(object) {
@@ -16,17 +16,6 @@ var stc = stc || {};
         else {
             window.addEventListener(event, callback);
         }
-    };
-
-    util.loadIframe = function(url, container, callback) {
-        var ifrm = document.createElement("iframe");
-        ifrm.id = "stc-popup-iframe";
-        ifrm.setAttribute("src", url);
-        ifrm.style.width = "100%";
-        ifrm.style.height = "100%";  
-        ifrm.onload = callback;
-        container.appendChild(ifrm);
-        iFrameResize({heightCalculationMethod:'max'}, '#stc-popup-iframe');
     };
 
     util.addCSS = function (href, callback) {

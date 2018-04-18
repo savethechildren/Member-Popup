@@ -1,4 +1,4 @@
-stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.css', function() {
+stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.min.css', function() {
     console.log('CSS ready');
     //initiate modal
     stc.modal.init();

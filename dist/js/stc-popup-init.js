@@ -131,7 +131,7 @@ var stc = stc || {};
     /**
      * Sets the user language variable and cookie.
      * @param {string} [lng] The two-letter language code. 
-     * Defaults to the main browser language or the user-set value if present.
+     *   Defaults to the main browser language or the user-set value if present.
      * @return {String} The language code.
      */
     geo.setUserLanguage = function(lng) {
@@ -163,9 +163,9 @@ var stc = stc || {};
 
     geo.members = ["AU", "CA", "CH", "CO", "DE", 
         "DK", "DO", "ES", "FI", "FJ", "GB", "GT", 
-        "HK", "HN", "ID", "IN", "IS", "IT", "JO", 
-        "JP", "KR", "LT", "MX", "NL", "NO", "NZ", 
-        "PH", "RO", "SE", "SZ", "US", "ZA"
+        "HK", "HN", "ID", "IN", "IS", "IT", "JP", 
+        "KR", "LT", "MX", "NL", "NO", "NZ", "PH", 
+        "RO", "SE", "SZ", "US", "ZA"
     ];
     
     /* Initialise some variables on page load */
@@ -186,7 +186,7 @@ else {
 function init() {
     if(stc.util.getCookie('stc_popup_closed') !== '1' && stc.geo.members.indexOf(stc.geo.country) > -1 && stc.geo.country !== stc.popupOrigin) {
         var stcp = document.createElement('script'); 
-        stcp.src = 'https://misc/member-popup/dist/js/stc-popup.js';
+        stcp.src = 'https://misc/member-popup/dist/js/stc-popup.min.js';
         var s = document.getElementsByTagName('script')[0]; 
         s.parentNode.insertBefore(stcp, s);
     }
