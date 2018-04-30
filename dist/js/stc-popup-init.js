@@ -161,6 +161,9 @@ var stc = stc || {};
         return true;
     };
 
+    /**
+     * The list of recognized country Members.
+     */
     geo.members = ["AU", "CA", "CH", "CO", "DE", 
         "DK", "DO", "ES", "FI", "FJ", "GB", "GT", 
         "HK", "HN", "ID", "IN", "IS", "IT", "JP", 

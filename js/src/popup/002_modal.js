@@ -3,6 +3,9 @@ var stc = stc || {};
 
     modal.element = null;
 
+    /**
+     * Initialises the popup by creating the required DOM elements.
+     */
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
         divmodal.addEventListener("click", function(event) {
@@ -32,41 +35,56 @@ var stc = stc || {};
         modal.element = divmodal;
         
         //add inner content HTML
-        content.innerHTML = '<h1></h1>' + 
+        content.innerHTML = '<h1>Welcome to Save the Children!</h1>' + 
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay here</a>' +
-            '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Continue to {country}</a></div>';
+            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay on International site</a>' +
+            '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Go to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
         var fromMember = stc.geo.members[stc.popupOrigin];
-        content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popup']['text'] + '</p>';
+        //content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
+        var popupText = "You've come to our international site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.";
+        var popupBtn = 'Go to {country} site';
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g,toMember.title) + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = toMember['popup']['btn'];
+        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}',toMember['title']);
         document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
-    }; 
+    };
 
+    /**
+     * Shows the modal.
+     */
     modal.show = function() {
         modal.element.className += " on";
         //reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     };
 
+    /**
+     * Hides the modal.
+     */
     modal.hide = function() {
         modal.element.className = modal.element.className.replace(' on', '');
         //reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
     };
 
-    modal.close = function(event) {
+    /**
+     * Closes the modal, sets the cookie and sends a GA event if relevant.
+     */
+    modal.close = function() {
         modal.hide();
-        //todo: add cookie to remember choice for X days stc.util.setCookie('stc_popup_closed', '1', 14);
+        stc.util.setCookie('stc_popup_closed', '1', 14);
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
             stc.analytics.sendEvent('Member popup', 'Stay', stc.geo.country + ' - Stay');
         }
     };
 
+    /**
+     * Tracks an outbound link before redirecting the user to it.
+     * @param {object} e The initiating event.
+     */
     modal.trackOutbound = function(e) {
         e.preventDefault();
         if(stc.analytics && stc.analytics.isOn()) {

@@ -18,6 +18,11 @@ var stc = stc || {};
         }
     };
 
+    /**
+     * Adds a stylesheet and calls back when complete.
+     * @param {string} href The URL of the stylesheet.
+     * @param {function} callback The callback function.
+     */
     util.addCSS = function (href, callback) {
         var s = document.createElement("link");
         s.setAttribute("rel", "stylesheet");
@@ -25,8 +30,13 @@ var stc = stc || {};
         s.setAttribute("href", href);		
         s.onload = callback;
         document.getElementsByTagName("head").item(0).appendChild(s);
-    }; 
+    };
 
+    /**
+     * Adds a script and calls back when complete.
+     * @param {string} src The URL of the script.
+     * @param {function} callback The callback function.
+     */
     util.addScript = function (src, callback) {
         var s = document.createElement("script");
         s.src = src;
@@ -35,6 +45,14 @@ var stc = stc || {};
         document.body.appendChild(s);
     };
 
+    /**
+     * Creates a new DOM element.
+     * @param {string} type The element name.
+     * @param {string} className The element CSS class name.
+     * @param {string} id The elemnt ID.
+     * @param {object} attrs The element attributes.
+     * @return {object} The newly created DOM element.
+     */
     util.newDOMElement = function (type, className, id, attrs) {
         var e = document.createElement(type);
         if(className && className !== "") {
@@ -56,6 +74,9 @@ var stc = stc || {};
 
     modal.element = null;
 
+    /**
+     * Initialises the popup by creating the required DOM elements.
+     */
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
         divmodal.addEventListener("click", function(event) {
@@ -85,41 +106,56 @@ var stc = stc || {};
         modal.element = divmodal;
         
         //add inner content HTML
-        content.innerHTML = '<h1></h1>' + 
+        content.innerHTML = '<h1>Welcome to Save the Children!</h1>' + 
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay here</a>' +
-            '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Continue to {country}</a></div>';
+            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay on International site</a>' +
+            '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Go to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
         var fromMember = stc.geo.members[stc.popupOrigin];
-        content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + toMember['popup']['text'] + '</p>';
+        //content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
+        var popupText = "You've come to our international site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.";
+        var popupBtn = 'Go to {country} site';
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g,toMember.title) + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = toMember['popup']['btn'];
+        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}',toMember['title']);
         document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
-    }; 
+    };
 
+    /**
+     * Shows the modal.
+     */
     modal.show = function() {
         modal.element.className += " on";
         //reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     };
 
+    /**
+     * Hides the modal.
+     */
     modal.hide = function() {
         modal.element.className = modal.element.className.replace(' on', '');
         //reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
     };
 
-    modal.close = function(event) {
+    /**
+     * Closes the modal, sets the cookie and sends a GA event if relevant.
+     */
+    modal.close = function() {
         modal.hide();
-        //todo: add cookie to remember choice for X days stc.util.setCookie('stc_popup_closed', '1', 14);
+        stc.util.setCookie('stc_popup_closed', '1', 14);
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
             stc.analytics.sendEvent('Member popup', 'Stay', stc.geo.country + ' - Stay');
         }
     };
 
+    /**
+     * Tracks an outbound link before redirecting the user to it.
+     * @param {object} e The initiating event.
+     */
     modal.trackOutbound = function(e) {
         e.preventDefault();
         if(stc.analytics && stc.analytics.isOn()) {
@@ -138,179 +174,135 @@ var stc = stc || {};
 
 var stc = stc || {};
 (function(geo){
+    /**
+     * The list of SC Member countries and their attributes.
+     */
     geo.members = {
         "AU": {
-            "iso": "AU",
             "title": "Australia",
             "url": "http://www.savethechildren.org.au"
         },
         "CA": {
-            "iso": "CA",
             "title": "Canada",
             "url": "http://www.savethechildren.ca"
         },
         "CO": {
-            "iso": "CO",
             "title": "Colombia",
             "url": "https://www.savethechildren.org.co"
         },
         "DK": {
-            "iso": "DK",
             "title": "Denmark",
             "url": "http://www.redbarnet.dk"
         },
         "DO": {
-            "iso": "DO",
             "title": "Dominican Republic",
             "url": "http://savethechildren.org.do"
         },
         "FJ": {
-            "iso": "FJ",
             "title": "Fiji",
             "url": "http://www.savethechildren.org.fj"
         },
         "FI": {
-            "iso": "FI",
             "title": "Finland",
             "url": "http://www.pelastakaalapset.fi"
         },
         "DE": {
-            "iso": "DE",
             "title": "Germany",
-            "popup": {
-                "title": "Welcome, visitor from Germany",
-                "text": "You've come to our international website, which contains information about our global programs. We also have a website for Save the Children Germany, where you can sponsor a child and find other ways to give.",
-                "btn": "Continue to Germany"
-            },
             "url": "http://www.savethechildren.de"
         },
         "GT": {
-            "iso": "GT",
             "title": "Guatemala",
             "url": "http://www.savethechildren.org.gt"
         },
         "HN": {
-            "iso": "HN",
             "title": "Honduras",
             "url": "http://www.savethechildrenhonduras.org"
         },
         "HK": {
-            "iso": "HK",
             "title": "Hong Kong",
             "url": "http://www.savethechildren.org.hk"
         },
         "IS": {
-            "iso": "IS",
             "title": "Iceland",
             "url": "http://www.barnaheill.is"
         },
         "IN": {
-            "iso": "IN",
             "title": "India",
             "url": "http://www.savethechildren.in"
         },
         "ID": {
-            "iso": "ID",
             "title": "Indonesia",
             "url": "https://www.stc.or.id"
         },
         "IT": {
-            "iso": "IT",
             "title": "Italy",
             "url": "http://www.savethechildren.it"
         },
         "JP": {
-            "iso": "JP",
             "title": "Japan",
             "url": "http://www.savechildren.or.jp"
         },
         "KR": {
-            "iso": "KR",
             "title": "Korea",
             "url": "http://www.sc.or.kr"
         },
         "LT": {
-            "iso": "LT",
             "title": "Lithuania",
             "url": "https://www.gelbekitvaikus.lt",
         },
         "MX": {
-            "iso": "MX",
             "title": "Mexico",
             "url": "https://www.savethechildren.mx"
         },
         "NL": {
-            "iso": "NL",
             "title": "Netherlands",
             "url": "https://www.savethechildren.nl"
         },
         "NZ": {
-            "iso": "NZ",
             "title": "New Zealand",
             "url": "http://www.savethechildren.org.nz"
         },
         "NO": {
-            "iso": "NO",
             "title": "Norway",
             "url": "http://www.reddbarna.no"
         },
         "PH": {
-            "iso": "PH",
             "title": "Philippines",
             "url": "http://www.savethechildren.org.ph"
         },
         "RO": {
-            "iso": "RO",
             "title": "Romania",
             "url": "http://www.salvaticopiii.ro"
         },
         "ZA": {
-            "iso": "ZA",
             "title": "South Africa",
             "url": "https://www.savethechildren.org.za"
         },
         "ES": {
-            "iso": "ES",
             "title": "Spain",
             "url": "https://www.savethechildren.es"
         },
         "SZ": {
-            "iso": "SZ",
             "title": "Swaziland",
             "url": "http://www.savethechildren.org.sz"
         },
         "SE": {
-            "iso": "SE",
             "title": "Sweden",
             "url": "https://www.raddabarnen.se"
         },
         "CH": {
-            "iso": "CH",
             "title": "Switzerland",
             "url": "https://www.savethechildren.ch"
         },
         "GB": {
-            "iso": "GB",
-            "title": "United Kingdom",
-            "popup": {
-                "title": "Welcome, visitor from the UK",
-                "text": "You've come to our international website which contains information about our global programmes. We also have a website for Save the Children UK where you can find information on fundraising, volunteering and other ways to give.",
-                "btn": "Continue to the UK"
-            },
+            "title": "UK",
             "url": "https://www.savethechildren.org.uk"
         },
         "US": {
-            "iso": "US",
-            "title": "United States",
-            "popup": {
-                "title": "Welcome, visitor from the U.S.",
-                "text": "You've come to our international website, which contains information about our global programs. We also have a brand new U.S. website, where you can sponsor a child and find other ways to give.",
-                "btn": "Continue to the U.S."
-            },
+            "title": "U.S.",
             "url": "https://www.savethechildren.org"
         },
         "XX": {
-            "iso": "XX",
             "title": "International",
             "url": "https://www.savethechildren.net"
         }
