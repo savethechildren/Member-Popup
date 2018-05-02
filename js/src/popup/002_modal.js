@@ -41,13 +41,11 @@ var stc = stc || {};
             '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Go to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
-        var fromMember = stc.geo.members[stc.popupOrigin];
-        //content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
         var popupText = "You've come to our international site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.";
         var popupBtn = 'Go to {country} site';
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g,toMember.title) + '</p>';
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g, toMember.title) + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}',toMember['title']);
+        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}', toMember.title);
         document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
     };
 

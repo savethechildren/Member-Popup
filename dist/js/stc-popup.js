@@ -62,7 +62,9 @@ var stc = stc || {};
             e.id = id;
         }
         if(typeof(attrs) === "object") {
-            e.attributes = attrs;
+            Object.keys(attrs).forEach(function(key) {
+                e.setAttribute(key, attrs[key]);
+            });
         }
         return e;
     };
@@ -112,13 +114,11 @@ var stc = stc || {};
             '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Go to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
-        var fromMember = stc.geo.members[stc.popupOrigin];
-        //content.getElementsByTagName('h1')[0].innerHTML = toMember['popup']['title'];
         var popupText = "You've come to our international site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.";
         var popupBtn = 'Go to {country} site';
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g,toMember.title) + '</p>';
+        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g, toMember.title) + '</p>';
         document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}',toMember['title']);
+        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}', toMember.title);
         document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
     };
 
@@ -343,7 +343,7 @@ var stc = stc || {};
      * @param {string} category The event category.
      * @param {string} action The action to record.
      * @param {string} [label] The event label.
-     * @param {function} callback The callback event if needed
+     * @param {function} [callback] The callback event if needed.
      * @return {bool} False if not needed.
      */
     analytics.sendEvent = function (category, action, label, callback) {
@@ -363,8 +363,7 @@ var stc = stc || {};
 
 }(stc.analytics = stc.analytics || {}));
 
-stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.min.css', function() {
-    console.log('CSS ready');
+stc.util.addCSS(stc.modal.baseURL + '/dist/css/stc-popup.min.css', function() {
     //initiate modal
     stc.modal.init();
     
@@ -375,12 +374,10 @@ stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.min.css', function
                 families: ['Gill Sans Infant', 'Trade Gothic LT'],
             },
             active: function() {
-                console.log('fonts ready');
                 stc.modal.show(); 
             },
             //in case of timeout or other error still show popup
             inactive: function() {
-                console.log('error loading fonts');
                 stc.modal.show(); 
             }
         });

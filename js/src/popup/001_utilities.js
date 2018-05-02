@@ -62,7 +62,9 @@ var stc = stc || {};
             e.id = id;
         }
         if(typeof(attrs) === "object") {
-            e.attributes = attrs;
+            Object.keys(attrs).forEach(function(key) {
+                e.setAttribute(key, attrs[key]);
+            });
         }
         return e;
     };

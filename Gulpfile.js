@@ -103,7 +103,7 @@ gulp.task('cssmin', function() {
 /**
  * QUnit tests
  */
-gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
+gulp.task('test', function() {
     return gulp.src(paths.tests + 'index.html')
         .pipe(qunit());
 });
@@ -112,6 +112,6 @@ gulp.task('test', ['cssmin', 'concat', 'uglify'], function() {
 /**
  * Build scripts
  */
-gulp.task("build", ['cssmin']);
+gulp.task("build", ['concatInit','concatPopup','sass','cssmin','eslint','test']);
 
 gulp.task('default', ['cssmin']);

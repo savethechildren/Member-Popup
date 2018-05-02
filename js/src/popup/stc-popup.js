@@ -1,5 +1,4 @@
-stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.min.css', function() {
-    console.log('CSS ready');
+stc.util.addCSS(stc.modal.baseURL + '/dist/css/stc-popup.min.css', function() {
     //initiate modal
     stc.modal.init();
     
@@ -10,12 +9,10 @@ stc.util.addCSS('https://misc/member-popup/dist/css/stc-popup.min.css', function
                 families: ['Gill Sans Infant', 'Trade Gothic LT'],
             },
             active: function() {
-                console.log('fonts ready');
                 stc.modal.show(); 
             },
             //in case of timeout or other error still show popup
             inactive: function() {
-                console.log('error loading fonts');
                 stc.modal.show(); 
             }
         });

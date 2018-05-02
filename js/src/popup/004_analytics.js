@@ -32,7 +32,7 @@ var stc = stc || {};
      * @param {string} category The event category.
      * @param {string} action The action to record.
      * @param {string} [label] The event label.
-     * @param {function} callback The callback event if needed
+     * @param {function} [callback] The callback event if needed.
      * @return {bool} False if not needed.
      */
     analytics.sendEvent = function (category, action, label, callback) {
