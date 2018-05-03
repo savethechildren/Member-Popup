@@ -8,6 +8,7 @@ paths.sass =  "scss/**/*.scss";
 paths.js =  "dist/js/";
 paths.jsInit = "js/src/init/**/*.js";
 paths.jsPopup = "js/src/popup/**/*.js";
+paths.jsMembers = "js/src/members/**/*.js";
 paths.jsSrc = "js/src/popup.js";
 paths.stcuiSrc = "js/src/stc-ui/**/*.js";
 paths.tests = "js/tests/";
@@ -43,15 +44,12 @@ gulp.task("concatPopup", function() {
 });
 
 /**
- * Uglify main javascript file
+ * Uglify member i18n files
  */
-gulp.task("uglify", function() {
-    return gulp.src(paths.jsSrc)
-        .pipe(concat('popup.js'))
-        .pipe(gulp.dest(paths.js))
-        .pipe(rename('popup.min.js'))
+gulp.task("uglifyMembers", function() {
+    return gulp.src(paths.jsMembers)
         .pipe(uglify())
-        .pipe(gulp.dest(paths.js));
+        .pipe(gulp.dest(paths.js + 'members/'));
 });
 
 /**
@@ -112,6 +110,6 @@ gulp.task('test', function() {
 /**
  * Build scripts
  */
-gulp.task("build", ['concatInit','concatPopup','sass','cssmin','eslint','test']);
+gulp.task("build", ['concatInit','concatPopup','sass','cssmin','eslint','test','uglifyMembers']);
 
 gulp.task('default', ['cssmin']);

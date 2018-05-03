@@ -99,27 +99,33 @@ var stc = stc || {};
             if (e.keyCode === 27) {
                 modal.close();
             }
-        }, false); 
+        }, false);
 
         innerModal.appendChild(content);
         divmodal.appendChild(innerModal);
         document.getElementsByTagName('body')[0].appendChild(divmodal);
 
         modal.element = divmodal;
-        
-        //add inner content HTML
-        content.innerHTML = '<h1>Welcome to Save the Children!</h1>' + 
-            '<div class="stc-popup-modal-content-body" id="stc-popup-content"></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">Stay on International site</a>' +
-            '<a href="#" class="btn btn-primary btn-lg" id="stc-popup-continue">Go to {country}</a></div>';
 
         var toMember = stc.geo.members[stc.geo.country];
-        var popupText = "You've come to our international site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.";
-        var popupBtn = 'Go to {country} site';
-        document.getElementById('stc-popup-content').innerHTML = '<p>' + popupText.replace(/\{country\}/g, toMember.title) + '</p>';
-        document.getElementById('stc-popup-continue').setAttribute('href', toMember['url']);
-        document.getElementById('stc-popup-continue').text = popupBtn.replace('{country}', toMember.title);
-        document.getElementById('stc-popup-continue').addEventListener('click', modal.trackOutbound);
+        var fromMember = stc.geo.members[stc.popupOrigin];
+
+        //load correct i18n data
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] : stc.modal.i18n.default;
+        var toCountry = lng.countries[stc.geo.country];
+        var fromCountry = lng.countries[stc.popupOrigin];
+
+        var popupText = lng.text;
+        var goBtn = lng.goBtn;
+        var stayBtn = lng.stayBtn;
+
+        
+        
+        //add inner content HTML
+        content.innerHTML = '<h1>' + lng.title + '</h1>' + 
+            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, toCountry) + '</p></div>' +
+            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">' + stayBtn + '</a>' +
+            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', toCountry) + '</a></div>';
     };
 
     /**
@@ -363,27 +369,30 @@ var stc = stc || {};
 
 }(stc.analytics = stc.analytics || {}));
 
-stc.util.addCSS(stc.modal.baseURL + '/dist/css/stc-popup.min.css', function() {
-    //initiate modal
-    stc.modal.init();
-    
-    //wait for web fonts to be loaded before displaying the popup
-    if(typeof WebFont !== 'undefined') {
-        WebFont.load({
-            custom: {
-                families: ['Gill Sans Infant', 'Trade Gothic LT'],
-            },
-            active: function() {
-                stc.modal.show(); 
-            },
-            //in case of timeout or other error still show popup
-            inactive: function() {
-                stc.modal.show(); 
-            }
-        });
-    } else {
-        stc.modal.show();
-    }
+stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css', function() {
+    //load relevant member language file
+    stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js', function() {
+        //initiate modal
+        stc.modal.init();
+
+        //wait for web fonts to be loaded before displaying the popup
+        if(typeof WebFont !== 'undefined') {
+            WebFont.load({
+                custom: {
+                    families: ['Gill Sans Infant', 'Trade Gothic LT'],
+                },
+                active: function() {
+                    stc.modal.show(); 
+                },
+                //in case of timeout or other error still show popup
+                inactive: function() {
+                    stc.modal.show(); 
+                }
+            });
+        } else {
+            stc.modal.show();
+        }
+    });
 
 });
 

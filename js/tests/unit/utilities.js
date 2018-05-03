@@ -1,5 +1,5 @@
 jQuery(function ($) {
-    QUnit.test('should successfully create a cookie', function (assert) {
+    QUnit.test('should successfully create and read a cookie', function (assert) {
         assert.expect(1);
         //set a test cookie with a random value
         var cookieValue = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
