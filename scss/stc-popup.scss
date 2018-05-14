@@ -39,6 +39,7 @@
     visibility: visible;
   }
   .stc-popup-modal-close {
+    z-index: 2;
     top: 0;
     right: 10px;
     position: absolute;
@@ -50,7 +51,29 @@
       font-family: $font-family-base,Arial,sans-serif;
       content: "\D7";
     }
-  } 
+  }
+  .stc-popup-modal-gradient-box {
+    z-index: 1;
+    background: linear-gradient(
+      to bottom right, 
+      #DA291C,
+      #761706
+    );
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    &:before {
+      content: " ";
+      width: calc(100% - 30px);
+      height: 100%;
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      background: #fff;
+    }
+  }
   * {
     box-sizing: border-box;
   }
@@ -59,6 +82,8 @@
     text-align: center;
     font-size: 18px;
     line-height: 1.3em;
+    z-index: 2;
+    position: relative;
     h1 {
       font-size: 30px;
       margin-bottom: 1em;

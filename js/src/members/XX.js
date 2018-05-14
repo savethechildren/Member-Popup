@@ -1,8 +1,8 @@
 stc.modal.i18n = {
     "default": {
-        "title": "Welcome to Save the Children!",
-        "text": "You've come to our international site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.",
-        "stayBtn": "Stay on International site",
+        "title": "Welcome to Save the Children International!",
+        "text": "Here you'll find information on our global organization and the work we do for children around the world. You can also visit Save the Children {country} to learn more about what we do and support <nobr>our work</nobr>.",
+        "stayBtn": "Stay on this site",
         "goBtn": "Go to {country} site",
         "countries": {
             "AU": "Australia",

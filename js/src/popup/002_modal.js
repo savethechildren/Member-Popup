@@ -16,6 +16,8 @@ var stc = stc || {};
         }, false);
         var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal' );
         var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close');
+        var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
+        innerModal.appendChild(gradientBox);
         closeBT.addEventListener("click", modal.close, false);
         closeBT.setAttribute("title", "Close");
         innerModal.appendChild(closeBT);
