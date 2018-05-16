@@ -55,9 +55,9 @@
   .stc-popup-modal-gradient-box {
     z-index: 1;
     background: linear-gradient(
-      to bottom right, 
-      #DA291C,
-      #761706
+      to bottom right,
+      $stc-red 50%,
+      $stc-red-gradient
     );
     position: absolute;
     bottom: 0;

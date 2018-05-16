@@ -124,7 +124,7 @@ var stc = stc || {};
         //add inner content HTML
         content.innerHTML = '<h1>' + lng.title + '</h1>' + 
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, toCountry) + '</p></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close();" class="btn btn-negative btn-lg" id="stc-popup-stay">' + stayBtn + '</a>' +
+            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close(\'Stay\');" class="btn btn-negative btn-lg" id="stc-popup-stay">' + stayBtn + '</a>' +
             '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', toCountry) + '</a></div>';
     };
 
@@ -148,13 +148,15 @@ var stc = stc || {};
 
     /**
      * Closes the modal, sets the cookie and sends a GA event if relevant.
+     * @param {string} [e] The name of the event to override the default 'Close' (optional).
      */
-    modal.close = function() {
+    modal.close = function(e) {
         modal.hide();
         stc.util.setCookie('stc_popup_closed', '1', 14);
+        var eventName = typeof(e) === "string" ? e : 'Close';
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', 'Stay', stc.geo.country + ' - Stay');
+            stc.analytics.sendEvent('Member popup', eventName, stc.geo.country + ' - ' + eventName);
         }
     };
 
