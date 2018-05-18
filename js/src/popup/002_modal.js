@@ -53,6 +53,8 @@ var stc = stc || {};
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, toCountry) + '</p></div>' +
             '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close(\'Stay\');" class="btn btn-negative btn-lg" id="stc-popup-stay">' + stayBtn + '</a>' +
             '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', toCountry) + '</a></div>';
+
+        document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound); 
     };
 
     /**
