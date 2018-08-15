@@ -5,52 +5,12 @@
     "tasks": [
         {
             "type": "gulp",
-            "task": "scripts:watch",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "concat",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "uglify",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "concatInit",
+            "task": "uglifyMembers",
             "problemMatcher": []
         },
         {
             "type": "gulp",
             "task": "sass:watch",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "sass",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "cssmin",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "concatPopup",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "build",
-            "problemMatcher": []
-        },
-        {
-            "type": "gulp",
-            "task": "uglifyMembers",
             "problemMatcher": []
         }
     ]

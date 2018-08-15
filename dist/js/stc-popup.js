@@ -112,13 +112,13 @@ var stc = stc || {};
         var picture = stc.util.newDOMElement('picture','');
         var img = stc.util.newDOMElement('img','img-responsive');
         img.setAttribute("alt", "Children playing with water");
-        img.setAttribute("src", "https://www.savethechildren.nl/getattachment/Wat-doen-we/Wat-bereiken-we/ontwikkelingshulp-water.jpg.aspx?lang=nl-NL&width=1366&height=700&ext=.jpg");
+        img.setAttribute("src", stc.modal.baseURL + "/img/children_dsk.jpg");
         var src1 = stc.util.newDOMElement('source','');
         src1.setAttribute("media", "(max-width: 767px)");
-        src1.setAttribute("srcset", "https://www.savethechildren.nl/getattachment/Wat-doen-we/Wat-bereiken-we/ontwikkelingshulp-water.jpg.aspx?lang=nl-NL&width=600&height=500&ext=.jpg");
+        src1.setAttribute("srcset", stc.modal.baseURL + "/img/children_mob.jpg");
         var src2 = stc.util.newDOMElement('source','');
         src2.setAttribute("media", "(min-width: 768px)");
-        src2.setAttribute("srcset", "https://www.savethechildren.nl/getattachment/Wat-doen-we/Wat-bereiken-we/ontwikkelingshulp-water.jpg.aspx?lang=nl-NL&width=1366height=700&ext=.jpg");
+        src2.setAttribute("srcset", stc.modal.baseURL + "/img/children_dsk.jpg");
         
         picture.appendChild(src1);
         picture.appendChild(src2);
