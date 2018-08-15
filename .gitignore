@@ -1,4 +1,5 @@
 .sass-cache/
+.vscode/
 nbproject/
 node_modules/
 bower_components/

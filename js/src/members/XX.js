@@ -1,9 +1,10 @@
 stc.modal.i18n = {
     "default": {
-        "title": "Welcome to Save the Children International!",
-        "text": "Here you'll find information on our global organization and the work we do for children around the world. You can also visit Save the Children {country} to learn more about what we do and support <nobr>our work</nobr>.",
-        "stayBtn": "Stay on this site",
-        "goBtn": "Go to {country} site",
+        "title": "Welcome to <nobr>Save the Children</nobr>!",
+        "text": "It looks like you're in {country}.",
+        "stayText": "Or <a href=\"javascript:stc.modal.close('Stay');\">find additional information</a> on our global organization and the work that we do.",
+        "goBtn": "Continue to {country}",
+        "prefix": "the ",
         "countries": {
             "AU": "Australia",
             "CA": "Canada",
@@ -24,10 +25,10 @@ stc.modal.i18n = {
             "KR": "Korea",
             "LT": "Lithuania",
             "MX": "Mexico",
-            "NL": "Netherlands",
+            "NL": "the Netherlands",
             "NZ": "New Zealand",
             "NO": "Norway",
-            "PH": "Philippines",
+            "PH": "the Philippines",
             "RO": "Romania",
             "ZA": "South Africa",
             "ES": "Spain",

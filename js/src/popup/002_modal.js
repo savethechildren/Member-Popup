@@ -8,28 +8,52 @@ var stc = stc || {};
      */
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
-        divmodal.addEventListener("click", function(event) {
-            if(event.currentTarget !== event.target) {
-                return false;
-            }
-            modal.close();
-        }, false);
+        if(!stc.popupNoClose) {
+            divmodal.addEventListener("click", function(event) {
+                if(event.currentTarget !== event.target) {
+                    return false;
+                }
+                modal.close();
+            }, false);
+        }
         var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal' );
         var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close');
         var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
         innerModal.appendChild(gradientBox);
         closeBT.addEventListener("click", modal.close, false);
         closeBT.setAttribute("title", "Close");
-        innerModal.appendChild(closeBT);
+        if(!stc.popupNoClose) {
+            innerModal.appendChild(closeBT);
+        }
         var content = stc.util.newDOMElement('div','stc-popup-modal-content');
 
         //close modal on esc key
-        window.addEventListener('keyup', function(e) {
-            if (e.keyCode === 27) {
-                modal.close();
-            }
-        }, false);
+        if(!stc.popupNoClose) {
+            window.addEventListener('keyup', function(e) {
+                if (e.keyCode === 27) {
+                    modal.close();
+                }
+            }, false);
+        }
 
+        var picture = stc.util.newDOMElement('picture','');
+        var img = stc.util.newDOMElement('img','img-responsive');
+        img.setAttribute("alt", "Children playing with water");
+        img.setAttribute("src", "https://www.savethechildren.nl/getattachment/Wat-doen-we/Wat-bereiken-we/ontwikkelingshulp-water.jpg.aspx?lang=nl-NL&width=1366&height=700&ext=.jpg");
+        var src1 = stc.util.newDOMElement('source','');
+        src1.setAttribute("media", "(max-width: 767px)");
+        src1.setAttribute("srcset", "https://www.savethechildren.nl/getattachment/Wat-doen-we/Wat-bereiken-we/ontwikkelingshulp-water.jpg.aspx?lang=nl-NL&width=600&height=500&ext=.jpg");
+        var src2 = stc.util.newDOMElement('source','');
+        src2.setAttribute("media", "(min-width: 768px)");
+        src2.setAttribute("srcset", "https://www.savethechildren.nl/getattachment/Wat-doen-we/Wat-bereiken-we/ontwikkelingshulp-water.jpg.aspx?lang=nl-NL&width=1366height=700&ext=.jpg");
+        
+        picture.appendChild(src1);
+        picture.appendChild(src2);
+        picture.appendChild(img);
+        
+
+
+        innerModal.appendChild(picture);
         innerModal.appendChild(content);
         divmodal.appendChild(innerModal);
         document.getElementsByTagName('body')[0].appendChild(divmodal);
@@ -45,14 +69,16 @@ var stc = stc || {};
         var fromCountry = lng.countries[stc.popupOrigin];
 
         var popupText = lng.text;
+        var stayText = lng.stayText;
         var goBtn = lng.goBtn;
         var stayBtn = lng.stayBtn;
-        
+
         //add inner content HTML
         content.innerHTML = '<h1>' + lng.title + '</h1>' + 
-            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, toCountry) + '</p></div>' +
-            '<div class="stc-popup-modal-actions"><a href="javascript:stc.modal.close(\'Stay\');" class="btn btn-negative btn-lg" id="stc-popup-stay">' + stayBtn + '</a>' +
-            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', toCountry) + '</a></div>';
+            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, stc.geo.prefix(toCountry)) + '</p>' +
+            '<p>' +
+            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>' +
+            '<p>' + stayText + '</p></div>';
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound); 
     };
@@ -81,7 +107,7 @@ var stc = stc || {};
      */
     modal.close = function(e) {
         modal.hide();
-        stc.util.setCookie('stc_popup_closed', '1', 14);
+        stc.util.setCookie('stc_popup_closed', '1', 14, stc.util.getDomain(window.location.hostname));
         var eventName = typeof(e) === "string" ? e : 'Close';
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {

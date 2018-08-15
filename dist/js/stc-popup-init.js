@@ -51,6 +51,11 @@ var stc = stc || {};
         element.dispatchEvent(newEvent);
     };
 
+    /**
+     * Retrieves JSON from a web service URL using JSON with padding.
+     * @param {string} src The webservice URL.
+     * @param {object} options The optional options.
+     */
     util.jsonp = function(src, options) {
         var callback_name = options.callbackName || 'callback',
             on_success = options.onSuccess || function(){},
@@ -73,6 +78,30 @@ var stc = stc || {};
         script.src = src;
     
         document.getElementsByTagName('head')[0].appendChild(script);
+    };
+
+    /**
+     * Gets the root domain name for a given hostname.
+     * @param {string} hostName The full hostname to get the root of.
+     * @return {string} The root domain.
+     */
+    util.getDomain = function(hostName){
+        var domain = hostName;
+        
+        if (hostName !== null) {
+            var parts = hostName.split('.').reverse();
+            
+            if (parts !== null && parts.length > 1) {
+                domain = parts[1] + '.' + parts[0];
+                    
+                //add exceptions for or(g).xx
+                if (hostName.toLowerCase().match(/\.org?\.[a-z][a-z]$/) && parts.length > 2) {
+                    domain = parts[2] + '.' + domain;
+                }
+            }
+        }
+        
+        return domain;
     };
     
 }(stc.util = stc.util || {}));
@@ -111,7 +140,7 @@ var stc = stc || {};
                 callbackName: 'setCountry',
                 onSuccess: function(json){
                     stc.geo.country = json.country_code;
-                    stc.util.setCookie('stc_country', stc.geo.country, 2);
+                    stc.util.setCookie('stc_country', stc.geo.country, 14, stc.util.getDomain(window.location.hostname));
                     stc.util.createEvent('countryIsSet');
                 },
                 onTimeout: function(){
@@ -141,26 +170,11 @@ var stc = stc || {};
         if(lng.length < 2) {
             return false;
         }
-        stc.util.setCookie('stc_user_language', lng, 2);
+        stc.util.setCookie('stc_user_language', lng, 14, stc.util.getDomain(window.location.hostname));
         geo.userLanguage = lng;
         return lng;
     };
     
-    /**
-     * Sets the user country variable and cookie.
-     * @param {string} iso The two-letter country code
-     * @return {Boolean} True if country was set or false.
-     */
-    geo.setUserCountry = function(iso) {
-        if(iso.length !== 2) {
-            return false;
-        }
-        geo.country = iso.toUpperCase();
-        stc.util.setCookie('stc_country', stc.geo.country, 2);
-        stc.util.createEvent('countryIsSet');
-        return true;
-    };
-
     /**
      * The list of recognized country Members.
      */

@@ -254,7 +254,7 @@
     box-sizing: border-box; }
   .stc-popup-modal html {
     font-size: 10px;
-    -webkit-tap-highlight-color: transparent; }
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
   .stc-popup-modal body {
     font-family: "Gill Sans Infant", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -877,6 +877,148 @@
   .stc-popup-modal input[type="reset"].btn-block,
   .stc-popup-modal input[type="button"].btn-block {
     width: 100%; }
+
+@-ms-viewport {
+  width: device-width; }
+  .stc-popup-modal .visible-xs {
+    display: none !important; }
+  .stc-popup-modal .visible-sm {
+    display: none !important; }
+  .stc-popup-modal .visible-md {
+    display: none !important; }
+  .stc-popup-modal .visible-lg {
+    display: none !important; }
+  .stc-popup-modal .visible-xs-block,
+  .stc-popup-modal .visible-xs-inline,
+  .stc-popup-modal .visible-xs-inline-block,
+  .stc-popup-modal .visible-sm-block,
+  .stc-popup-modal .visible-sm-inline,
+  .stc-popup-modal .visible-sm-inline-block,
+  .stc-popup-modal .visible-md-block,
+  .stc-popup-modal .visible-md-inline,
+  .stc-popup-modal .visible-md-inline-block,
+  .stc-popup-modal .visible-lg-block,
+  .stc-popup-modal .visible-lg-inline,
+  .stc-popup-modal .visible-lg-inline-block {
+    display: none !important; }
+  @media (max-width: 767px) {
+    .stc-popup-modal .visible-xs {
+      display: block !important; }
+    .stc-popup-modal table.visible-xs {
+      display: table !important; }
+    .stc-popup-modal tr.visible-xs {
+      display: table-row !important; }
+    .stc-popup-modal th.visible-xs,
+    .stc-popup-modal td.visible-xs {
+      display: table-cell !important; } }
+  @media (max-width: 767px) {
+    .stc-popup-modal .visible-xs-block {
+      display: block !important; } }
+  @media (max-width: 767px) {
+    .stc-popup-modal .visible-xs-inline {
+      display: inline !important; } }
+  @media (max-width: 767px) {
+    .stc-popup-modal .visible-xs-inline-block {
+      display: inline-block !important; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .stc-popup-modal .visible-sm {
+      display: block !important; }
+    .stc-popup-modal table.visible-sm {
+      display: table !important; }
+    .stc-popup-modal tr.visible-sm {
+      display: table-row !important; }
+    .stc-popup-modal th.visible-sm,
+    .stc-popup-modal td.visible-sm {
+      display: table-cell !important; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .stc-popup-modal .visible-sm-block {
+      display: block !important; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .stc-popup-modal .visible-sm-inline {
+      display: inline !important; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .stc-popup-modal .visible-sm-inline-block {
+      display: inline-block !important; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .stc-popup-modal .visible-md {
+      display: block !important; }
+    .stc-popup-modal table.visible-md {
+      display: table !important; }
+    .stc-popup-modal tr.visible-md {
+      display: table-row !important; }
+    .stc-popup-modal th.visible-md,
+    .stc-popup-modal td.visible-md {
+      display: table-cell !important; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .stc-popup-modal .visible-md-block {
+      display: block !important; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .stc-popup-modal .visible-md-inline {
+      display: inline !important; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .stc-popup-modal .visible-md-inline-block {
+      display: inline-block !important; } }
+  @media (min-width: 1200px) {
+    .stc-popup-modal .visible-lg {
+      display: block !important; }
+    .stc-popup-modal table.visible-lg {
+      display: table !important; }
+    .stc-popup-modal tr.visible-lg {
+      display: table-row !important; }
+    .stc-popup-modal th.visible-lg,
+    .stc-popup-modal td.visible-lg {
+      display: table-cell !important; } }
+  @media (min-width: 1200px) {
+    .stc-popup-modal .visible-lg-block {
+      display: block !important; } }
+  @media (min-width: 1200px) {
+    .stc-popup-modal .visible-lg-inline {
+      display: inline !important; } }
+  @media (min-width: 1200px) {
+    .stc-popup-modal .visible-lg-inline-block {
+      display: inline-block !important; } }
+  @media (max-width: 767px) {
+    .stc-popup-modal .hidden-xs {
+      display: none !important; } }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .stc-popup-modal .hidden-sm {
+      display: none !important; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .stc-popup-modal .hidden-md {
+      display: none !important; } }
+  @media (min-width: 1200px) {
+    .stc-popup-modal .hidden-lg {
+      display: none !important; } }
+  .stc-popup-modal .visible-print {
+    display: none !important; }
+  @media print {
+    .stc-popup-modal .visible-print {
+      display: block !important; }
+    .stc-popup-modal table.visible-print {
+      display: table !important; }
+    .stc-popup-modal tr.visible-print {
+      display: table-row !important; }
+    .stc-popup-modal th.visible-print,
+    .stc-popup-modal td.visible-print {
+      display: table-cell !important; } }
+  .stc-popup-modal .visible-print-block {
+    display: none !important; }
+    @media print {
+      .stc-popup-modal .visible-print-block {
+        display: block !important; } }
+  .stc-popup-modal .visible-print-inline {
+    display: none !important; }
+    @media print {
+      .stc-popup-modal .visible-print-inline {
+        display: inline !important; } }
+  .stc-popup-modal .visible-print-inline-block {
+    display: none !important; }
+    @media print {
+      .stc-popup-modal .visible-print-inline-block {
+        display: inline-block !important; } }
+  @media print {
+    .stc-popup-modal .hidden-print {
+      display: none !important; } }
   .stc-popup-modal h1 {
     font-family: "Trade Gothic LT", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
@@ -938,7 +1080,7 @@
         color: #DA291C; }
   .stc-popup-modal .stc-popup-modal-inner {
     overflow: hidden;
-    padding: 40px;
+    padding: 15px;
     position: relative;
     background: #fff;
     color: #222221;
@@ -951,6 +1093,19 @@
         height: auto;
         min-height: auto;
         margin: 10% auto; } }
+    .stc-popup-modal .stc-popup-modal-inner .img-responsive {
+      position: relative;
+      z-index: 3; }
+      @media screen and (max-device-width: 1023px) and (orientation: landscape) {
+        .stc-popup-modal .stc-popup-modal-inner .img-responsive {
+          display: none; } }
+      .stc-popup-modal .stc-popup-modal-inner .img-responsive img {
+        width: 100%;
+        height: auto; }
+  .stc-popup-modal .stc-popup-modal-content {
+    padding: 0 25px; }
+    .stc-popup-modal .stc-popup-modal-content p {
+      margin-bottom: 18px; }
   .stc-popup-modal.on {
     opacity: 1;
     visibility: visible; }
@@ -970,7 +1125,7 @@
     z-index: 1;
     background: linear-gradient(to bottom right, #DA291C 50%, #761706);
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 30%; }
@@ -979,7 +1134,7 @@
       width: calc(100% - 30px);
       height: 100%;
       position: absolute;
-      bottom: 15px;
+      top: 15px;
       left: 15px;
       background: #fff; }
   .stc-popup-modal * {
@@ -993,20 +1148,22 @@
     position: relative; }
     .stc-popup-modal .stc-popup-modal-content h1 {
       font-size: 30px;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
       text-transform: none; }
     .stc-popup-modal .stc-popup-modal-content .stc-popup-modal-actions {
-      margin-top: 2em; }
+      margin-top: 1em; }
       .stc-popup-modal .stc-popup-modal-content .stc-popup-modal-actions a.btn {
         margin: 0.5em; }
     .stc-popup-modal .stc-popup-modal-content p {
       line-height: 1.3em; }
-  .stc-popup-modal .btn.btn-negative {
-    border-color: #DA291C;
-    box-shadow: inset 0 0 0 1px #DA291C;
-    background-color: #fff; }
-    .stc-popup-modal .btn.btn-negative:hover, .stc-popup-modal .btn.btn-negative:focus {
-      border-color: #ad2116;
-      box-shadow: inset 0 0 0 1px #ad2116;
-      color: #9A3324;
+  .stc-popup-modal .btn {
+    white-space: normal; }
+    .stc-popup-modal .btn.btn-negative {
+      border-color: #DA291C;
+      box-shadow: inset 0 0 0 1px #DA291C;
       background-color: #fff; }
+      .stc-popup-modal .btn.btn-negative:hover, .stc-popup-modal .btn.btn-negative:focus {
+        border-color: #ad2116;
+        box-shadow: inset 0 0 0 1px #ad2116;
+        color: #9A3324;
+        background-color: #fff; }

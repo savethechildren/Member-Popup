@@ -16,7 +16,7 @@ var stc = stc || {};
                 callbackName: 'setCountry',
                 onSuccess: function(json){
                     stc.geo.country = json.country_code;
-                    stc.util.setCookie('stc_country', stc.geo.country, 2);
+                    stc.util.setCookie('stc_country', stc.geo.country, 14, stc.util.getDomain(window.location.hostname));
                     stc.util.createEvent('countryIsSet');
                 },
                 onTimeout: function(){
@@ -46,26 +46,11 @@ var stc = stc || {};
         if(lng.length < 2) {
             return false;
         }
-        stc.util.setCookie('stc_user_language', lng, 2);
+        stc.util.setCookie('stc_user_language', lng, 14, stc.util.getDomain(window.location.hostname));
         geo.userLanguage = lng;
         return lng;
     };
     
-    /**
-     * Sets the user country variable and cookie.
-     * @param {string} iso The two-letter country code
-     * @return {Boolean} True if country was set or false.
-     */
-    geo.setUserCountry = function(iso) {
-        if(iso.length !== 2) {
-            return false;
-        }
-        geo.country = iso.toUpperCase();
-        stc.util.setCookie('stc_country', stc.geo.country, 2);
-        stc.util.createEvent('countryIsSet');
-        return true;
-    };
-
     /**
      * The list of recognized country Members.
      */

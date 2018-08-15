@@ -62,7 +62,7 @@ var stc = stc || {};
         },
         "IT": {
             "title": "Italy",
-            "url": "http://www.savethechildren.it"
+            "url": "https://www.savethechildren.it/?utm_campaign=sci-website-redirect&utm_source=sci&utm_medium=display&utm_content=link"
         },
         "JP": {
             "title": "Japan",
@@ -133,4 +133,14 @@ var stc = stc || {};
             "url": "https://www.savethechildren.net"
         }
     };
+
+    geo.prefix = function(country) {
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] : stc.modal.i18n.default;
+        var prefix = "";
+        if(["DO","GB","US","PH","NL"].indexOf(stc.geo.country) > -1) {
+            prefix = lng.prefix;
+        }
+        return prefix + country;
+    };
+
 }(stc.geo = stc.geo || {}));
