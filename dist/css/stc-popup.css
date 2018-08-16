@@ -1096,7 +1096,7 @@
     .stc-popup-modal .stc-popup-modal-inner .img-responsive {
       position: relative;
       z-index: 3; }
-      @media screen and (max-device-width: 1023px) and (orientation: landscape) {
+      @media screen and (max-device-width: 40em) and (orientation: landscape) {
         .stc-popup-modal .stc-popup-modal-inner .img-responsive {
           display: none; } }
       .stc-popup-modal .stc-popup-modal-inner .img-responsive img {
@@ -1106,6 +1106,8 @@
     padding: 0 15px; }
     .stc-popup-modal .stc-popup-modal-content p {
       margin-bottom: 18px; }
+      .stc-popup-modal .stc-popup-modal-content p:last-child {
+        margin-bottom: 5px; }
   .stc-popup-modal.on {
     opacity: 1;
     visibility: visible; }

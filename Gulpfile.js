@@ -11,6 +11,7 @@ paths.jsPopup = "js/src/popup/**/*.js";
 paths.jsMembers = "js/src/members/**/*.js";
 paths.jsAll = "js/src/**/*.js";
 paths.jsSrc = "js/src/popup.js";
+paths.stcuiSrc = "js/src/stc-ui/**/*.js";
 paths.tests = "js/tests/";
 
 var gulp = require("gulp"),
