@@ -12,6 +12,11 @@
             "type": "gulp",
             "task": "sass:watch",
             "problemMatcher": []
+        },
+        {
+            "type": "gulp",
+            "task": "scripts:watch",
+            "problemMatcher": []
         }
     ]
 }

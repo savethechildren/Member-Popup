@@ -2,7 +2,7 @@ stc.modal.i18n = {
     "default": {
         "title": "Welcome to <nobr>Save the Children</nobr>!",
         "text": "It looks like you're in {country}.",
-        "stayText": "Or <a href=\"javascript:stc.modal.close('Stay');\">find additional information</a> on our global organization and the work that we do.",
+        "stayText": "Or <a href=\"javascript:stc.modal.close('Stay');\">stay here</a> to find additional information about our global organization and the work that <span class=\"text-nowrap\">we do</span>.",
         "goBtn": "Continue to {country}",
         "prefix": "the ",
         "countries": {

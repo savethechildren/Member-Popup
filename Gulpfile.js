@@ -9,8 +9,8 @@ paths.js =  "dist/js/";
 paths.jsInit = "js/src/init/**/*.js";
 paths.jsPopup = "js/src/popup/**/*.js";
 paths.jsMembers = "js/src/members/**/*.js";
+paths.jsAll = "js/src/**/*.js";
 paths.jsSrc = "js/src/popup.js";
-paths.stcuiSrc = "js/src/stc-ui/**/*.js";
 paths.tests = "js/tests/";
 
 var gulp = require("gulp"),
@@ -77,21 +77,20 @@ gulp.task('sass', function () {
  * Watch SASS files 
  */
 gulp.task('sass:watch', function () {
-    gulp.watch(paths.sass, ['sass','cssmin']);
+    gulp.watch(paths.sass, ['cssmin']);
 }); 
 
 /**
  * Watch JS files 
  */
 gulp.task('scripts:watch', function () {
-    gulp.watch(paths.jsInit, ['concatInit']);
-    gulp.watch(paths.jsPopup, ['concatPopup']);
+    gulp.watch(paths.jsAll, ['concatInit', 'concatPopup', 'uglifyMembers']);
 });
 
 /**
  * Minify css files
  */
-gulp.task('cssmin', function() {
+gulp.task('cssmin', ['sass'], function() {
     return gulp.src(paths.toMin)
         .pipe(cssmin())
         .pipe(rename({ suffix: '.min' }))
