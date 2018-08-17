@@ -32,11 +32,11 @@
       height: auto;
       min-height: auto;
       margin: 10% auto;
-    }    
+    }  
     .img-responsive {
       position: relative;
       z-index: 3;
-      @media screen and (max-device-width: 40em) and (orientation: landscape) {
+      @media screen and (max-device-width: 1023px) and (orientation: landscape) {
         display: none;
       }
       img {

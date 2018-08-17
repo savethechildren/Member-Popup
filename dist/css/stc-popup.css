@@ -1096,7 +1096,7 @@
     .stc-popup-modal .stc-popup-modal-inner .img-responsive {
       position: relative;
       z-index: 3; }
-      @media screen and (max-device-width: 40em) and (orientation: landscape) {
+      @media screen and (max-device-width: 1023px) and (orientation: landscape) {
         .stc-popup-modal .stc-popup-modal-inner .img-responsive {
           display: none; } }
       .stc-popup-modal .stc-popup-modal-inner .img-responsive img {

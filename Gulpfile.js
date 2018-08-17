@@ -11,7 +11,6 @@ paths.jsPopup = "js/src/popup/**/*.js";
 paths.jsMembers = "js/src/members/**/*.js";
 paths.jsAll = "js/src/**/*.js";
 paths.jsSrc = "js/src/popup.js";
-paths.stcuiSrc = "js/src/stc-ui/**/*.js";
 paths.tests = "js/tests/";
 
 var gulp = require("gulp"),
@@ -57,9 +56,9 @@ gulp.task("uglifyMembers", function() {
  * eslint task for all javascript files
  */
 gulp.task('eslint', function () {
-    return gulp.src(paths.jsSrc)
+    return gulp.src(paths.jsAll)
         .pipe(eslint({
-            //configFile: "js/eslint.config.json"
+            configFile: ".eslintrc.json"
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
@@ -79,7 +78,7 @@ gulp.task('sass', function () {
  */
 gulp.task('sass:watch', function () {
     gulp.watch(paths.sass, ['cssmin']);
-}); 
+});
 
 /**
  * Watch JS files 
@@ -106,10 +105,9 @@ gulp.task('test', function() {
         .pipe(qunit());
 });
 
-
 /**
  * Build scripts
  */
 gulp.task("build", ['concatInit','concatPopup','sass','cssmin','eslint','test','uglifyMembers']);
 
-gulp.task('default', ['cssmin']);
+gulp.task('default', ['build']);

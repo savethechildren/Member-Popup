@@ -81,9 +81,10 @@ stc.modal.i18n = {
     },
     "fr": {
         "title": "Bienvenue chez Save the Children!",
-        "text": "You've come to our Swiss site, which contains information about our work with children around the world. You can also visit our {country} site to explore the different ways you can support our work.",
-        "stayBtn": "Rester sur le site suisse",
-        "goBtn": "Aller sur le site {country}",
+        "text": "Vous semblez &ecirc;tre en {country}.",
+        "stayText": "Ou Restez sur le site suisse.",
+        "prefix": "",
+        "goBtn": "Continuez vers {country}",
         "countries": {
             "AU": "Australia",
             "CA": "Canada",
@@ -114,8 +115,8 @@ stc.modal.i18n = {
             "SZ": "Swaziland",
             "SE": "Sweden",
             "CH": "Switzerland",
-            "GB": "GB",
-            "US": "U.S.",
+            "GB": "Grande-Bretagne",
+            "US": "U.S.A.",
             "XX": "International"
         }
     },

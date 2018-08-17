@@ -8,7 +8,7 @@ var stc = stc || {};
      */
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
-        if(!stc.popupNoClose) {
+        if(stc.popupClose) {
             divmodal.addEventListener("click", function(event) {
                 if(event.currentTarget !== event.target) {
                     return false;
@@ -22,13 +22,13 @@ var stc = stc || {};
         innerModal.appendChild(gradientBox);
         closeBT.addEventListener("click", modal.close, false);
         closeBT.setAttribute("title", "Close");
-        if(!stc.popupNoClose) {
+        if(stc.popupClose) {
             innerModal.appendChild(closeBT);
         }
         var content = stc.util.newDOMElement('div','stc-popup-modal-content');
 
         //close modal on esc key
-        if(!stc.popupNoClose) {
+        if(stc.popupClose) {
             window.addEventListener('keyup', function(e) {
                 if (e.keyCode === 27) {
                     modal.close();
