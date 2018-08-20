@@ -11,12 +11,12 @@ stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css', function() {
                     families: ['Gill Sans Infant', 'Trade Gothic LT'],
                 },
                 active: function() {
-                    stc.modal.show(); 
+                    stc.modal.show();
                 },
                 //in case of timeout or other error still show popup
                 inactive: function() {
-                    stc.modal.show(); 
-                }
+                    stc.modal.show();
+                },
             });
         } else {
             stc.modal.show();

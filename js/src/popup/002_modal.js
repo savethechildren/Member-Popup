@@ -9,7 +9,7 @@ var stc = stc || {};
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
         if(stc.popupClose) {
-            divmodal.addEventListener("click", function(event) {
+            divmodal.addEventListener('click', function(event) {
                 if(event.currentTarget !== event.target) {
                     return false;
                 }
@@ -17,11 +17,10 @@ var stc = stc || {};
             }, false);
         }
         var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal' );
-        var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close');
+        var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'});
         var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
         innerModal.appendChild(gradientBox);
-        closeBT.addEventListener("click", modal.close, false);
-        closeBT.setAttribute("title", "Close");
+        closeBT.addEventListener('click', modal.close, false);
         if(stc.popupClose) {
             innerModal.appendChild(closeBT);
         }
@@ -38,15 +37,18 @@ var stc = stc || {};
 
         //add picture element with different image sizes.
         var picture = stc.util.newDOMElement('picture','');
-        var img = stc.util.newDOMElement('img','img-responsive');
-        img.setAttribute("alt", "Children playing with water");
-        img.setAttribute("src", stc.modal.baseURL + "/img/children_dsk.jpg");
-        var src1 = stc.util.newDOMElement('source','');
-        src1.setAttribute("media", "(max-width: 640px) and (orientation: portrait)");
-        src1.setAttribute("srcset", stc.modal.baseURL + "/img/children_mob.jpg");
-        var src2 = stc.util.newDOMElement('source','');
-        src2.setAttribute("media", "(min-width: 641px)");
-        src2.setAttribute("srcset", stc.modal.baseURL + "/img/children_dsk.jpg");    
+        var img = stc.util.newDOMElement('img','img-responsive', null, {
+            alt: 'Children playing with water',
+            src: stc.modal.baseURL + '/img/children_dsk.jpg',
+        });
+        var src1 = stc.util.newDOMElement('source',null, null, {
+            media: '(max-width: 640px) and (orientation: portrait)',
+            srcset: stc.modal.baseURL + '/img/children_mob.jpg',
+        });
+        var src2 = stc.util.newDOMElement('source',null, null, {
+            media: '(min-width: 641px)',
+            srcset: stc.modal.baseURL + '/img/children_dsk.jpg',
+        });  
         picture.appendChild(src1);
         picture.appendChild(src2);
         picture.appendChild(img);
@@ -85,7 +87,7 @@ var stc = stc || {};
      * Shows the modal.
      */
     modal.show = function() {
-        modal.element.className += " on";
+        modal.element.className += ' on';
         //reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     };
@@ -106,7 +108,7 @@ var stc = stc || {};
     modal.close = function(e) {
         modal.hide();
         stc.util.setCookie('stc_popup_closed', '1', 14, stc.util.getDomain(window.location.hostname));
-        var eventName = typeof(e) === "string" ? e : 'Close';
+        var eventName = typeof(e) === 'string' ? e : 'Close';
         //add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
             stc.analytics.sendEvent('Member popup', eventName, stc.geo.country + ' - ' + eventName);

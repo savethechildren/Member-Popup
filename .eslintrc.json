@@ -5,8 +5,9 @@
     "no-extra-semi": "warn",
     "semi": "warn",
     "indent": [ "warn", 4 ],
+    "quotes": ["warn", "single"],
     "valid-jsdoc": [
-      1,
+      "warn",
       {
         "prefer": {
           "returns": "return",
@@ -14,10 +15,17 @@
         },
         "requireReturn": false
       }
+    ],
+    "comma-dangle": [
+      "warn", {
+        "arrays": "always-multiline",
+        "objects": "always-multiline"
+      }
     ]
   },
   "env": {
     "browser": true,
+    "node": true,
     "es6": true
   },
   "globals": {

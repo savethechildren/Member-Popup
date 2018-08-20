@@ -7,7 +7,7 @@ var stc = stc || {};
     analytics.trackers = [];
 
     /**
-     * Checks that Google Analytics is initialized 
+     * Checks that Google Analytics is initialized
      *   and sets the available tracker names.
      * @return {bool} True if GA is available or false.
      */
@@ -15,7 +15,7 @@ var stc = stc || {};
         if (window.ga && ga.create) {
             var gaTrackers = ga.getAll();
             gaTrackers.forEach(function(v) {
-                if(v.get('trackingId') !== "") {
+                if(v.get('trackingId') !== '') {
                     analytics.trackers.push(v.get('name'));
                 }
             });
@@ -28,7 +28,7 @@ var stc = stc || {};
 
     /**
      * Sends an event to GA.
-     * 
+     *
      * @param {string} category The event category.
      * @param {string} action The action to record.
      * @param {string} [label] The event label.
@@ -45,9 +45,9 @@ var stc = stc || {};
                 eventCategory: category,
                 eventAction: action,
                 eventLabel: (label ? label : ''),
-                hitCallback: (callback ? callback : '')
+                hitCallback: (callback ? callback : ''),
             });
-        });        
+        });
     };
 
 }(stc.analytics = stc.analytics || {}));

@@ -1,31 +1,30 @@
-"use strict";
+'use strict';
 
 var paths = {};
 
-paths.css = "dist/css/";
+paths.css = 'dist/css/';
 paths.toMin = ['dist/css/*.css', '!dist/css/*.min.css'];
-paths.sass =  "scss/**/*.scss";
-paths.js =  "dist/js/";
-paths.jsInit = "js/src/init/**/*.js";
-paths.jsPopup = "js/src/popup/**/*.js";
-paths.jsMembers = "js/src/members/**/*.js";
-paths.jsAll = "js/src/**/*.js";
-paths.jsSrc = "js/src/popup.js";
-paths.tests = "js/tests/";
+paths.sass =  'scss/**/*.scss';
+paths.js =  'dist/js/';
+paths.jsInit = 'js/src/init/**/*.js';
+paths.jsPopup = 'js/src/popup/**/*.js';
+paths.jsMembers = 'js/src/members/**/*.js';
+paths.jsAll = 'js/src/**/*.js';
+paths.tests = 'js/tests/';
 
-var gulp = require("gulp"),
-    sass = require("gulp-sass"),
-    concat = require("gulp-concat"),
-    cssmin = require("gulp-cssmin"),
-    rename = require("gulp-rename"),
-    eslint = require("gulp-eslint"),
-    qunit = require("gulp-qunit"),
-    uglify = require("gulp-uglify");
+var gulp = require('gulp'),
+    sass = require('gulp-sass'),
+    concat = require('gulp-concat'),
+    cssmin = require('gulp-cssmin'),
+    rename = require('gulp-rename'),
+    eslint = require('gulp-eslint'),
+    qunit = require('gulp-qunit'),
+    uglify = require('gulp-uglify');
 
 /**
  * Concatenate javascript files
  */
-gulp.task("concatInit", function() {
+gulp.task('concatInit', function() {
     return gulp.src(paths.jsInit)
         .pipe(concat('stc-popup-init.js'))
         .pipe(gulp.dest(paths.js))
@@ -34,7 +33,7 @@ gulp.task("concatInit", function() {
         .pipe(gulp.dest(paths.js));
 });
 
-gulp.task("concatPopup", function() {
+gulp.task('concatPopup', function() {
     return gulp.src(paths.jsPopup)
         .pipe(concat('stc-popup.js'))
         .pipe(gulp.dest(paths.js))
@@ -46,7 +45,7 @@ gulp.task("concatPopup", function() {
 /**
  * Uglify member i18n files
  */
-gulp.task("uglifyMembers", function() {
+gulp.task('uglifyMembers', function() {
     return gulp.src(paths.jsMembers)
         .pipe(uglify())
         .pipe(gulp.dest(paths.js + 'members/'));
@@ -58,7 +57,7 @@ gulp.task("uglifyMembers", function() {
 gulp.task('eslint', function () {
     return gulp.src(paths.jsAll)
         .pipe(eslint({
-            configFile: ".eslintrc.json"
+            configFile: '.eslintrc.json',
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
@@ -108,6 +107,6 @@ gulp.task('test', function() {
 /**
  * Build scripts
  */
-gulp.task("build", ['concatInit','concatPopup','sass','cssmin','eslint','test','uglifyMembers']);
+gulp.task('build', ['concatInit','concatPopup','sass','cssmin','eslint','test','uglifyMembers']);
 
 gulp.task('default', ['build']);

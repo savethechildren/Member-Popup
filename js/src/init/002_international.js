@@ -3,15 +3,15 @@ var stc = stc || {};
 
     /**
      * Locate the visitor by IP.
-     * 
+     *
      * @desc Uses Skype API to retrieve user's country ISO code and set a country cookie.
-     * 
+     *
      * @return {string} 2-letter country ISO code (if set)
      */
     geo.locate = function() {
-        stc.geo.country = "";
-        stc.geo.country = stc.util.getCookie('stc_country'); 
-        if(typeof stc.geo.country === 'undefined' || stc.geo.country === ""){
+        stc.geo.country = '';
+        stc.geo.country = stc.util.getCookie('stc_country');
+        if(typeof stc.geo.country === 'undefined' || stc.geo.country === ''){
             stc.util.jsonp('https://apps.skype.com/countrycode?jsoncallback=setCountry', {
                 callbackName: 'setCountry',
                 onSuccess: function(json){
@@ -22,7 +22,7 @@ var stc = stc || {};
                 onTimeout: function(){
                     //do nothing
                 },
-                timeout: 5
+                timeout: 5,
             });
         }
         else {
@@ -32,10 +32,10 @@ var stc = stc || {};
         }
         return stc.geo.country;
     };
-    
+
     /**
      * Sets the user language variable and cookie.
-     * @param {string} [lng] The two-letter language code. 
+     * @param {string} [lng] The two-letter language code.
      *   Defaults to the main browser language or the user-set value if present.
      * @return {String} The language code.
      */
@@ -50,17 +50,17 @@ var stc = stc || {};
         geo.userLanguage = lng;
         return lng;
     };
-    
+
     /**
      * The list of recognized country Members.
      */
-    geo.members = ["AU", "CA", "CH", "CO", "DE", 
-        "DK", "DO", "ES", "FI", "FJ", "GB", "GT", 
-        "HK", "HN", "ID", "IN", "IS", "IT", "JP", 
-        "KR", "LT", "MX", "NL", "NO", "NZ", "PH", 
-        "RO", "SE", "SZ", "US", "ZA"
+    geo.members = ['AU', 'CA', 'CH', 'CO', 'DE',
+        'DK', 'DO', 'ES', 'FI', 'FJ', 'GB', 'GT',
+        'HK', 'HN', 'ID', 'IN', 'IS', 'IT', 'JP',
+        'KR', 'LT', 'MX', 'NL', 'NO', 'NZ', 'PH',
+        'RO', 'SE', 'SZ', 'US', 'ZA',
     ];
-    
+
     /* Initialise some variables on page load */
     (function() {
         geo.setUserLanguage();
