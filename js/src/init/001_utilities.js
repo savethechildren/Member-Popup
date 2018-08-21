@@ -12,7 +12,7 @@ var stc = stc || {};
     util.setCookie = function(cname, cvalue, exdays, domain) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = 'expires='+d.toUTCString();
+        var expires = 'expires=' + d.toUTCString();
         document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/' +
                 (domain ? ';domain=' + domain : '');
     };
@@ -23,7 +23,7 @@ var stc = stc || {};
      * @param {String} cname The name of the cookie to retrieve
      * @return {String} The value of the cookie
      */
-    util.getCookie = function (cname) {
+    util.getCookie = function(cname) {
         var name = cname + '=';
         var ca = document.cookie.split(';');
         for(var i = 0; i < ca.length; i++) {
@@ -45,7 +45,7 @@ var stc = stc || {};
      * @param {HTMLElement} [element=window] The DOM element to attach
      * the event to (defaults to window)
      */
-    util.createEvent = function (eventName, element) {
+    util.createEvent = function(eventName, element) {
         element = element || window;
         var newEvent = new CustomEvent(eventName);
         element.dispatchEvent(newEvent);
@@ -94,7 +94,7 @@ var stc = stc || {};
             if (parts !== null && parts.length > 1) {
                 domain = parts[1] + '.' + parts[0];
 
-                //add exceptions for or(g).xx
+                // add exceptions for or(g).xx
                 if (hostName.toLowerCase().match(/\.org?\.[a-z][a-z]$/) && parts.length > 2) {
                     domain = parts[2] + '.' + domain;
                 }
@@ -108,14 +108,14 @@ var stc = stc || {};
 
 
 /* polyfill fix for custom event in Internet Explorer */
-(function () {
+(function() {
     if (typeof window.CustomEvent === 'function') {
         return false;
-    } //If not IE
-    function CustomEvent ( event, params ) {
+    } // If not IE
+    function CustomEvent(event, params) {
         params = params || { bubbles: false, cancelable: false, detail: undefined };
-        var evt = document.createEvent( 'CustomEvent' );
-        evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+        var evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
         return evt;
     }
     CustomEvent.prototype = window.Event.prototype;

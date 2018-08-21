@@ -20,8 +20,7 @@ var stc = stc || {};
                 }
             });
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     };
@@ -35,7 +34,7 @@ var stc = stc || {};
      * @param {function} [callback] The callback event if needed.
      * @return {bool} False if not needed.
      */
-    analytics.sendEvent = function (category, action, label, callback) {
+    analytics.sendEvent = function(category, action, label, callback) {
         if(!category || !action || !label) {
             return false;
         }
@@ -44,8 +43,8 @@ var stc = stc || {};
                 hitType: 'event',
                 eventCategory: category,
                 eventAction: action,
-                eventLabel: (label ? label : ''),
-                hitCallback: (callback ? callback : ''),
+                eventLabel: label || '',
+                hitCallback: callback || '',
             });
         });
     };

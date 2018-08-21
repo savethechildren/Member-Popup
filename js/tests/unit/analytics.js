@@ -5,12 +5,12 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 ga('create', 'UA-3139343-4', 'auto');
 
-jQuery(function ($) {
-    QUnit.test('should send an event to GA', function (assert) {
+jQuery(function($) {
+    QUnit.test('should send an event to GA', function(assert) {
         var done = assert.async();
         stc.analytics.isOn();
         stc.analytics.sendEvent('test', 'test', 'test', function() {
-            assert.ok(true, "The event was dispatched correctly");
+            assert.ok(true, 'The event was dispatched correctly');
             done();
         });
     });

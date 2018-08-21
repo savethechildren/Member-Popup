@@ -12,8 +12,7 @@ var stc = stc || {};
     util.waitForObjectOrEvent = function(object, event, callback) {
         if(object) {
             callback();
-        }
-        else {
+        } else {
             window.addEventListener(event, callback);
         }
     };
@@ -23,7 +22,7 @@ var stc = stc || {};
      * @param {string} href The URL of the stylesheet.
      * @param {function} callback The callback function.
      */
-    util.addCSS = function (href, callback) {
+    util.addCSS = function(href, callback) {
         var s = document.createElement('link');
         s.setAttribute('rel', 'stylesheet');
         s.setAttribute('type', 'text/css');
@@ -37,7 +36,7 @@ var stc = stc || {};
      * @param {string} src The URL of the script.
      * @param {function} callback The callback function.
      */
-    util.addScript = function (src, callback) {
+    util.addScript = function(src, callback) {
         var s = document.createElement('script');
         s.src = src;
         s.async = false;
@@ -53,7 +52,7 @@ var stc = stc || {};
      * @param {object} attrs The element attributes.
      * @return {object} The newly created DOM element.
      */
-    util.newDOMElement = function (type, className, id, attrs) {
+    util.newDOMElement = function(type, className, id, attrs) {
         var e = document.createElement(type);
         if(className) {
             e.className = className;
@@ -61,7 +60,7 @@ var stc = stc || {};
         if(id) {
             e.id = id;
         }
-        if(typeof(attrs) === 'object') {
+        if(typeof (attrs) === 'object') {
             Object.keys(attrs).forEach(function(key) {
                 e.setAttribute(key, attrs[key]);
             });
@@ -89,7 +88,7 @@ var stc = stc || {};
                 modal.close();
             }, false);
         }
-        var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal' );
+        var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal');
         var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'});
         var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
         innerModal.appendChild(gradientBox);
@@ -97,9 +96,9 @@ var stc = stc || {};
         if(stc.popupClose) {
             innerModal.appendChild(closeBT);
         }
-        var content = stc.util.newDOMElement('div','stc-popup-modal-content');
+        var content = stc.util.newDOMElement('div', 'stc-popup-modal-content');
 
-        //close modal on esc key
+        // close modal on esc key
         if(stc.popupClose) {
             window.addEventListener('keyup', function(e) {
                 if (e.keyCode === 27) {
@@ -108,24 +107,24 @@ var stc = stc || {};
             }, false);
         }
 
-        //add picture element with different image sizes.
-        var picture = stc.util.newDOMElement('picture','');
-        var img = stc.util.newDOMElement('img','img-responsive', null, {
+        // add picture element with different image sizes.
+        var picture = stc.util.newDOMElement('picture', '');
+        var img = stc.util.newDOMElement('img', 'img-responsive', null, {
             alt: 'Children playing with water',
             src: stc.modal.baseURL + '/img/children_dsk.jpg',
         });
-        var src1 = stc.util.newDOMElement('source',null, null, {
+        var src1 = stc.util.newDOMElement('source', null, null, {
             media: '(max-width: 640px) and (orientation: portrait)',
             srcset: stc.modal.baseURL + '/img/children_mob.jpg',
         });
-        var src2 = stc.util.newDOMElement('source',null, null, {
+        var src2 = stc.util.newDOMElement('source', null, null, {
             media: '(min-width: 641px)',
             srcset: stc.modal.baseURL + '/img/children_dsk.jpg',
-        });  
+        });
         picture.appendChild(src1);
         picture.appendChild(src2);
         picture.appendChild(img);
-        
+
         innerModal.appendChild(picture);
         innerModal.appendChild(content);
         divmodal.appendChild(innerModal);
@@ -134,26 +133,23 @@ var stc = stc || {};
         modal.element = divmodal;
 
         var toMember = stc.geo.members[stc.geo.country];
-        var fromMember = stc.geo.members[stc.popupOrigin];
 
-        //load correct i18n data
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] : stc.modal.i18n.default;
+        // load correct i18n data
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
         var toCountry = lng.countries[stc.geo.country];
-        var fromCountry = lng.countries[stc.popupOrigin];
 
         var popupText = lng.text;
         var stayText = lng.stayText;
         var goBtn = lng.goBtn;
-        var stayBtn = lng.stayBtn;
 
-        //add inner content HTML
-        content.innerHTML = '<h1>' + lng.title + '</h1>' + 
+        // add inner content HTML
+        content.innerHTML = '<h1>' + lng.title + '</h1>' +
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, stc.geo.prefix(toCountry)) + '</p>' +
             '<p>' +
             '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>' +
             '<p>' + stayText + '</p></div>';
 
-        document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound); 
+        document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
     };
 
     /**
@@ -161,7 +157,7 @@ var stc = stc || {};
      */
     modal.show = function() {
         modal.element.className += ' on';
-        //reset body overflow
+        // reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'hidden';
     };
 
@@ -170,7 +166,7 @@ var stc = stc || {};
      */
     modal.hide = function() {
         modal.element.className = modal.element.className.replace(' on', '');
-        //reset body overflow
+        // reset body overflow
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
     };
 
@@ -181,8 +177,8 @@ var stc = stc || {};
     modal.close = function(e) {
         modal.hide();
         stc.util.setCookie('stc_popup_closed', '1', 14, stc.util.getDomain(window.location.hostname));
-        var eventName = typeof(e) === 'string' ? e : 'Close';
-        //add event in GA
+        var eventName = typeof (e) === 'string' ? e : 'Close';
+        // add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
             stc.analytics.sendEvent('Member popup', eventName, stc.geo.country + ' - ' + eventName);
         }
@@ -197,11 +193,10 @@ var stc = stc || {};
         if(stc.analytics && stc.analytics.isOn()) {
             stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - Go', function() {
                 window.location = e.target;
-            });      
-            //1 second timeout fallback in case ga event doesn't call back
+            });
+            // 1 second timeout fallback in case ga event doesn't call back
             window.setTimeout(function() { window.location = e.target; }, 1000);
-        }
-        else {
+        } else {
             window.location = e.target;
         }
     };
@@ -214,140 +209,140 @@ var stc = stc || {};
      * The list of SC Member countries and their attributes.
      */
     geo.members = {
-        'AU': {
-            'title': 'Australia',
-            'url': 'http://www.savethechildren.org.au',
+        AU: {
+            title: 'Australia',
+            url: 'http://www.savethechildren.org.au',
         },
-        'CA': {
-            'title': 'Canada',
-            'url': 'http://www.savethechildren.ca',
+        CA: {
+            title: 'Canada',
+            url: 'http://www.savethechildren.ca',
         },
-        'CO': {
-            'title': 'Colombia',
-            'url': 'https://www.savethechildren.org.co',
+        CO: {
+            title: 'Colombia',
+            url: 'https://www.savethechildren.org.co',
         },
-        'DK': {
-            'title': 'Denmark',
-            'url': 'http://www.redbarnet.dk',
+        DK: {
+            title: 'Denmark',
+            url: 'http://www.redbarnet.dk',
         },
-        'DO': {
-            'title': 'Dominican Republic',
-            'url': 'http://savethechildren.org.do',
+        DO: {
+            title: 'Dominican Republic',
+            url: 'http://savethechildren.org.do',
         },
-        'FJ': {
-            'title': 'Fiji',
-            'url': 'http://www.savethechildren.org.fj',
+        FJ: {
+            title: 'Fiji',
+            url: 'http://www.savethechildren.org.fj',
         },
-        'FI': {
-            'title': 'Finland',
-            'url': 'http://www.pelastakaalapset.fi',
+        FI: {
+            title: 'Finland',
+            url: 'http://www.pelastakaalapset.fi',
         },
-        'DE': {
-            'title': 'Germany',
-            'url': 'http://www.savethechildren.de',
+        DE: {
+            title: 'Germany',
+            url: 'http://www.savethechildren.de',
         },
-        'GT': {
-            'title': 'Guatemala',
-            'url': 'http://www.savethechildren.org.gt',
+        GT: {
+            title: 'Guatemala',
+            url: 'http://www.savethechildren.org.gt',
         },
-        'HN': {
-            'title': 'Honduras',
-            'url': 'http://www.savethechildrenhonduras.org',
+        HN: {
+            title: 'Honduras',
+            url: 'http://www.savethechildrenhonduras.org',
         },
-        'HK': {
-            'title': 'Hong Kong',
-            'url': 'http://www.savethechildren.org.hk',
+        HK: {
+            title: 'Hong Kong',
+            url: 'http://www.savethechildren.org.hk',
         },
-        'IS': {
-            'title': 'Iceland',
-            'url': 'http://www.barnaheill.is',
+        IS: {
+            title: 'Iceland',
+            url: 'http://www.barnaheill.is',
         },
-        'IN': {
-            'title': 'India',
-            'url': 'http://www.savethechildren.in',
+        IN: {
+            title: 'India',
+            url: 'http://www.savethechildren.in',
         },
-        'ID': {
-            'title': 'Indonesia',
-            'url': 'https://www.stc.or.id',
+        ID: {
+            title: 'Indonesia',
+            url: 'https://www.stc.or.id',
         },
-        'IT': {
-            'title': 'Italy',
-            'url': 'https://www.savethechildren.it/?utm_campaign=sci-website-redirect&utm_source=sci&utm_medium=display&utm_content=link',
+        IT: {
+            title: 'Italy',
+            url: 'https://www.savethechildren.it/?utm_campaign=sci-website-redirect&utm_source=sci&utm_medium=display&utm_content=link',
         },
-        'JP': {
-            'title': 'Japan',
-            'url': 'http://www.savechildren.or.jp',
+        JP: {
+            title: 'Japan',
+            url: 'http://www.savechildren.or.jp',
         },
-        'KR': {
-            'title': 'Korea',
-            'url': 'http://www.sc.or.kr',
+        KR: {
+            title: 'Korea',
+            url: 'http://www.sc.or.kr',
         },
-        'LT': {
-            'title': 'Lithuania',
-            'url': 'https://www.gelbekitvaikus.lt',
+        LT: {
+            title: 'Lithuania',
+            url: 'https://www.gelbekitvaikus.lt',
         },
-        'MX': {
-            'title': 'Mexico',
-            'url': 'https://www.savethechildren.mx',
+        MX: {
+            title: 'Mexico',
+            url: 'https://www.savethechildren.mx',
         },
-        'NL': {
-            'title': 'Netherlands',
-            'url': 'https://www.savethechildren.nl',
+        NL: {
+            title: 'Netherlands',
+            url: 'https://www.savethechildren.nl',
         },
-        'NZ': {
-            'title': 'New Zealand',
-            'url': 'http://www.savethechildren.org.nz',
+        NZ: {
+            title: 'New Zealand',
+            url: 'http://www.savethechildren.org.nz',
         },
-        'NO': {
-            'title': 'Norway',
-            'url': 'http://www.reddbarna.no',
+        NO: {
+            title: 'Norway',
+            url: 'http://www.reddbarna.no',
         },
-        'PH': {
-            'title': 'Philippines',
-            'url': 'http://www.savethechildren.org.ph',
+        PH: {
+            title: 'Philippines',
+            url: 'http://www.savethechildren.org.ph',
         },
-        'RO': {
-            'title': 'Romania',
-            'url': 'http://www.salvaticopiii.ro',
+        RO: {
+            title: 'Romania',
+            url: 'http://www.salvaticopiii.ro',
         },
-        'ZA': {
-            'title': 'South Africa',
-            'url': 'https://www.savethechildren.org.za',
+        ZA: {
+            title: 'South Africa',
+            url: 'https://www.savethechildren.org.za',
         },
-        'ES': {
-            'title': 'Spain',
-            'url': 'https://www.savethechildren.es',
+        ES: {
+            title: 'Spain',
+            url: 'https://www.savethechildren.es',
         },
-        'SZ': {
-            'title': 'Swaziland',
-            'url': 'http://www.savethechildren.org.sz',
+        SZ: {
+            title: 'Swaziland',
+            url: 'http://www.savethechildren.org.sz',
         },
-        'SE': {
-            'title': 'Sweden',
-            'url': 'https://www.raddabarnen.se',
+        SE: {
+            title: 'Sweden',
+            url: 'https://www.raddabarnen.se',
         },
-        'CH': {
-            'title': 'Switzerland',
-            'url': 'https://www.savethechildren.ch',
+        CH: {
+            title: 'Switzerland',
+            url: 'https://www.savethechildren.ch',
         },
-        'GB': {
-            'title': 'UK',
-            'url': 'https://www.savethechildren.org.uk',
+        GB: {
+            title: 'UK',
+            url: 'https://www.savethechildren.org.uk',
         },
-        'US': {
-            'title': 'U.S.',
-            'url': 'https://www.savethechildren.org',
+        US: {
+            title: 'U.S.',
+            url: 'https://www.savethechildren.org',
         },
-        'XX': {
-            'title': 'International',
-            'url': 'https://www.savethechildren.net',
+        XX: {
+            title: 'International',
+            url: 'https://www.savethechildren.net',
         },
     };
 
     geo.prefix = function(country) {
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] : stc.modal.i18n.default;
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
         var prefix = '';
-        if(['DO','GB','US','PH','NL'].indexOf(stc.geo.country) > -1) {
+        if(['DO', 'GB', 'US', 'PH', 'NL'].indexOf(stc.geo.country) > -1) {
             prefix = lng.prefix;
         }
         return prefix + country;
@@ -377,8 +372,7 @@ var stc = stc || {};
                 }
             });
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     };
@@ -392,7 +386,7 @@ var stc = stc || {};
      * @param {function} [callback] The callback event if needed.
      * @return {bool} False if not needed.
      */
-    analytics.sendEvent = function (category, action, label, callback) {
+    analytics.sendEvent = function(category, action, label, callback) {
         if(!category || !action || !label) {
             return false;
         }
@@ -401,8 +395,8 @@ var stc = stc || {};
                 hitType: 'event',
                 eventCategory: category,
                 eventAction: action,
-                eventLabel: (label ? label : ''),
-                hitCallback: (callback ? callback : ''),
+                eventLabel: label || '',
+                hitCallback: callback || '',
             });
         });
     };
@@ -410,12 +404,12 @@ var stc = stc || {};
 }(stc.analytics = stc.analytics || {}));
 
 stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css', function() {
-    //load relevant member language file
+    // load relevant member language file
     stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js', function() {
-        //initiate modal
+        // initiate modal
         stc.modal.init();
 
-        //wait for web fonts to be loaded before displaying the popup
+        // wait for web fonts to be loaded before displaying the popup
         if(typeof WebFont !== 'undefined') {
             WebFont.load({
                 custom: {
@@ -424,7 +418,7 @@ stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css', function() {
                 active: function() {
                     stc.modal.show();
                 },
-                //in case of timeout or other error still show popup
+                // in case of timeout or other error still show popup
                 inactive: function() {
                     stc.modal.show();
                 },

@@ -12,8 +12,7 @@ var stc = stc || {};
     util.waitForObjectOrEvent = function(object, event, callback) {
         if(object) {
             callback();
-        }
-        else {
+        } else {
             window.addEventListener(event, callback);
         }
     };
@@ -23,7 +22,7 @@ var stc = stc || {};
      * @param {string} href The URL of the stylesheet.
      * @param {function} callback The callback function.
      */
-    util.addCSS = function (href, callback) {
+    util.addCSS = function(href, callback) {
         var s = document.createElement('link');
         s.setAttribute('rel', 'stylesheet');
         s.setAttribute('type', 'text/css');
@@ -37,7 +36,7 @@ var stc = stc || {};
      * @param {string} src The URL of the script.
      * @param {function} callback The callback function.
      */
-    util.addScript = function (src, callback) {
+    util.addScript = function(src, callback) {
         var s = document.createElement('script');
         s.src = src;
         s.async = false;
@@ -53,7 +52,7 @@ var stc = stc || {};
      * @param {object} attrs The element attributes.
      * @return {object} The newly created DOM element.
      */
-    util.newDOMElement = function (type, className, id, attrs) {
+    util.newDOMElement = function(type, className, id, attrs) {
         var e = document.createElement(type);
         if(className) {
             e.className = className;
@@ -61,7 +60,7 @@ var stc = stc || {};
         if(id) {
             e.id = id;
         }
-        if(typeof(attrs) === 'object') {
+        if(typeof (attrs) === 'object') {
             Object.keys(attrs).forEach(function(key) {
                 e.setAttribute(key, attrs[key]);
             });

@@ -20,12 +20,11 @@ var stc = stc || {};
                     stc.util.createEvent('countryIsSet');
                 },
                 onTimeout: function(){
-                    //do nothing
+                    // do nothing
                 },
                 timeout: 5,
             });
-        }
-        else {
+        } else {
             (function($) {
                 stc.util.createEvent('countryIsSet');
             })();
@@ -41,7 +40,7 @@ var stc = stc || {};
      */
     geo.setUserLanguage = function(lng) {
         if(!lng) {
-            var lng = stc.util.getCookie('stc_user_language') || (navigator.languages ? navigator.languages[0] : navigator.language || navigator.userLanguage);
+            lng = stc.util.getCookie('stc_user_language') || (navigator.languages ? navigator.languages[0] : navigator.language || navigator.userLanguage);
         }
         if(lng.length < 2) {
             return false;

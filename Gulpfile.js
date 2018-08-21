@@ -4,8 +4,8 @@ var paths = {};
 
 paths.css = 'dist/css/';
 paths.toMin = ['dist/css/*.css', '!dist/css/*.min.css'];
-paths.sass =  'scss/**/*.scss';
-paths.js =  'dist/js/';
+paths.sass = 'scss/**/*.scss';
+paths.js = 'dist/js/';
 paths.jsInit = 'js/src/init/**/*.js';
 paths.jsPopup = 'js/src/popup/**/*.js';
 paths.jsMembers = 'js/src/members/**/*.js';
@@ -54,7 +54,7 @@ gulp.task('uglifyMembers', function() {
 /**
  * eslint task for all javascript files
  */
-gulp.task('eslint', function () {
+gulp.task('eslint', function() {
     return gulp.src(paths.jsAll)
         .pipe(eslint({
             configFile: '.eslintrc.json',
@@ -64,25 +64,25 @@ gulp.task('eslint', function () {
 });
 
 /**
- * Compile SASS to CSS 
+ * Compile SASS to CSS
  */
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     return gulp.src('scss/stc-popup.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest(paths.css));
 });
 
 /**
- * Watch SASS files 
+ * Watch SASS files
  */
-gulp.task('sass:watch', function () {
+gulp.task('sass:watch', function() {
     gulp.watch(paths.sass, ['cssmin']);
 });
 
 /**
- * Watch JS files 
+ * Watch JS files
  */
-gulp.task('scripts:watch', function () {
+gulp.task('scripts:watch', function() {
     gulp.watch(paths.jsAll, ['concatInit', 'concatPopup', 'uglifyMembers']);
 });
 
@@ -107,6 +107,6 @@ gulp.task('test', function() {
 /**
  * Build scripts
  */
-gulp.task('build', ['concatInit','concatPopup','sass','cssmin','eslint','test','uglifyMembers']);
+gulp.task('build', ['concatInit', 'concatPopup', 'sass', 'cssmin', 'eslint', 'test', 'uglifyMembers']);
 
 gulp.task('default', ['build']);

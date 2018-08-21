@@ -4,140 +4,140 @@ var stc = stc || {};
      * The list of SC Member countries and their attributes.
      */
     geo.members = {
-        'AU': {
-            'title': 'Australia',
-            'url': 'http://www.savethechildren.org.au',
+        AU: {
+            title: 'Australia',
+            url: 'http://www.savethechildren.org.au',
         },
-        'CA': {
-            'title': 'Canada',
-            'url': 'http://www.savethechildren.ca',
+        CA: {
+            title: 'Canada',
+            url: 'http://www.savethechildren.ca',
         },
-        'CO': {
-            'title': 'Colombia',
-            'url': 'https://www.savethechildren.org.co',
+        CO: {
+            title: 'Colombia',
+            url: 'https://www.savethechildren.org.co',
         },
-        'DK': {
-            'title': 'Denmark',
-            'url': 'http://www.redbarnet.dk',
+        DK: {
+            title: 'Denmark',
+            url: 'http://www.redbarnet.dk',
         },
-        'DO': {
-            'title': 'Dominican Republic',
-            'url': 'http://savethechildren.org.do',
+        DO: {
+            title: 'Dominican Republic',
+            url: 'http://savethechildren.org.do',
         },
-        'FJ': {
-            'title': 'Fiji',
-            'url': 'http://www.savethechildren.org.fj',
+        FJ: {
+            title: 'Fiji',
+            url: 'http://www.savethechildren.org.fj',
         },
-        'FI': {
-            'title': 'Finland',
-            'url': 'http://www.pelastakaalapset.fi',
+        FI: {
+            title: 'Finland',
+            url: 'http://www.pelastakaalapset.fi',
         },
-        'DE': {
-            'title': 'Germany',
-            'url': 'http://www.savethechildren.de',
+        DE: {
+            title: 'Germany',
+            url: 'http://www.savethechildren.de',
         },
-        'GT': {
-            'title': 'Guatemala',
-            'url': 'http://www.savethechildren.org.gt',
+        GT: {
+            title: 'Guatemala',
+            url: 'http://www.savethechildren.org.gt',
         },
-        'HN': {
-            'title': 'Honduras',
-            'url': 'http://www.savethechildrenhonduras.org',
+        HN: {
+            title: 'Honduras',
+            url: 'http://www.savethechildrenhonduras.org',
         },
-        'HK': {
-            'title': 'Hong Kong',
-            'url': 'http://www.savethechildren.org.hk',
+        HK: {
+            title: 'Hong Kong',
+            url: 'http://www.savethechildren.org.hk',
         },
-        'IS': {
-            'title': 'Iceland',
-            'url': 'http://www.barnaheill.is',
+        IS: {
+            title: 'Iceland',
+            url: 'http://www.barnaheill.is',
         },
-        'IN': {
-            'title': 'India',
-            'url': 'http://www.savethechildren.in',
+        IN: {
+            title: 'India',
+            url: 'http://www.savethechildren.in',
         },
-        'ID': {
-            'title': 'Indonesia',
-            'url': 'https://www.stc.or.id',
+        ID: {
+            title: 'Indonesia',
+            url: 'https://www.stc.or.id',
         },
-        'IT': {
-            'title': 'Italy',
-            'url': 'https://www.savethechildren.it/?utm_campaign=sci-website-redirect&utm_source=sci&utm_medium=display&utm_content=link',
+        IT: {
+            title: 'Italy',
+            url: 'https://www.savethechildren.it/?utm_campaign=sci-website-redirect&utm_source=sci&utm_medium=display&utm_content=link',
         },
-        'JP': {
-            'title': 'Japan',
-            'url': 'http://www.savechildren.or.jp',
+        JP: {
+            title: 'Japan',
+            url: 'http://www.savechildren.or.jp',
         },
-        'KR': {
-            'title': 'Korea',
-            'url': 'http://www.sc.or.kr',
+        KR: {
+            title: 'Korea',
+            url: 'http://www.sc.or.kr',
         },
-        'LT': {
-            'title': 'Lithuania',
-            'url': 'https://www.gelbekitvaikus.lt',
+        LT: {
+            title: 'Lithuania',
+            url: 'https://www.gelbekitvaikus.lt',
         },
-        'MX': {
-            'title': 'Mexico',
-            'url': 'https://www.savethechildren.mx',
+        MX: {
+            title: 'Mexico',
+            url: 'https://www.savethechildren.mx',
         },
-        'NL': {
-            'title': 'Netherlands',
-            'url': 'https://www.savethechildren.nl',
+        NL: {
+            title: 'Netherlands',
+            url: 'https://www.savethechildren.nl',
         },
-        'NZ': {
-            'title': 'New Zealand',
-            'url': 'http://www.savethechildren.org.nz',
+        NZ: {
+            title: 'New Zealand',
+            url: 'http://www.savethechildren.org.nz',
         },
-        'NO': {
-            'title': 'Norway',
-            'url': 'http://www.reddbarna.no',
+        NO: {
+            title: 'Norway',
+            url: 'http://www.reddbarna.no',
         },
-        'PH': {
-            'title': 'Philippines',
-            'url': 'http://www.savethechildren.org.ph',
+        PH: {
+            title: 'Philippines',
+            url: 'http://www.savethechildren.org.ph',
         },
-        'RO': {
-            'title': 'Romania',
-            'url': 'http://www.salvaticopiii.ro',
+        RO: {
+            title: 'Romania',
+            url: 'http://www.salvaticopiii.ro',
         },
-        'ZA': {
-            'title': 'South Africa',
-            'url': 'https://www.savethechildren.org.za',
+        ZA: {
+            title: 'South Africa',
+            url: 'https://www.savethechildren.org.za',
         },
-        'ES': {
-            'title': 'Spain',
-            'url': 'https://www.savethechildren.es',
+        ES: {
+            title: 'Spain',
+            url: 'https://www.savethechildren.es',
         },
-        'SZ': {
-            'title': 'Swaziland',
-            'url': 'http://www.savethechildren.org.sz',
+        SZ: {
+            title: 'Swaziland',
+            url: 'http://www.savethechildren.org.sz',
         },
-        'SE': {
-            'title': 'Sweden',
-            'url': 'https://www.raddabarnen.se',
+        SE: {
+            title: 'Sweden',
+            url: 'https://www.raddabarnen.se',
         },
-        'CH': {
-            'title': 'Switzerland',
-            'url': 'https://www.savethechildren.ch',
+        CH: {
+            title: 'Switzerland',
+            url: 'https://www.savethechildren.ch',
         },
-        'GB': {
-            'title': 'UK',
-            'url': 'https://www.savethechildren.org.uk',
+        GB: {
+            title: 'UK',
+            url: 'https://www.savethechildren.org.uk',
         },
-        'US': {
-            'title': 'U.S.',
-            'url': 'https://www.savethechildren.org',
+        US: {
+            title: 'U.S.',
+            url: 'https://www.savethechildren.org',
         },
-        'XX': {
-            'title': 'International',
-            'url': 'https://www.savethechildren.net',
+        XX: {
+            title: 'International',
+            url: 'https://www.savethechildren.net',
         },
     };
 
     geo.prefix = function(country) {
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0,2)] : stc.modal.i18n.default;
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
         var prefix = '';
-        if(['DO','GB','US','PH','NL'].indexOf(stc.geo.country) > -1) {
+        if(['DO', 'GB', 'US', 'PH', 'NL'].indexOf(stc.geo.country) > -1) {
             prefix = lng.prefix;
         }
         return prefix + country;

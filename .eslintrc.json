@@ -1,34 +1,11 @@
 {
-  "rules": {
-    "eqeqeq": "warn",
-    "curly": "warn",
-    "no-extra-semi": "warn",
-    "semi": "warn",
-    "indent": [ "warn", 4 ],
-    "quotes": ["warn", "single"],
-    "valid-jsdoc": [
-      "warn",
-      {
-        "prefer": {
-          "returns": "return",
-          "property": "prop"
-        },
-        "requireReturn": false
-      }
-    ],
-    "comma-dangle": [
-      "warn", {
-        "arrays": "always-multiline",
-        "objects": "always-multiline"
-      }
-    ]
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
-  },
-  "globals": {
-    "jQuery": true
-  }
+    "extends": "strongloop",
+    "rules": {
+        "indent": [2, 4, { "SwitchCase": 1 }],
+        "max-len": 0,
+        "no-undef": 0,
+        "keyword-spacing": 0,
+        "strict": 0,
+        "one-var": 0
+    }
 }

@@ -1,10 +1,10 @@
 stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css', function() {
-    //load relevant member language file
+    // load relevant member language file
     stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js', function() {
-        //initiate modal
+        // initiate modal
         stc.modal.init();
 
-        //wait for web fonts to be loaded before displaying the popup
+        // wait for web fonts to be loaded before displaying the popup
         if(typeof WebFont !== 'undefined') {
             WebFont.load({
                 custom: {
@@ -13,7 +13,7 @@ stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css', function() {
                 active: function() {
                     stc.modal.show();
                 },
-                //in case of timeout or other error still show popup
+                // in case of timeout or other error still show popup
                 inactive: function() {
                     stc.modal.show();
                 },
