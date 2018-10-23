@@ -22,7 +22,9 @@
   },
   "contributors": [],
   "license": "(MIT)",
-  "dependencies": {},
+  "dependencies": {
+    "bootstrap": "^4.1.3"
+  },
   "engines": {
     "node": ">=0.10.3"
   },

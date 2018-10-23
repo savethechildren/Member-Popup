@@ -109,7 +109,7 @@ var stc = stc || {};
 
         // add picture element with different image sizes.
         var picture = stc.util.newDOMElement('picture', '');
-        var img = stc.util.newDOMElement('img', 'img-responsive', null, {
+        var img = stc.util.newDOMElement('img', 'img-fluid', null, {
             alt: 'Children playing with water',
             src: stc.modal.baseURL + '/img/children_dsk.jpg',
         });

@@ -22,16 +22,16 @@ $stc-trans-white: rgba(255,255,255,0.4);
 $base-duration: 250ms;
 $base-timing: ease;
 
-/* overrides */ 
-$brand-primary: $stc-red;
+/* overrides */
+$primary: $stc-red;
 $link-color: $stc-red;
 $link-hover-color: $stc-plum;
 $link-hover-decoration: none;
 $btn-border-radius-base: 4px;
 $gray-lighter: $stc-biscuit-lighter;
 
-$font-size-base: 16px;
-$font-size-small: 14px;
+$font-size-base: 1rem;
+$font-size-small: 0.875rem;
 $font-size-h1: floor(($font-size-base * 4)); // 64px
 $font-size-h2: floor(($font-size-base * 1.5)); // 24px
 $font-size-h3: floor(($font-size-base * 1.25)); // 20px
