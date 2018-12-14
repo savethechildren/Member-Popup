@@ -83,13 +83,13 @@ gulp.task('sass:watch', function() {
  * Watch JS files
  */
 gulp.task('scripts:watch', function() {
-    gulp.watch(paths.jsAll, ['concatInit', 'concatPopup', 'uglifyMembers']);
+    gulp.watch(paths.jsAll, gulp.series(gulp.parallel('concatInit', 'concatPopup', 'uglifyMembers')));
 });
 
 /**
  * Minify css files
  */
-gulp.task('cssmin', ['sass'], function() {
+gulp.task('cssmin', gulp.series(gulp.parallel('sass')), function() {
     return gulp.src(paths.toMin)
         .pipe(cssmin())
         .pipe(rename({ suffix: '.min' }))
@@ -107,6 +107,6 @@ gulp.task('test', function() {
 /**
  * Build scripts
  */
-gulp.task('build', ['concatInit', 'concatPopup', 'sass', 'cssmin', 'eslint', 'test', 'uglifyMembers']);
+gulp.task('build', gulp.series(gulp.parallel('concatInit', 'concatPopup', 'sass', 'cssmin', 'eslint', 'test', 'uglifyMembers')));
 
-gulp.task('default', ['build']);
+gulp.task('default', gulp.series(gulp.parallel('build')));
