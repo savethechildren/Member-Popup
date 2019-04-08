@@ -3,7 +3,7 @@ var stc = stc || {};
     /**
      * The list of SC Member countries and their attributes.
      */
-    geo.members = {
+    geo.extendedMembers = {
         AU: {
             title: 'Australia',
             url: 'http://www.savethechildren.org.au',

@@ -19,6 +19,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     eslint = require('gulp-eslint'),
     qunit = require('gulp-qunit'),
+    sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify');
 
 /**
@@ -28,8 +29,10 @@ gulp.task('concatInit', function() {
     return gulp.src(paths.jsInit)
         .pipe(concat('stc-popup-init.js'))
         .pipe(gulp.dest(paths.js))
-        .pipe(rename('stc-popup-init.min.js'))
+        .pipe(sourcemaps.init())
         .pipe(uglify())
+        .pipe(rename('stc-popup-init.min.js'))
+        .pipe(sourcemaps.write('../maps'))
         .pipe(gulp.dest(paths.js));
 });
 
@@ -37,8 +40,10 @@ gulp.task('concatPopup', function() {
     return gulp.src(paths.jsPopup)
         .pipe(concat('stc-popup.js'))
         .pipe(gulp.dest(paths.js))
-        .pipe(rename('stc-popup.min.js'))
+        .pipe(sourcemaps.init())
         .pipe(uglify())
+        .pipe(rename('stc-popup.min.js'))
+        .pipe(sourcemaps.write('../maps'))
         .pipe(gulp.dest(paths.js));
 });
 
@@ -68,7 +73,9 @@ gulp.task('eslint', function() {
  */
 gulp.task('sass', function() {
     return gulp.src('scss/stc-popup.scss')
+        .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
+        .pipe(sourcemaps.write('../maps'))
         .pipe(gulp.dest(paths.css));
 });
 
@@ -76,7 +83,7 @@ gulp.task('sass', function() {
  * Watch SASS files
  */
 gulp.task('sass:watch', function() {
-    gulp.watch(paths.sass, ['cssmin']);
+    gulp.watch(paths.sass, gulp.series('cssmin'));
 });
 
 /**
@@ -89,7 +96,7 @@ gulp.task('scripts:watch', function() {
 /**
  * Minify css files
  */
-gulp.task('cssmin', gulp.series(gulp.parallel('sass')), function() {
+gulp.task('cssmin', function() {
     return gulp.src(paths.toMin)
         .pipe(cssmin())
         .pipe(rename({ suffix: '.min' }))

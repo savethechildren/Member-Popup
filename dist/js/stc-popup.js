@@ -132,7 +132,7 @@ var stc = stc || {};
 
         modal.element = divmodal;
 
-        var toMember = stc.geo.members[stc.geo.country];
+        var toMember = stc.geo.extendedMembers[stc.geo.country];
 
         // load correct i18n data
         var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
@@ -208,7 +208,7 @@ var stc = stc || {};
     /**
      * The list of SC Member countries and their attributes.
      */
-    geo.members = {
+    geo.extendedMembers = {
         AU: {
             title: 'Australia',
             url: 'http://www.savethechildren.org.au',
