@@ -90,7 +90,7 @@ gulp.task('sass:watch', function() {
  * Watch JS files
  */
 gulp.task('scripts:watch', function() {
-    gulp.watch(paths.jsAll, gulp.series(gulp.parallel('concatInit', 'concatPopup', 'uglifyMembers')));
+    gulp.watch(paths.jsAll, gulp.series('concatInit', 'concatPopup', 'uglifyMembers'));
 });
 
 /**
@@ -114,6 +114,6 @@ gulp.task('test', function() {
 /**
  * Build scripts
  */
-gulp.task('build', gulp.series(gulp.parallel('concatInit', 'concatPopup', 'sass', 'cssmin', 'eslint', 'test', 'uglifyMembers')));
+gulp.task('build', gulp.series('concatInit', 'concatPopup', 'sass', 'cssmin', 'eslint', 'test', 'uglifyMembers'));
 
-gulp.task('default', gulp.series(gulp.parallel('build')));
+gulp.task('default', gulp.series('build'));
