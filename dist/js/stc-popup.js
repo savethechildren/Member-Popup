@@ -80,32 +80,26 @@ var stc = stc || {};
      */
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
-        if(stc.popupClose) {
-            divmodal.addEventListener('click', function(event) {
-                if(event.currentTarget !== event.target) {
-                    return false;
-                }
-                modal.close();
-            }, false);
-        }
+        divmodal.addEventListener('click', function(event) {
+            if(event.currentTarget !== event.target) {
+                return false;
+            }
+            modal.close();
+        }, false);
         var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal');
         var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'});
         var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
         innerModal.appendChild(gradientBox);
         closeBT.addEventListener('click', modal.close, false);
-        if(stc.popupClose) {
-            innerModal.appendChild(closeBT);
-        }
+        innerModal.appendChild(closeBT);
         var content = stc.util.newDOMElement('div', 'stc-popup-modal-content');
 
         // close modal on esc key
-        if(stc.popupClose) {
-            window.addEventListener('keyup', function(e) {
-                if (e.keyCode === 27) {
-                    modal.close();
-                }
-            }, false);
-        }
+        window.addEventListener('keyup', function(e) {
+            if (e.keyCode === 27) {
+                modal.close();
+            }
+        }, false);
 
         // add picture element with different image sizes.
         var picture = stc.util.newDOMElement('picture', '');

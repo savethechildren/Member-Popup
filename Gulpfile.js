@@ -83,7 +83,7 @@ gulp.task('sass', function() {
  * Watch SASS files
  */
 gulp.task('sass:watch', function() {
-    gulp.watch(paths.sass, gulp.series('cssmin'));
+    gulp.watch(paths.sass, gulp.series('sass', 'cssmin'));
 });
 
 /**
