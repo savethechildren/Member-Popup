@@ -115,11 +115,6 @@
       font-family: $font-family-base,Arial,sans-serif;
       content: "\D7";
     }
-    opacity: 0.6;
-    transition: $transition-base;
-    @include hover-focus {
-        opacity: 1;
-    }
   }
   .stc-popup-modal-gradient-box {
     z-index: 1;

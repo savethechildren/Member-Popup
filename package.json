@@ -35,7 +35,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.2.0",
     "gulp-eslint": "^6.0.0",
-    "gulp-qunit": "^2.0.3",
+    "gulp-qunit": "^2.0.4",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",

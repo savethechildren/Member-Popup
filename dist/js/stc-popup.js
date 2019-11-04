@@ -131,17 +131,16 @@ var stc = stc || {};
         // load correct i18n data
         var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
         var toCountry = lng.countries[stc.geo.country];
-
-        var popupText = lng.text;
-        var stayText = lng.stayText;
+        var popupText = lng.text.replace(/\{country\}/g, toCountry)
+            .replace(/\{prefixCountry\}/g, stc.geo.prefix(toCountry)).replace(/\.\./g, '.');
         var goBtn = lng.goBtn;
 
         // add inner content HTML
         content.innerHTML = '<h1>' + lng.title + '</h1>' +
-            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, stc.geo.prefix(toCountry)) + '</p>' +
+            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
-            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>' +
-            '<p>' + stayText + '</p></div>';
+            '<a href="javascript:stc.modal.close()" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
+            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>';
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
     };
