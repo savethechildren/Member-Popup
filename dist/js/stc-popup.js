@@ -139,7 +139,7 @@ var stc = stc || {};
         content.innerHTML = '<h1>' + lng.title + '</h1>' +
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
-            '<a href="javascript:stc.modal.close()" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
+            '<a href="javascript:stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
             '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>';
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
@@ -396,7 +396,7 @@ var stc = stc || {};
 
 }(stc.analytics = stc.analytics || {}));
 
-stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?v=2.0', function() {
+stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?v=3.0', function() {
     // load relevant member language file
     stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js', function() {
         // initiate modal

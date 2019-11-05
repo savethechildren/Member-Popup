@@ -7,10 +7,13 @@
     <script>
         var stc = stc || {}; stc.popupOrigin = "XX";
         (function() {
-            var stcp = document.createElement('script'); stcp.async = true; stcp.defer = true; stcp.src = "dist/js/stc-popup-init.min.js";
+            var stcp = document.createElement('script'); stcp.type = 'module'; stcp.async = true; stcp.defer = true; stcp.src = "https://www.savethechildren.ngo/member-popup/dist/js/modules/main.js?v=3.0";
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(stcp, s);
+            var stcp = document.createElement('script'); stcp.async = true; stcp.defer = true; stcp.src = "https://www.savethechildren.ngo/member-popup/dist/js/stc-popup-init.min.js?v=3.0";
+            stcp.setAttribute('nomodule', '');
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(stcp, s);
         })();
-    </script>
+        </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-2913954-23"></script>
     <script>

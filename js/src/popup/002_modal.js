@@ -67,7 +67,7 @@ var stc = stc || {};
         content.innerHTML = '<h1>' + lng.title + '</h1>' +
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
-            '<a href="javascript:stc.modal.close()" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
+            '<a href="javascript:stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
             '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>';
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);

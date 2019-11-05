@@ -1,4 +1,4 @@
-stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?v=2.0', function() {
+stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?v=3.0', function() {
     // load relevant member language file
     stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js', function() {
         // initiate modal
