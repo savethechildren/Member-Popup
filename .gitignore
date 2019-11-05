@@ -1,7 +1,7 @@
 .sass-cache/
 .vscode/
-nbproject/
 node_modules/
-bower_components/
 dist/fonts/
 css/
+/nbproject/
+package-lock.json

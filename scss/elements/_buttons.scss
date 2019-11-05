@@ -2,12 +2,15 @@
   font-family: $font-family-header;
   text-transform: uppercase;
   width: auto;
+  margin-bottom: 1em;
+  margin-right: 0.5em;
+  margin-left: 0.5em;
   &.btn-empty {
-    border-color: $body-bg;
-    color: $body-bg;
+    border-color: $stc-red;
+    color: $stc-red;
     &:hover, &:active {
-      background-color: $body-bg;
-      color: $stc-red;
+      background-color: $stc-red;
+      color: $body-bg;
     }
   }
 }

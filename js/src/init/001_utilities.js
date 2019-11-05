@@ -9,11 +9,13 @@ var stc = stc || {};
      * @param {Int} exdays Number of days the cookie will last.
      * @param {String} [domain] The domain name to set the cookie for.
      */
-    util.setCookie = function(cname, cvalue, exdays, domain) {
+    util.setCookie = function(cname, cvalue, exdays, domain, sameSite) {
+        sameSite = sameSite || 'none';
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         var expires = 'expires=' + d.toUTCString();
         document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/' +
+                ';secure;sameSite=' + sameSite +
                 (domain ? ';domain=' + domain : '');
     };
 

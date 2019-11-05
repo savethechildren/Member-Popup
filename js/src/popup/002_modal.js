@@ -8,36 +8,30 @@ var stc = stc || {};
      */
     modal.init = function() {
         var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
-        if(stc.popupClose) {
-            divmodal.addEventListener('click', function(event) {
-                if(event.currentTarget !== event.target) {
-                    return false;
-                }
-                modal.close();
-            }, false);
-        }
+        divmodal.addEventListener('click', function(event) {
+            if(event.currentTarget !== event.target) {
+                return false;
+            }
+            modal.close();
+        }, false);
         var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal');
         var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'});
         var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
         innerModal.appendChild(gradientBox);
         closeBT.addEventListener('click', modal.close, false);
-        if(stc.popupClose) {
-            innerModal.appendChild(closeBT);
-        }
+        innerModal.appendChild(closeBT);
         var content = stc.util.newDOMElement('div', 'stc-popup-modal-content');
 
         // close modal on esc key
-        if(stc.popupClose) {
-            window.addEventListener('keyup', function(e) {
-                if (e.keyCode === 27) {
-                    modal.close();
-                }
-            }, false);
-        }
+        window.addEventListener('keyup', function(e) {
+            if (e.keyCode === 27) {
+                modal.close();
+            }
+        }, false);
 
         // add picture element with different image sizes.
         var picture = stc.util.newDOMElement('picture', '');
-        var img = stc.util.newDOMElement('img', 'img-responsive', null, {
+        var img = stc.util.newDOMElement('img', 'img-fluid', null, {
             alt: 'Children playing with water',
             src: stc.modal.baseURL + '/img/children_dsk.jpg',
         });
@@ -60,22 +54,21 @@ var stc = stc || {};
 
         modal.element = divmodal;
 
-        var toMember = stc.geo.members[stc.geo.country];
+        var toMember = stc.geo.extendedMembers[stc.geo.country];
 
         // load correct i18n data
         var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
         var toCountry = lng.countries[stc.geo.country];
-
-        var popupText = lng.text;
-        var stayText = lng.stayText;
+        var popupText = lng.text.replace(/\{country\}/g, toCountry)
+            .replace(/\{prefixCountry\}/g, stc.geo.prefix(toCountry)).replace(/\.\./g, '.');
         var goBtn = lng.goBtn;
 
         // add inner content HTML
         content.innerHTML = '<h1>' + lng.title + '</h1>' +
-            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText.replace(/\{country\}/g, stc.geo.prefix(toCountry)) + '</p>' +
+            '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
-            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>' +
-            '<p>' + stayText + '</p></div>';
+            '<a href="javascript:stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
+            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>';
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
     };

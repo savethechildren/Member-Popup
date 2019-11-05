@@ -1,5 +1,8 @@
 {
     "extends": "strongloop",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
         "max-len": 0,

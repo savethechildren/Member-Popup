@@ -12,7 +12,7 @@ var stc = stc || {};
         stc.geo.country = '';
         stc.geo.country = stc.util.getCookie('stc_country');
         if(typeof stc.geo.country === 'undefined' || stc.geo.country === ''){
-            stc.util.jsonp('https://apps.skype.com/countrycode?jsoncallback=setCountry', {
+            stc.util.jsonp('https://cfwk.savethechildren.ngo/api/geo/country?callback=setCountry', {
                 callbackName: 'setCountry',
                 onSuccess: function(json){
                     stc.geo.country = json.country_code;

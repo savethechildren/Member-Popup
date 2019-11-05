@@ -5,15 +5,7 @@ h1 {
   font-family: $font-family-header;
   font-weight: 400;
   font-size: 36px;
-  @media (min-width: $screen-md-min) { font-size: 48px; }
-  @media (min-width: $screen-lg-min) { font-size: $font-size-h1; }
-  &.lead {
-    background: $body-bg;
-    padding: 0.1em 0.2em;
-    display: inline-block;
-    border-radius: 4px;
-    line-height: 90%;
-  }
+  margin-top: 1.5rem;
 }
 h2, h3, h4 {
   font-family: $font-family-header;
@@ -27,15 +19,13 @@ h2 {
   text-transform: uppercase;
 }
 
-.stc-icon { 
+.stc-icon {
   width: 1em;
   height: 1em;
   display: inline-block;
   path {
     fill: $stc-red;
-    @include transition-property(fill);
-    @include transition-duration(250ms);
-    transition-timing-function: ease;
+    @include transition($btn-transition);
   }
   &.stc-gray path {
     fill: $stc-biscuit;
@@ -48,12 +38,6 @@ h2 {
 
 .cap {
   text-transform: uppercase;
-}
-
-a {
-  @include transition-property(color);
-  @include transition-duration(250ms);
-  transition-timing-function: ease;
 }
 
 .text-red {

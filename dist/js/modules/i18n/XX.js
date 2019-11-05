@@ -1,4 +1,4 @@
-stc.modal.i18n = {
+let i18n = {
     default: {
         title: 'Welcome to <span class="text-nowrap">Save the Children</span>!',
         text: 'Here you’ll find news and information on our global organisation and the work we do for children around the world. You can also visit your local Save the Children {country} website to learn more about how you can support our work.',
@@ -42,3 +42,5 @@ stc.modal.i18n = {
         },
     },
 };
+
+export {i18n}

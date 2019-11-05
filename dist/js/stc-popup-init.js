@@ -9,11 +9,13 @@ var stc = stc || {};
      * @param {Int} exdays Number of days the cookie will last.
      * @param {String} [domain] The domain name to set the cookie for.
      */
-    util.setCookie = function(cname, cvalue, exdays, domain) {
+    util.setCookie = function(cname, cvalue, exdays, domain, sameSite) {
+        sameSite = sameSite || 'none';
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         var expires = 'expires=' + d.toUTCString();
         document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/' +
+                ';secure;sameSite=' + sameSite +
                 (domain ? ';domain=' + domain : '');
     };
 
@@ -136,7 +138,7 @@ var stc = stc || {};
         stc.geo.country = '';
         stc.geo.country = stc.util.getCookie('stc_country');
         if(typeof stc.geo.country === 'undefined' || stc.geo.country === ''){
-            stc.util.jsonp('https://apps.skype.com/countrycode?jsoncallback=setCountry', {
+            stc.util.jsonp('https://cfwk.savethechildren.ngo/api/geo/country?callback=setCountry', {
                 callbackName: 'setCountry',
                 onSuccess: function(json){
                     stc.geo.country = json.country_code;
@@ -197,14 +199,16 @@ if(stc.geo.country) {
 } else {
     window.addEventListener('countryIsSet', init);
 }
+stc.popupIsInit = false;
 
 function init() {
-    if(stc.util.getCookie('stc_popup_closed') !== '1' && stc.geo.members.indexOf(stc.geo.country) > -1 && stc.geo.country !== stc.popupOrigin) {
+    if(!stc.popupIsInit && stc.util.getCookie('stc_popup_closed') !== '1' && stc.geo.members.indexOf(stc.geo.country) > -1 && stc.geo.country !== stc.popupOrigin) {
         stc.modal = stc.modal || {};
-        stc.modal.baseURL = 'https://misc/member-popup/dist';
+        stc.modal.baseURL = 'https://www.savethechildren.ngo/member-popup/dist';
         var stcp = document.createElement('script');
-        stcp.src = stc.modal.baseURL + '/js/stc-popup.min.js';
+        stcp.src = stc.modal.baseURL + '/js/stc-popup.min.js?v=3.0';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(stcp, s);
+        stc.popupIsInit = true;
     }
 }
