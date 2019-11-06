@@ -132,15 +132,15 @@ var stc = stc || {};
             title: 'International',
             url: 'https://www.savethechildren.net',
         },
-    };
+    }
 
     geo.prefix = function(country) {
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
-        var prefix = '';
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default
+        var prefix = ''
         if(['DO', 'GB', 'US', 'PH', 'NL'].indexOf(stc.geo.country) > -1) {
-            prefix = lng.prefix;
+            prefix = lng.prefix
         }
-        return prefix + country;
-    };
+        return prefix + country
+    }
 
-}(stc.geo = stc.geo || {}));
+}(stc.geo = stc.geo || {}))

@@ -917,6 +917,7 @@
     .stc-popup-modal .stc-popup-modal-content p {
       line-height: 1.3em; }
   .stc-popup-modal .btn {
+    background-image: none;
     white-space: normal; }
     .stc-popup-modal .btn.btn-negative {
       border-color: #DA291C;

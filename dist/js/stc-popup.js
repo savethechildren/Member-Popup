@@ -11,11 +11,11 @@ var stc = stc || {};
      */
     util.waitForObjectOrEvent = function(object, event, callback) {
         if(object) {
-            callback();
+            callback()
         } else {
-            window.addEventListener(event, callback);
+            window.addEventListener(event, callback)
         }
-    };
+    }
 
     /**
      * Adds a stylesheet and calls back when complete.
@@ -23,13 +23,13 @@ var stc = stc || {};
      * @param {function} callback The callback function.
      */
     util.addCSS = function(href, callback) {
-        var s = document.createElement('link');
-        s.setAttribute('rel', 'stylesheet');
-        s.setAttribute('type', 'text/css');
-        s.setAttribute('href', href);
-        s.onload = callback;
-        document.getElementsByTagName('head').item(0).appendChild(s);
-    };
+        var s = document.createElement('link')
+        s.setAttribute('rel', 'stylesheet')
+        s.setAttribute('type', 'text/css')
+        s.setAttribute('href', href)
+        s.onload = callback
+        document.getElementsByTagName('head').item(0).appendChild(s)
+    }
 
     /**
      * Adds a script and calls back when complete.
@@ -37,12 +37,12 @@ var stc = stc || {};
      * @param {function} callback The callback function.
      */
     util.addScript = function(src, callback) {
-        var s = document.createElement('script');
-        s.src = src;
-        s.async = false;
-        s.onload = callback;
-        document.body.appendChild(s);
-    };
+        var s = document.createElement('script')
+        s.src = src
+        s.async = false
+        s.onload = callback
+        document.body.appendChild(s)
+    }
 
     /**
      * Creates a new DOM element.
@@ -53,148 +53,148 @@ var stc = stc || {};
      * @return {object} The newly created DOM element.
      */
     util.newDOMElement = function(type, className, id, attrs) {
-        var e = document.createElement(type);
+        var e = document.createElement(type)
         if(className) {
-            e.className = className;
+            e.className = className
         }
         if(id) {
-            e.id = id;
+            e.id = id
         }
         if(typeof (attrs) === 'object') {
             Object.keys(attrs).forEach(function(key) {
-                e.setAttribute(key, attrs[key]);
-            });
+                e.setAttribute(key, attrs[key])
+            })
         }
-        return e;
-    };
+        return e
+    }
 
-}(stc.util = stc.util || {}));
+}(stc.util = stc.util || {}))
 
 var stc = stc || {};
 (function(modal, $){
 
-    modal.element = null;
+    modal.element = null
 
     /**
      * Initialises the popup by creating the required DOM elements.
      */
     modal.init = function() {
-        var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
+        var divmodal = stc.util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal')
         divmodal.addEventListener('click', function(event) {
             if(event.currentTarget !== event.target) {
-                return false;
+                return false
             }
-            modal.close();
-        }, false);
-        var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal');
-        var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'});
-        var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box');
-        innerModal.appendChild(gradientBox);
-        closeBT.addEventListener('click', modal.close, false);
-        innerModal.appendChild(closeBT);
-        var content = stc.util.newDOMElement('div', 'stc-popup-modal-content');
+            modal.close()
+        }, false)
+        var innerModal = stc.util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal')
+        var closeBT = stc.util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'})
+        var gradientBox = stc.util.newDOMElement('div', 'stc-popup-modal-gradient-box')
+        innerModal.appendChild(gradientBox)
+        closeBT.addEventListener('click', modal.close, false)
+        innerModal.appendChild(closeBT)
+        var content = stc.util.newDOMElement('div', 'stc-popup-modal-content')
 
         // close modal on esc key
         window.addEventListener('keyup', function(e) {
             if (e.keyCode === 27) {
-                modal.close();
+                modal.close()
             }
-        }, false);
+        }, false)
 
         // add picture element with different image sizes.
-        var picture = stc.util.newDOMElement('picture', '');
+        var picture = stc.util.newDOMElement('picture', '')
         var img = stc.util.newDOMElement('img', 'img-fluid', null, {
             alt: 'Children playing with water',
             src: stc.modal.baseURL + '/img/children_dsk.jpg',
-        });
+        })
         var src1 = stc.util.newDOMElement('source', null, null, {
             media: '(max-width: 640px) and (orientation: portrait)',
             srcset: stc.modal.baseURL + '/img/children_mob.jpg',
-        });
+        })
         var src2 = stc.util.newDOMElement('source', null, null, {
             media: '(min-width: 641px)',
             srcset: stc.modal.baseURL + '/img/children_dsk.jpg',
-        });
-        picture.appendChild(src1);
-        picture.appendChild(src2);
-        picture.appendChild(img);
+        })
+        picture.appendChild(src1)
+        picture.appendChild(src2)
+        picture.appendChild(img)
 
-        innerModal.appendChild(picture);
-        innerModal.appendChild(content);
-        divmodal.appendChild(innerModal);
-        document.getElementsByTagName('body')[0].appendChild(divmodal);
+        innerModal.appendChild(picture)
+        innerModal.appendChild(content)
+        divmodal.appendChild(innerModal)
+        document.getElementsByTagName('body')[0].appendChild(divmodal)
 
-        modal.element = divmodal;
+        modal.element = divmodal
 
-        var toMember = stc.geo.extendedMembers[stc.geo.country];
+        var toMember = stc.geo.extendedMembers[stc.geo.country]
 
         // load correct i18n data
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
-        var toCountry = lng.countries[stc.geo.country];
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default
+        var toCountry = lng.countries[stc.geo.country]
         var popupText = lng.text.replace(/\{country\}/g, toCountry)
-            .replace(/\{prefixCountry\}/g, stc.geo.prefix(toCountry)).replace(/\.\./g, '.');
-        var goBtn = lng.goBtn;
+            .replace(/\{prefixCountry\}/g, stc.geo.prefix(toCountry)).replace(/\.\./g, '.')
+        var goBtn = lng.goBtn
 
         // add inner content HTML
         content.innerHTML = '<h1>' + lng.title + '</h1>' +
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
             '<a href="javascript:stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
-            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>';
+            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>'
 
-        document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
-    };
+        document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound)
+    }
 
     /**
      * Shows the modal.
      */
     modal.show = function() {
-        modal.element.className += ' on';
+        modal.element.className += ' on'
         // reset body overflow
-        document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-    };
+        document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+    }
 
     /**
      * Hides the modal.
      */
     modal.hide = function() {
-        modal.element.className = modal.element.className.replace(' on', '');
+        modal.element.className = modal.element.className.replace(' on', '')
         // reset body overflow
-        document.getElementsByTagName('body')[0].style.overflow = 'auto';
-    };
+        document.getElementsByTagName('body')[0].style.overflow = 'auto'
+    }
 
     /**
      * Closes the modal, sets the cookie and sends a GA event if relevant.
      * @param {string} [e] The name of the event to override the default 'Close' (optional).
      */
     modal.close = function(e) {
-        modal.hide();
-        stc.util.setCookie('stc_popup_closed', '1', 14, stc.util.getDomain(window.location.hostname));
-        var eventName = typeof (e) === 'string' ? e : 'Close';
+        modal.hide()
+        stc.util.setCookie('stc_popup_closed', '1', 14, stc.util.getDomain(window.location.hostname))
+        var eventName = typeof (e) === 'string' ? e : 'Close'
         // add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', eventName, stc.geo.country + ' - ' + eventName);
+            stc.analytics.sendEvent('Member popup', eventName, stc.geo.country + ' - ' + eventName)
         }
-    };
+    }
 
     /**
      * Tracks an outbound link before redirecting the user to it.
      * @param {object} e The initiating event.
      */
     modal.trackOutbound = function(e) {
-        e.preventDefault();
+        e.preventDefault()
         if(stc.analytics && stc.analytics.isOn()) {
             stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - Go', function() {
-                window.location = e.target;
-            });
+                window.location = e.target
+            })
             // 1 second timeout fallback in case ga event doesn't call back
-            window.setTimeout(function() { window.location = e.target; }, 1000);
+            window.setTimeout(function() { window.location = e.target }, 1000)
         } else {
-            window.location = e.target;
+            window.location = e.target
         }
-    };
+    }
 
-}(stc.modal = stc.modal || {}));
+}(stc.modal = stc.modal || {}))
 
 var stc = stc || {};
 (function(geo){
@@ -330,18 +330,18 @@ var stc = stc || {};
             title: 'International',
             url: 'https://www.savethechildren.net',
         },
-    };
+    }
 
     geo.prefix = function(country) {
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default;
-        var prefix = '';
+        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default
+        var prefix = ''
         if(['DO', 'GB', 'US', 'PH', 'NL'].indexOf(stc.geo.country) > -1) {
-            prefix = lng.prefix;
+            prefix = lng.prefix
         }
-        return prefix + country;
-    };
+        return prefix + country
+    }
 
-}(stc.geo = stc.geo || {}));
+}(stc.geo = stc.geo || {}))
 
 var stc = stc || {};
 (function(analytics){
@@ -349,7 +349,7 @@ var stc = stc || {};
     /**
      * The list of available tracker names.
      */
-    analytics.trackers = [];
+    analytics.trackers = []
 
     /**
      * Checks that Google Analytics is initialized
@@ -358,17 +358,17 @@ var stc = stc || {};
      */
     analytics.isOn = function() {
         if (window.ga && ga.create) {
-            var gaTrackers = ga.getAll();
+            var gaTrackers = ga.getAll()
             gaTrackers.forEach(function(v) {
                 if(v.get('trackingId') !== '') {
-                    analytics.trackers.push(v.get('name'));
+                    analytics.trackers.push(v.get('name'))
                 }
-            });
-            return true;
+            })
+            return true
         } else {
-            return false;
+            return false
         }
-    };
+    }
 
     /**
      * Sends an event to GA.
@@ -381,7 +381,7 @@ var stc = stc || {};
      */
     analytics.sendEvent = function(category, action, label, callback) {
         if(!category || !action || !label) {
-            return false;
+            return false
         }
         analytics.trackers.forEach(function(v) {
             ga(v + '.' + 'send', {
@@ -390,17 +390,17 @@ var stc = stc || {};
                 eventAction: action,
                 eventLabel: label || '',
                 hitCallback: callback || '',
-            });
-        });
-    };
+            })
+        })
+    }
 
-}(stc.analytics = stc.analytics || {}));
+}(stc.analytics = stc.analytics || {}))
 
-stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?v=3.0', function() {
+stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?ver=1572968762390', function() {
     // load relevant member language file
-    stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js', function() {
+    stc.util.addScript(stc.modal.baseURL + '/js/members/' + stc.popupOrigin + '.js?ver=1572968762390', function() {
         // initiate modal
-        stc.modal.init();
+        stc.modal.init()
 
         // wait for web fonts to be loaded before displaying the popup
         if(typeof WebFont !== 'undefined') {
@@ -409,19 +409,19 @@ stc.util.addCSS(stc.modal.baseURL + '/css/stc-popup.min.css?v=3.0', function() {
                     families: ['Gill Sans Infant', 'Trade Gothic LT'],
                 },
                 active: function() {
-                    stc.modal.show();
+                    stc.modal.show()
                 },
                 // in case of timeout or other error still show popup
                 inactive: function() {
-                    stc.modal.show();
+                    stc.modal.show()
                 },
-            });
+            })
         } else {
-            stc.modal.show();
+            stc.modal.show()
         }
-    });
+    })
 
-});
+})
 
 /* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
 function w(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
