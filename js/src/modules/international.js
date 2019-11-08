@@ -1,4 +1,4 @@
-import * as util from './utilities'
+import * as util from './utilities.js'
 
 let country = ''
 let userLanguage = 'en-US'
@@ -66,5 +66,5 @@ setUserLanguage()
 locate()
 
 export {
-    locate, country, members, setUserLanguage, userLanguage
+    locate, country, members, setUserLanguage, userLanguage,
 }

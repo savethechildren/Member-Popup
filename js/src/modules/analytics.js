@@ -1,7 +1,7 @@
 /**
  * The list of available tracker names.
  */
-let trackers = []
+const trackers = []
 
 /**
  * Checks that Google Analytics is initialized
