@@ -55,15 +55,15 @@ const init = () => {
     const picture = util.newDOMElement('picture', '')
     const img = util.newDOMElement('img', 'img-fluid', null, {
         alt: 'Children playing with water',
-        src: `${window.stc.modal.baseURL  }/img/children_dsk.jpg`,
+        src: `${window.stc.modal.baseURL}/img/children_dsk.jpg`,
     })
     const src1 = util.newDOMElement('source', null, null, {
         media: '(max-width: 640px) and (orientation: portrait)',
-        srcset: `${window.stc.modal.baseURL  }/img/children_mob.jpg`,
+        srcset: `${window.stc.modal.baseURL}/img/children_mob.jpg`,
     })
     const src2 = util.newDOMElement('source', null, null, {
         media: '(min-width: 641px)',
-        srcset: `${window.stc.modal.baseURL  }/img/children_dsk.jpg`,
+        srcset: `${window.stc.modal.baseURL}/img/children_dsk.jpg`,
     })
     picture.appendChild(src1)
     picture.appendChild(src2)
@@ -79,23 +79,21 @@ const init = () => {
     const toMember = geo.extendedMembers[stc.geo.country]
 
     // load correct i18n data
-    import('./i18n/' + stc.popupOrigin + '.js')
-        .then(i18n => {
+    import(`./i18n/${stc.popupOrigin}.js`)
+        .then((i18n) => {
             stc.i18n = i18n.i18n
-            var lng = i18n.i18n[stc.geo.userLanguage.substr(0, 2)] ? i18n.i18n[stc.geo.userLanguage.substr(0, 2)] : i18n.i18n.default;
-            var toCountry = lng.countries[stc.geo.country];
-            var popupText = lng.text.replace(/\{country\}/g, toCountry)
-                .replace(/\{prefixCountry\}/g, geo.prefix(toCountry)).replace(/\.\./g, '.');
-            var goBtn = lng.goBtn;
+            const lng = i18n.i18n[stc.geo.userLanguage.substr(0, 2)] ? i18n.i18n[stc.geo.userLanguage.substr(0, 2)] : i18n.i18n.default
+            const toCountry = lng.countries[stc.geo.country]
+            const popupText = lng.text.replace(/\{country\}/g, toCountry)
+                .replace(/\{prefixCountry\}/g, geo.prefix(toCountry)).replace(/\.\./g, '.')
 
             // add inner content HTML
-            content.innerHTML = '<h1>' + lng.title + '</h1>' +
-                '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
-                '<p>' +
-                '<a href="javascript:window.stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
-                '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', geo.prefix(toCountry)) + '</a></p>';
+            content.innerHTML = `<h1>${lng.title}</h1>
+            <div class="stc-popup-modal-content-body" id="stc-popup-content"><p>${popupText}</p>
+              <p><a href="javascript:window.stc.modal.close('Stay')" class="btn btn-empty btn-lg" id="stc-popup-stay">${lng.stayBtn}</a>
+                <a href="${toMember.url}" class="btn btn-primary btn-lg" id="stc-popup-continue">${lng.goBtn.replace('{country}', geo.prefix(toCountry))}</a></p>`
 
-            document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
+            document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound)
         })
 }
 

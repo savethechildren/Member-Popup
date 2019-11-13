@@ -30,6 +30,7 @@
     "node": ">=0.10.3"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-strongloop": "^2.1.0",
@@ -41,7 +42,6 @@
     "gulp-qunit": "^2.0.4",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2",
     "gulp-uglify-es": "^2.0.0",
     "gulp-watch": "^5.0.1"
   }

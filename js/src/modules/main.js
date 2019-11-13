@@ -1,11 +1,13 @@
+/* eslint-disable no-inner-declarations */
+/* eslint-disable no-new-func */
 import * as util from './utilities.js'
 import * as geo from './international.js'
 
-const baseURL = 'https://www.savethechildren.ngo/member-popup/dist' //https://misc/member-popup/dist
+const baseURL = 'https://misc/member-popup/dist' // https://www.savethechildren.ngo/member-popup/dist
 
 // Feature detect dynamic import() (Edge lacks support)
 try {
-    new Function('import("").catch(function(){})')();
+    new Function('import("").catch(function(){})')()
 
     window.stc = window.stc || {}
 
@@ -17,16 +19,14 @@ try {
         if (!window.stc.popupIsInit && window.stc.util.getCookie('stc_popup_closed') !== '1'
             && window.stc.geo.members.indexOf(window.stc.geo.country) > -1
             && window.stc.geo.country !== window.stc.popupOrigin) {
-
             import('./modal.js')
-                .then(modal => {
+                .then((modal) => {
                     window.stc.modal = { ...modal }
 
                     window.stc.modal.baseURL = baseURL
 
-                    window.stc.util.addCSS(`${window.stc.modal.baseURL}/css/stc-popup.min.css`)
+                    window.stc.util.addCSS(`${baseURL}/css/stc-popup.min.css`)
                         .then(() => {
-
                             import('./vendor/webfont.js')
                                 .then(() => {
                                     modal.init()
@@ -36,14 +36,14 @@ try {
                                             custom: {
                                                 families: ['Gill Sans Infant', 'Trade Gothic LT'],
                                             },
-                                            active: function () {
+                                            active: () => {
                                                 window.stc.modal.show()
                                             },
                                             // in case of timeout or other error still show popup
-                                            inactive: function () {
+                                            inactive: () => {
                                                 stc.modal.show()
                                             },
-                                        });
+                                        })
                                     } else {
                                         window.stc.modal.show()
                                     }
@@ -51,15 +51,14 @@ try {
                                 })
                         })
                 })
-                .catch(err => {
-                    console.group(err)
+                .catch(() => {
+                    // Do nothing.
                 })
         }
     }
 
     geo.locate().then(() => init())
 } catch (err) {
-    console.log('no dynamic imports')
-    var stcp = document.createElement('script'); stcp.async = true; stcp.defer = true; stcp.src = baseURL + "/js/stc-popup-init.min.js";
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(stcp, s);
+    const stcp = document.createElement('script'); stcp.async = true; stcp.defer = true; stcp.src = `${baseURL}/js/stc-popup-init.min.js`
+    const s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(stcp, s)
 }
