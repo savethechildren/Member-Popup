@@ -27,6 +27,7 @@ function locate() {
                 timeout: 5,
             })
         } else {
+            window.stc.geo.country = country
             resolve(country)
         }
     })
@@ -63,7 +64,6 @@ const members = ['AU', 'CA', 'CH', 'CO', 'DE',
 
 /* Initialise some variables on page load */
 setUserLanguage()
-locate()
 
 export {
     locate, country, members, setUserLanguage, userLanguage,

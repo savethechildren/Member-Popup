@@ -3,64 +3,80 @@ import * as geo from './members.js'
 import * as analytics from './analytics.js'
 
 window.stc = window.stc || {}
-window.stc.util = {...util, ...window.stc.util}
-window.stc.geo = {...geo, ...window.stc.geo}
+window.stc.util = { ...util, ...window.stc.util }
+window.stc.geo = { ...geo, ...window.stc.geo }
 window.stc.analytics = analytics
 
-let element = null;
+let element = null
+
+/**
+ * Closes the modal, sets the cookie and sends a GA event if relevant.
+ * @param {string} [e] The name of the event to override the default 'Close' (optional).
+ */
+const close = (e) => {
+    window.stc.modal.hide()
+    window.stc.util.setCookie('stc_popup_closed', '1', 14, window.stc.util.getDomain(window.location.hostname))
+    const eventName = typeof (e) === 'string' ? e : 'Close'
+    // add event in GA
+    if(window.stc.analytics && window.stc.analytics.isOn()) {
+        window.stc.analytics.sendEvent('Member popup', eventName, `${window.stc.geo.country} - ${eventName}`)
+    }
+}
 
 /**
  * Initialises the popup by creating the required DOM elements.
  */
-const init = function() {
-    var divmodal = util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal');
-    divmodal.addEventListener('click', function(event) {
+const init = () => {
+    const divmodal = util.newDOMElement('div', 'stc-popup-modal', 'stcPopupModal')
+    divmodal.style.opacity = 0
+    divmodal.addEventListener('click', (event) => {
         if(event.currentTarget !== event.target) {
-            return false;
+            return false
         }
-        window.stc.modal.close();
-    }, false);
-    var innerModal = util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal');
-    var closeBT = util.newDOMElement('div', 'stc-popup-modal-close', null, {title: 'Close'});
-    var gradientBox = util.newDOMElement('div', 'stc-popup-modal-gradient-box');
-    innerModal.appendChild(gradientBox);
-    closeBT.addEventListener('click', close, false);
-    innerModal.appendChild(closeBT);
-    var content = util.newDOMElement('div', 'stc-popup-modal-content');
+        window.stc.modal.close()
+        return true
+    }, false)
+    const innerModal = util.newDOMElement('div', 'stc-popup-modal-inner', 'stcPopupInnerModal')
+    const closeBT = util.newDOMElement('div', 'stc-popup-modal-close', null, { title: 'Close' })
+    const gradientBox = util.newDOMElement('div', 'stc-popup-modal-gradient-box')
+    innerModal.appendChild(gradientBox)
+    closeBT.addEventListener('click', close, false)
+    innerModal.appendChild(closeBT)
+    const content = util.newDOMElement('div', 'stc-popup-modal-content')
 
     // close modal on esc key
-    window.addEventListener('keyup', function(e) {
+    window.addEventListener('keyup', (e) => {
         if (e.keyCode === 27) {
-            window.stc.modal.close();
+            window.stc.modal.close()
         }
-    }, false);
+    }, false)
 
     // add picture element with different image sizes.
-    var picture = util.newDOMElement('picture', '');
-    var img = util.newDOMElement('img', 'img-fluid', null, {
+    const picture = util.newDOMElement('picture', '')
+    const img = util.newDOMElement('img', 'img-fluid', null, {
         alt: 'Children playing with water',
-        src: window.stc.modal.baseURL + '/img/children_dsk.jpg',
-    });
-    var src1 = util.newDOMElement('source', null, null, {
+        src: `${window.stc.modal.baseURL  }/img/children_dsk.jpg`,
+    })
+    const src1 = util.newDOMElement('source', null, null, {
         media: '(max-width: 640px) and (orientation: portrait)',
-        srcset: window.stc.modal.baseURL + '/img/children_mob.jpg',
-    });
-    var src2 = util.newDOMElement('source', null, null, {
+        srcset: `${window.stc.modal.baseURL  }/img/children_mob.jpg`,
+    })
+    const src2 = util.newDOMElement('source', null, null, {
         media: '(min-width: 641px)',
-        srcset: window.stc.modal.baseURL + '/img/children_dsk.jpg',
-    });
-    picture.appendChild(src1);
-    picture.appendChild(src2);
-    picture.appendChild(img);
+        srcset: `${window.stc.modal.baseURL  }/img/children_dsk.jpg`,
+    })
+    picture.appendChild(src1)
+    picture.appendChild(src2)
+    picture.appendChild(img)
 
-    innerModal.appendChild(picture);
-    innerModal.appendChild(content);
-    divmodal.appendChild(innerModal);
-    document.getElementsByTagName('body')[0].appendChild(divmodal);
+    innerModal.appendChild(picture)
+    innerModal.appendChild(content)
+    divmodal.appendChild(innerModal)
+    document.getElementsByTagName('body')[0].appendChild(divmodal)
 
-    element = divmodal;
+    element = divmodal
 
-    var toMember = geo.extendedMembers[stc.geo.country];
+    const toMember = geo.extendedMembers[stc.geo.country]
 
     // load correct i18n data
     import('./i18n/' + stc.popupOrigin + '.js')
@@ -81,55 +97,44 @@ const init = function() {
 
             document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound);
         })
-};
+}
 
 /**
  * Shows the modal.
  */
-const show = function() {
-    element.className += ' on';
+const show = () => {
+    element.style.removeProperty('opacity')
+    element.className += ' on'
     // reset body overflow
-    document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-};
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+}
 
 /**
  * Hides the modal.
  */
-const hide = function() {
-    element.className = element.className.replace(' on', '');
+const hide = () => {
+    element.className = element.className.replace(' on', '')
     // reset body overflow
-    document.getElementsByTagName('body')[0].style.overflow = 'auto';
-};
-
-/**
- * Closes the modal, sets the cookie and sends a GA event if relevant.
- * @param {string} [e] The name of the event to override the default 'Close' (optional).
- */
-const close = function(e) {
-    window.stc.modal.hide();
-    window.stc.util.setCookie('stc_popup_closed', '1', 14, window.stc.util.getDomain(window.location.hostname));
-    var eventName = typeof (e) === 'string' ? e : 'Close';
-    // add event in GA
-    if(window.stc.analytics && window.stc.analytics.isOn()) {
-        window.stc.analytics.sendEvent('Member popup', eventName, window.stc.geo.country + ' - ' + eventName);
-    }
-};
+    document.getElementsByTagName('body')[0].style.overflow = 'auto'
+}
 
 /**
  * Tracks an outbound link before redirecting the user to it.
  * @param {object} e The initiating event.
  */
-const trackOutbound = function(e) {
+const trackOutbound = (e) => {
     e.preventDefault()
     if(window.stc.analytics && stc.analytics.isOn()) {
-        window.stc.analytics.sendEvent('Member popup', 'Go', geo.country + ' - Go', function() {
-            window.location = e.target;
-        });
+        window.stc.analytics.sendEvent('Member popup', 'Go', `${geo.country} - Go`, () => {
+            window.location = e.target
+        })
         // 1 second timeout fallback in case ga event doesn't call back
-        window.setTimeout(function() { window.location = e.target; }, 1000)
+        window.setTimeout(() => { window.location = e.target }, 1000)
     } else {
         window.location = e.target
     }
 }
 
-export {element, close, hide, init, show, trackOutbound}
+export {
+    element, close, hide, init, show, trackOutbound,
+}
