@@ -19,9 +19,10 @@ const gulp = require('gulp'),
     cssmin = require('gulp-cssmin'),
     rename = require('gulp-rename'),
     eslint = require('gulp-eslint'),
-    qunit = require('gulp-qunit'),
+    qunit = require('node-qunit-phantomjs'),
     sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify-es').default
+    uglify = require('gulp-uglify'),
+    uglifyEs = require('gulp-uglify-es').default
 
 /**
  * Concatenate javascript files
@@ -55,7 +56,7 @@ gulp.task('uglifyMembers', () => gulp.src(paths.jsMembers)
  * Uglify module files
  */
 gulp.task('uglifyModules', () => gulp.src('js/src/modules/**/*.js')
-    .pipe(uglify())
+    .pipe(uglifyEs())
     .pipe(gulp.dest('dist/js/modules')))
 
 /**
@@ -98,8 +99,14 @@ gulp.task('cssmin', () => gulp.src(paths.toMin)
 /**
  * QUnit tests
  */
-gulp.task('test', () => gulp.src(`${paths.tests}index.html`)
-    .pipe(qunit()))
+gulp.task('test', (callback) => qunit(`${paths.tests}index.html`, {verbose: true}, (result) => {
+    // Called with 0 for successful test completion, 1 for failure(s).
+    if (result === 0) {
+        callback()
+    } else {
+        callback(new Error('tests failed'))
+    }
+}))
 
 /**
  * Build scripts
