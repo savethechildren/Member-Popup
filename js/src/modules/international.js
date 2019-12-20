@@ -1,7 +1,27 @@
 import * as util from './utilities.js'
 
 let country = ''
-let userLanguage = 'en-US'
+
+/**
+ * Sets the user language variable and cookie.
+ * @param {string} [lng] The two-letter language code.
+ *   Defaults to the main browser language or the user-set value if present.
+ * @return {String} The language code.
+ */
+function setUserLanguage(lng) {
+    let language = 'en-US'
+    if(!lng) {
+        language = util.getCookie('stc_user_language') || (navigator.languages ? navigator.languages[0] : navigator.language || navigator.userLanguage)
+    } else {
+        language = lng
+    }
+    if(language.length < 2) {
+        return false
+    }
+    util.setCookie('stc_user_language', language, 14, util.getDomain(window.location.hostname))
+    stc.geo.userLanguage = language
+    return language
+}
 
 /**
  * Locate the visitor by IP.
@@ -19,6 +39,7 @@ function locate() {
                 onSuccess: (json) => {
                     window.stc.geo.country = json.country_code
                     util.setCookie('stc_country', json.country_code, 14, util.getDomain(window.location.hostname))
+                    setUserLanguage(json.user_language)
                     resolve(country)
                 },
                 onTimeout: () => {
@@ -28,28 +49,10 @@ function locate() {
             })
         } else {
             window.stc.geo.country = country
+            setUserLanguage()
             resolve(country)
         }
     })
-}
-
-/**
- * Sets the user language variable and cookie.
- * @param {string} [lng] The two-letter language code.
- *   Defaults to the main browser language or the user-set value if present.
- * @return {String} The language code.
- */
-function setUserLanguage(lng) {
-    let language = 'en-US'
-    if(!lng) {
-        language = util.getCookie('stc_user_language') || (navigator.languages ? navigator.languages[0] : navigator.language || navigator.userLanguage)
-    }
-    if(language.length < 2) {
-        return false
-    }
-    util.setCookie('stc_user_language', language, 14, util.getDomain(window.location.hostname))
-    userLanguage = language
-    return language
 }
 
 /**
@@ -62,9 +65,6 @@ const members = ['AU', 'CA', 'CH', 'CO', 'DE',
     'RO', 'SE', 'SZ', 'US', 'ZA',
 ]
 
-/* Initialise some variables on page load */
-setUserLanguage()
-
 export {
-    locate, country, members, setUserLanguage, userLanguage,
+    locate, country, members, setUserLanguage,
 }
