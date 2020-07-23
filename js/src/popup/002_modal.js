@@ -29,20 +29,41 @@ var stc = stc || {};
             }
         }, false)
 
+        var version = stc.modal.version || 'a'
+
         // add picture element with different image sizes.
         var picture = stc.util.newDOMElement('picture', '')
+
         var img = stc.util.newDOMElement('img', 'img-fluid', null, {
             alt: 'Children playing with water',
-            src: stc.modal.baseURL + '/img/children_dsk.jpg',
+            src: stc.modal.baseURL + '/img/covid_a_dsk.jpg',
         })
         var src1 = stc.util.newDOMElement('source', null, null, {
             media: '(max-width: 640px) and (orientation: portrait)',
-            srcset: stc.modal.baseURL + '/img/children_mob.jpg',
+            srcset: stc.modal.baseURL + '/img/covid_a_mob.jpg',
         })
         var src2 = stc.util.newDOMElement('source', null, null, {
             media: '(min-width: 641px)',
-            srcset: stc.modal.baseURL + '/img/children_dsk.jpg',
+            srcset: stc.modal.baseURL + '/img/covid_a_dsk.jpg',
         })
+        var popupTitle = 'Coronavirus Crisis'
+        var popupText = 'In these difficult times, everyone is struggling. But at-risk children and families need your help to fight this pandemic. If we act fast, their communities can be prepared and resilient.'
+        if(version === 'b') {
+            img = stc.util.newDOMElement('img', 'img-fluid', null, {
+                alt: 'Children playing with water',
+                src: stc.modal.baseURL + '/img/covid_b_dsk.jpg',
+            })
+            src1 = stc.util.newDOMElement('source', null, null, {
+                media: '(max-width: 640px) and (orientation: portrait)',
+                srcset: stc.modal.baseURL + '/img/cobid_b.jpg',
+            })
+            src2 = stc.util.newDOMElement('source', null, null, {
+                media: '(min-width: 641px)',
+                srcset: stc.modal.baseURL + '/img/covid_b_dsk.jpg',
+            })
+            popupTitle = 'Coronavirus Emergency Appeal'
+            popupText = 'Thank you for your interest in our work during this emergency. As you’ve just read, our teams are on the ground, ready to fight this pandemic. Please send help now, your support will keep children alive and safe so they can survive this crisis'
+        }
         picture.appendChild(src1)
         picture.appendChild(src2)
         picture.appendChild(img)
@@ -54,21 +75,13 @@ var stc = stc || {};
 
         modal.element = divmodal
 
-        var toMember = stc.geo.extendedMembers[stc.geo.country]
-
-        // load correct i18n data
-        var lng = stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] ? stc.modal.i18n[stc.geo.userLanguage.substr(0, 2)] : stc.modal.i18n.default
-        var toCountry = lng.countries[stc.geo.country]
-        var popupText = lng.text.replace(/\{country\}/g, toCountry)
-            .replace(/\{prefixCountry\}/g, stc.geo.prefix(toCountry)).replace(/\.\./g, '.')
-        var goBtn = lng.goBtn
-
         // add inner content HTML
-        content.innerHTML = '<h1>' + lng.title + '</h1>' +
+        content.innerHTML = '<h1>' + popupTitle + '</h1>' +
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
-            '<a href="javascript:stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
-            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>'
+            '<a href="https://donate.savethechildren.org/coronavirus?utm_source=web&utm_medium=lightbox&utm_campaign='
+            + (version === 'a' ? 'homepage' : 'coronavirus')
+            + '" class="btn btn-primary btn-lg" id="stc-popup-continue">Donate Now</a></p>'
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound)
     }
@@ -97,11 +110,11 @@ var stc = stc || {};
      */
     modal.close = function(e) {
         modal.hide()
-        stc.util.setCookie('stc_popup_closed', '1', 14, stc.util.getDomain(window.location.hostname))
+        stc.util.setCookie('stc_corona_closed', '1', 14, stc.util.getDomain(window.location.hostname))
         var eventName = typeof (e) === 'string' ? e : 'Close'
         // add event in GA
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', eventName, stc.geo.country + ' - ' + eventName)
+            stc.analytics.sendEvent('Coronavirus popup', eventName, eventName)
         }
     }
 
@@ -112,7 +125,7 @@ var stc = stc || {};
     modal.trackOutbound = function(e) {
         e.preventDefault()
         if(stc.analytics && stc.analytics.isOn()) {
-            stc.analytics.sendEvent('Member popup', 'Go', stc.geo.country + ' - Go', function() {
+            stc.analytics.sendEvent('Coronavirus popup', 'Donate', 'Donate', function() {
                 window.location = e.target
             })
             // 1 second timeout fallback in case ga event doesn't call back
