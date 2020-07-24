@@ -38,7 +38,32 @@ const newDOMElement = (type, className, id, attrs) => {
     return e
 }
 
+/**
+ * Adds UTM tracking code to a given URL.
+ * @param {string} url The URL to add tracking to.
+ * @param {string} source The UTM source.
+ * @param {string} medium The UTM medium.
+ * @param {string} campaign The UTM campaign.
+ * @return {string} The updated URL.
+ */
+const addUTM = (url, source, medium, campaign) => {
+    const fullURL = new URL(url)
+    const params = fullURL.searchParams
+    if(params.utm_source) {
+        return url
+    }
+
+    const queryString = `&utm_source=${source}&utm_medium=${medium}&utm_campaign=${campaign}`
+    if(fullURL.search) {
+        fullURL.search += queryString
+    } else {
+        fullURL.search = `?${queryString.substr(1)}`
+    }
+    return fullURL
+}
+
 export {
     addCSS,
     newDOMElement,
+    addUTM,
 }

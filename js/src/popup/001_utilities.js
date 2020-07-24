@@ -68,4 +68,67 @@ var stc = stc || {};
         return e
     }
 
+    /**
+     * Loads the URL into an anchor DOM element.
+     * @param {string} url The URL to parse.
+     * @return {Element} The anchor element.
+     */
+    util.loadURLNode = function(url) {
+        var urlParsingNode = document.createElement('a')
+        var href = url
+        if (util.msie) {
+            // Normalize before parse.  Refer Implementation Notes on why this is
+            // done in two steps on IE.
+            urlParsingNode.setAttribute('href', href)
+            href = urlParsingNode.href
+        }
+        urlParsingNode.setAttribute('href', href)
+        return urlParsingNode
+    }
+
+    /**
+     * Adds UTM tracking code to a given URL.
+     * @param {string} url The URL to add tracking to.
+     * @param {string} source The UTM source.
+     * @param {string} medium The UTM medium.
+     * @param {string} campaign The UTM campaign.
+     * @return {string} The updated URL.
+     */
+    util.addUTM = function(url, source, medium, campaign) {
+        var params = util.parseURLParams(url)
+        if(params.utm_source) {
+            return url
+        }
+        let urlParsingNode = util.loadURLNode(url)
+
+        let queryString = '&utm_source=' + source + '&utm_medium=' + medium + '&utm_campaign=' + campaign
+        if(urlParsingNode.search) {
+            urlParsingNode.search += queryString
+        } else {
+            urlParsingNode.search = '?' + queryString.substr(1)
+        }
+        return urlParsingNode.href
+    }
+
+    /**
+     * Parses the current URL search string into key value pairs.
+     * @param {string} [url=location.href] The URL to parse. Defaults to the current url.
+     * @return {object} The key/value pairs of URL paramaters.
+     */
+    util.parseURLParams = function(url) {
+        url = url || location.href
+        var parsedParameters = {}
+        url = util.parseURL(url)
+        if(url.search && url.search.length > 0) {
+            var uriParameters = url.search.split('&')
+            $.each(uriParameters, function(i, v) {
+                var parameter = v.split('=')
+                if(parameter.length === 2) {
+                    parsedParameters[parameter[0]] = decodeURIComponent(parameter[1])
+                }
+            })
+        }
+        return parsedParameters
+    }
+
 }(stc.util = stc.util || {}))
