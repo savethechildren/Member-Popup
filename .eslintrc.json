@@ -5,12 +5,19 @@
         "sourceType": "module"
     },
     "rules": {
-        "indent": [2, 4, { "SwitchCase": 1 }],
+        // "indent": [2, 4, { "SwitchCase": 1 }],
+        "linebreak-style": 0,
+        "eslint linebreak-style": [0, "error", "windows"],
         "max-len": 0,
         "no-undef": 0,
         "keyword-spacing": 0,
         "strict": 0,
         "one-var": 0,
-        "semi": [2, "never"]
+        "semi": [2, "never"],
+        "template-curly-spacing": "off",
+        "indent": [2, 4, {
+            "ignoredNodes": ["TemplateLiteral"],
+            "SwitchCase": 1
+        }]
     }
 }
