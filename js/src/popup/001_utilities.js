@@ -11,11 +11,11 @@ var stc = stc || {};
      */
     util.waitForObjectOrEvent = function(object, event, callback) {
         if(object) {
-            callback();
+            callback()
         } else {
-            window.addEventListener(event, callback);
+            window.addEventListener(event, callback)
         }
-    };
+    }
 
     /**
      * Adds a stylesheet and calls back when complete.
@@ -23,13 +23,13 @@ var stc = stc || {};
      * @param {function} callback The callback function.
      */
     util.addCSS = function(href, callback) {
-        var s = document.createElement('link');
-        s.setAttribute('rel', 'stylesheet');
-        s.setAttribute('type', 'text/css');
-        s.setAttribute('href', href);
-        s.onload = callback;
-        document.getElementsByTagName('head').item(0).appendChild(s);
-    };
+        var s = document.createElement('link')
+        s.setAttribute('rel', 'stylesheet')
+        s.setAttribute('type', 'text/css')
+        s.setAttribute('href', href)
+        s.onload = callback
+        document.getElementsByTagName('head').item(0).appendChild(s)
+    }
 
     /**
      * Adds a script and calls back when complete.
@@ -37,12 +37,12 @@ var stc = stc || {};
      * @param {function} callback The callback function.
      */
     util.addScript = function(src, callback) {
-        var s = document.createElement('script');
-        s.src = src;
-        s.async = false;
-        s.onload = callback;
-        document.body.appendChild(s);
-    };
+        var s = document.createElement('script')
+        s.src = src
+        s.async = false
+        s.onload = callback
+        document.body.appendChild(s)
+    }
 
     /**
      * Creates a new DOM element.
@@ -53,19 +53,107 @@ var stc = stc || {};
      * @return {object} The newly created DOM element.
      */
     util.newDOMElement = function(type, className, id, attrs) {
-        var e = document.createElement(type);
+        var e = document.createElement(type)
         if(className) {
-            e.className = className;
+            e.className = className
         }
         if(id) {
-            e.id = id;
+            e.id = id
         }
         if(typeof (attrs) === 'object') {
             Object.keys(attrs).forEach(function(key) {
-                e.setAttribute(key, attrs[key]);
-            });
+                e.setAttribute(key, attrs[key])
+            })
         }
-        return e;
-    };
+        return e
+    }
 
-}(stc.util = stc.util || {}));
+    /**
+     * Parses a given URL to extract its attributes.
+     * @param {string} url The URL to be parsed.
+     * @return {object} The parsed URL object.
+     * @see https://github.com/angular/angular.js/blob/v1.4.4/src/ng/urlUtils.js
+     */
+    util.parseURL = function(url) {
+
+        var urlParsingNode = util.loadURLNode(url)
+
+        // urlParsingNode provides the URLUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+            href: urlParsingNode.href,
+            protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+            host: urlParsingNode.host,
+            search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+            hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+            hostname: urlParsingNode.hostname,
+            port: urlParsingNode.port,
+            pathname: (urlParsingNode.pathname.charAt(0) === '/')
+                ? urlParsingNode.pathname
+                : '/' + urlParsingNode.pathname,
+        }
+    }
+
+    /**
+     * Loads the URL into an anchor DOM element.
+     * @param {string} url The URL to parse.
+     * @return {Element} The anchor element.
+     */
+    util.loadURLNode = function(url) {
+        var urlParsingNode = document.createElement('a')
+        var href = url
+        if (util.msie) {
+            // Normalize before parse.  Refer Implementation Notes on why this is
+            // done in two steps on IE.
+            urlParsingNode.setAttribute('href', href)
+            href = urlParsingNode.href
+        }
+        urlParsingNode.setAttribute('href', href)
+        return urlParsingNode
+    }
+
+    /**
+     * Adds UTM tracking code to a given URL.
+     * @param {string} url The URL to add tracking to.
+     * @param {string} source The UTM source.
+     * @param {string} medium The UTM medium.
+     * @param {string} campaign The UTM campaign.
+     * @return {string} The updated URL.
+     */
+    util.addUTM = function(url, source, medium, campaign) {
+        var params = util.parseURLParams(url)
+        if(params.utm_source) {
+            return url
+        }
+        var urlParsingNode = util.loadURLNode(url)
+
+        var queryString = '&utm_source=' + source + '&utm_medium=' + medium + '&utm_campaign=' + campaign
+        if(urlParsingNode.search) {
+            urlParsingNode.search += queryString
+        } else {
+            urlParsingNode.search = '?' + queryString.substr(1)
+        }
+        return urlParsingNode.href
+    }
+
+    /**
+     * Parses the current URL search string into key value pairs.
+     * @param {string} [url=location.href] The URL to parse. Defaults to the current url.
+     * @return {object} The key/value pairs of URL paramaters.
+     */
+    util.parseURLParams = function(url) {
+        url = url || location.href
+        var parsedParameters = {}
+        url = util.parseURL(url)
+        if(url.search && url.search.length > 0) {
+            var uriParameters = url.search.split('&')
+            uriParameters.forEach(function(v) {
+                var parameter = v.split('=')
+                if(parameter.length === 2) {
+                    parsedParameters[parameter[0]] = decodeURIComponent(parameter[1])
+                }
+            })
+        }
+        return parsedParameters
+    }
+
+}(stc.util = stc.util || {}))

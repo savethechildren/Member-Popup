@@ -160,4 +160,4 @@ stc.modal.i18n = {
             XX: 'International',
         },
     },
-};
+}

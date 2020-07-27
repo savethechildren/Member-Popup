@@ -33,7 +33,7 @@
   src: url("../fonts/TradeGothicW02-BoldCn20.eot?#iefix") format("eot"), url("../fonts/TradeGothicW02-BoldCn20.woff2") format("woff2"), url("../fonts/TradeGothicW02-BoldCn20.woff") format("woff"), url("../fonts/TradeGothicW02-BoldCn20.ttf") format("truetype"); }
 
 /*!
- * Bootstrap v4.1.3 (https://getbootstrap.com/)
+ * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -102,7 +102,7 @@
     color: #212529;
     text-align: left;
     background-color: #fff; }
-  .stc-popup-modal [tabindex="-1"]:focus {
+  .stc-popup-modal [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important; }
   .stc-popup-modal hr {
     box-sizing: content-box;
@@ -164,14 +164,12 @@
     .stc-popup-modal a:hover {
       color: #9A3324;
       text-decoration: none; }
-  .stc-popup-modal a:not([href]):not([tabindex]) {
+  .stc-popup-modal a:not([href]) {
     color: inherit;
     text-decoration: none; }
-    .stc-popup-modal a:not([href]):not([tabindex]):hover, .stc-popup-modal a:not([href]):not([tabindex]):focus {
+    .stc-popup-modal a:not([href]):hover {
       color: inherit;
       text-decoration: none; }
-    .stc-popup-modal a:not([href]):not([tabindex]):focus {
-      outline: 0; }
   .stc-popup-modal pre,
   .stc-popup-modal code,
   .stc-popup-modal kbd,
@@ -181,7 +179,8 @@
   .stc-popup-modal pre {
     margin-top: 0;
     margin-bottom: 1rem;
-    overflow: auto; }
+    overflow: auto;
+    -ms-overflow-style: scrollbar; }
   .stc-popup-modal figure {
     margin: 0 0 1rem; }
   .stc-popup-modal img {
@@ -223,6 +222,8 @@
   .stc-popup-modal button,
   .stc-popup-modal select {
     text-transform: none; }
+  .stc-popup-modal [role="button"] {
+    cursor: pointer; }
   .stc-popup-modal select {
     word-wrap: normal; }
   .stc-popup-modal button,
@@ -245,11 +246,6 @@
   .stc-popup-modal input[type="checkbox"] {
     box-sizing: border-box;
     padding: 0; }
-  .stc-popup-modal input[type="date"],
-  .stc-popup-modal input[type="time"],
-  .stc-popup-modal input[type="datetime-local"],
-  .stc-popup-modal input[type="month"] {
-    -webkit-appearance: listbox; }
   .stc-popup-modal textarea {
     overflow: auto;
     resize: vertical; }
@@ -404,6 +400,8 @@
       box-shadow: 0 0 0 0.2rem rgba(218, 41, 28, 0.25); }
     .stc-popup-modal .btn.disabled, .stc-popup-modal .btn:disabled {
       opacity: 0.65; }
+    .stc-popup-modal .btn:not(:disabled):not(.disabled) {
+      cursor: pointer; }
   .stc-popup-modal a.btn.disabled,
   .stc-popup-modal fieldset:disabled a.btn {
     pointer-events: none; }
@@ -416,6 +414,9 @@
       background-color: #b82318;
       border-color: #ad2116; }
     .stc-popup-modal .btn-primary:focus, .stc-popup-modal .btn-primary.focus {
+      color: #fff;
+      background-color: #b82318;
+      border-color: #ad2116;
       box-shadow: 0 0 0 0.2rem rgba(224, 73, 62, 0.5); }
     .stc-popup-modal .btn-primary.disabled, .stc-popup-modal .btn-primary:disabled {
       color: #fff;
@@ -438,6 +439,9 @@
       background-color: #5a6268;
       border-color: #545b62; }
     .stc-popup-modal .btn-secondary:focus, .stc-popup-modal .btn-secondary.focus {
+      color: #fff;
+      background-color: #5a6268;
+      border-color: #545b62;
       box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5); }
     .stc-popup-modal .btn-secondary.disabled, .stc-popup-modal .btn-secondary:disabled {
       color: #fff;
@@ -460,6 +464,9 @@
       background-color: #218838;
       border-color: #1e7e34; }
     .stc-popup-modal .btn-success:focus, .stc-popup-modal .btn-success.focus {
+      color: #fff;
+      background-color: #218838;
+      border-color: #1e7e34;
       box-shadow: 0 0 0 0.2rem rgba(72, 180, 97, 0.5); }
     .stc-popup-modal .btn-success.disabled, .stc-popup-modal .btn-success:disabled {
       color: #fff;
@@ -482,6 +489,9 @@
       background-color: #138496;
       border-color: #117a8b; }
     .stc-popup-modal .btn-info:focus, .stc-popup-modal .btn-info.focus {
+      color: #fff;
+      background-color: #138496;
+      border-color: #117a8b;
       box-shadow: 0 0 0 0.2rem rgba(58, 176, 195, 0.5); }
     .stc-popup-modal .btn-info.disabled, .stc-popup-modal .btn-info:disabled {
       color: #fff;
@@ -504,6 +514,9 @@
       background-color: #e0a800;
       border-color: #d39e00; }
     .stc-popup-modal .btn-warning:focus, .stc-popup-modal .btn-warning.focus {
+      color: #212529;
+      background-color: #e0a800;
+      border-color: #d39e00;
       box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5); }
     .stc-popup-modal .btn-warning.disabled, .stc-popup-modal .btn-warning:disabled {
       color: #212529;
@@ -526,6 +539,9 @@
       background-color: #c82333;
       border-color: #bd2130; }
     .stc-popup-modal .btn-danger:focus, .stc-popup-modal .btn-danger.focus {
+      color: #fff;
+      background-color: #c82333;
+      border-color: #bd2130;
       box-shadow: 0 0 0 0.2rem rgba(225, 83, 97, 0.5); }
     .stc-popup-modal .btn-danger.disabled, .stc-popup-modal .btn-danger:disabled {
       color: #fff;
@@ -548,6 +564,9 @@
       background-color: #e2e6ea;
       border-color: #dae0e5; }
     .stc-popup-modal .btn-light:focus, .stc-popup-modal .btn-light.focus {
+      color: #212529;
+      background-color: #e2e6ea;
+      border-color: #dae0e5;
       box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5); }
     .stc-popup-modal .btn-light.disabled, .stc-popup-modal .btn-light:disabled {
       color: #212529;
@@ -570,6 +589,9 @@
       background-color: #23272b;
       border-color: #1d2124; }
     .stc-popup-modal .btn-dark:focus, .stc-popup-modal .btn-dark.focus {
+      color: #fff;
+      background-color: #23272b;
+      border-color: #1d2124;
       box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5); }
     .stc-popup-modal .btn-dark.disabled, .stc-popup-modal .btn-dark:disabled {
       color: #fff;
@@ -751,8 +773,7 @@
       color: #9A3324;
       text-decoration: none; }
     .stc-popup-modal .btn-link:focus, .stc-popup-modal .btn-link.focus {
-      text-decoration: none;
-      box-shadow: none; }
+      text-decoration: none; }
     .stc-popup-modal .btn-link:disabled, .stc-popup-modal .btn-link.disabled {
       color: #6c757d;
       pointer-events: none; }
@@ -917,6 +938,7 @@
     .stc-popup-modal .stc-popup-modal-content p {
       line-height: 1.3em; }
   .stc-popup-modal .btn {
+    background-image: none;
     white-space: normal; }
     .stc-popup-modal .btn.btn-negative {
       border-color: #DA291C;

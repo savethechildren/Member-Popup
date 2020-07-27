@@ -1,9 +1,10 @@
-stc.modal.i18n = {
+const i18n = {
     default: {
         title: 'Welcome to <span class="text-nowrap">Save the Children</span>!',
-        text: 'It looks like you\'re in {country}',
-        stayText: 'Or <a href="javascript:stc.modal.close(\'Stay\');">stay on the UK website</a> to find additional information about the work that we do here in the UK.',
-        goBtn: 'Continue to {country}',
+        text: 'Here you’ll find news and information on our global organisation and the work we do for children around the world. You can also visit your local Save the Children {country} website to learn more about how you can support our work.',
+        stayBtn: 'Stay on International site',
+        stayText: 'Or <a href="javascript:stc.modal.close(\'Stay\');">stay here</a> to find additional information about our global organization and the work that <span class="text-nowrap">we do</span>.',
+        goBtn: 'Go to {country} site',
         prefix: 'the ',
         countries: {
             AU: 'Australia',
@@ -40,4 +41,8 @@ stc.modal.i18n = {
             XX: 'International',
         },
     },
+}
+
+export {
+    i18n,
 }

@@ -4,7 +4,7 @@ var stc = stc || {};
     /**
      * The list of available tracker names.
      */
-    analytics.trackers = [];
+    analytics.trackers = []
 
     /**
      * Checks that Google Analytics is initialized
@@ -13,17 +13,17 @@ var stc = stc || {};
      */
     analytics.isOn = function() {
         if (window.ga && ga.create) {
-            var gaTrackers = ga.getAll();
+            var gaTrackers = ga.getAll()
             gaTrackers.forEach(function(v) {
                 if(v.get('trackingId') !== '') {
-                    analytics.trackers.push(v.get('name'));
+                    analytics.trackers.push(v.get('name'))
                 }
-            });
-            return true;
+            })
+            return true
         } else {
-            return false;
+            return false
         }
-    };
+    }
 
     /**
      * Sends an event to GA.
@@ -36,7 +36,7 @@ var stc = stc || {};
      */
     analytics.sendEvent = function(category, action, label, callback) {
         if(!category || !action || !label) {
-            return false;
+            return false
         }
         analytics.trackers.forEach(function(v) {
             ga(v + '.' + 'send', {
@@ -45,8 +45,8 @@ var stc = stc || {};
                 eventAction: action,
                 eventLabel: label || '',
                 hitCallback: callback || '',
-            });
-        });
-    };
+            })
+        })
+    }
 
-}(stc.analytics = stc.analytics || {}));
+}(stc.analytics = stc.analytics || {}))
