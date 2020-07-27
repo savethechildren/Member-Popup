@@ -7,6 +7,8 @@
     },
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1 }],
+        "linebreak-style": 0,
+        "eslint linebreak-style": [0, "error", "windows"],
         "max-len": 0,
         "no-undef": 0,
         "keyword-spacing": 0,
