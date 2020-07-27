@@ -69,6 +69,31 @@ var stc = stc || {};
     }
 
     /**
+     * Parses a given URL to extract its attributes.
+     * @param {string} url The URL to be parsed.
+     * @return {object} The parsed URL object.
+     * @see https://github.com/angular/angular.js/blob/v1.4.4/src/ng/urlUtils.js
+     */
+    util.parseURL = function(url) {
+
+        var urlParsingNode = util.loadURLNode(url)
+
+        // urlParsingNode provides the URLUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+            href: urlParsingNode.href,
+            protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+            host: urlParsingNode.host,
+            search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+            hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+            hostname: urlParsingNode.hostname,
+            port: urlParsingNode.port,
+            pathname: (urlParsingNode.pathname.charAt(0) === '/')
+                ? urlParsingNode.pathname
+                : '/' + urlParsingNode.pathname,
+        }
+    }
+
+    /**
      * Loads the URL into an anchor DOM element.
      * @param {string} url The URL to parse.
      * @return {Element} The anchor element.
@@ -99,9 +124,9 @@ var stc = stc || {};
         if(params.utm_source) {
             return url
         }
-        let urlParsingNode = util.loadURLNode(url)
+        var urlParsingNode = util.loadURLNode(url)
 
-        let queryString = '&utm_source=' + source + '&utm_medium=' + medium + '&utm_campaign=' + campaign
+        var queryString = '&utm_source=' + source + '&utm_medium=' + medium + '&utm_campaign=' + campaign
         if(urlParsingNode.search) {
             urlParsingNode.search += queryString
         } else {
@@ -121,7 +146,7 @@ var stc = stc || {};
         url = util.parseURL(url)
         if(url.search && url.search.length > 0) {
             var uriParameters = url.search.split('&')
-            $.each(uriParameters, function(i, v) {
+            uriParameters.forEach(function(v) {
                 var parameter = v.split('=')
                 if(parameter.length === 2) {
                     parsedParameters[parameter[0]] = decodeURIComponent(parameter[1])

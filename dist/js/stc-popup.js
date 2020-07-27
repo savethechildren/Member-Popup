@@ -68,6 +68,94 @@ var stc = stc || {};
         return e
     }
 
+    /**
+     * Parses a given URL to extract its attributes.
+     * @param {string} url The URL to be parsed.
+     * @return {object} The parsed URL object.
+     * @see https://github.com/angular/angular.js/blob/v1.4.4/src/ng/urlUtils.js
+     */
+    util.parseURL = function(url) {
+
+        var urlParsingNode = util.loadURLNode(url)
+
+        // urlParsingNode provides the URLUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+            href: urlParsingNode.href,
+            protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+            host: urlParsingNode.host,
+            search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+            hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+            hostname: urlParsingNode.hostname,
+            port: urlParsingNode.port,
+            pathname: (urlParsingNode.pathname.charAt(0) === '/')
+                ? urlParsingNode.pathname
+                : '/' + urlParsingNode.pathname,
+        }
+    }
+
+    /**
+     * Loads the URL into an anchor DOM element.
+     * @param {string} url The URL to parse.
+     * @return {Element} The anchor element.
+     */
+    util.loadURLNode = function(url) {
+        var urlParsingNode = document.createElement('a')
+        var href = url
+        if (util.msie) {
+            // Normalize before parse.  Refer Implementation Notes on why this is
+            // done in two steps on IE.
+            urlParsingNode.setAttribute('href', href)
+            href = urlParsingNode.href
+        }
+        urlParsingNode.setAttribute('href', href)
+        return urlParsingNode
+    }
+
+    /**
+     * Adds UTM tracking code to a given URL.
+     * @param {string} url The URL to add tracking to.
+     * @param {string} source The UTM source.
+     * @param {string} medium The UTM medium.
+     * @param {string} campaign The UTM campaign.
+     * @return {string} The updated URL.
+     */
+    util.addUTM = function(url, source, medium, campaign) {
+        var params = util.parseURLParams(url)
+        if(params.utm_source) {
+            return url
+        }
+        var urlParsingNode = util.loadURLNode(url)
+
+        var queryString = '&utm_source=' + source + '&utm_medium=' + medium + '&utm_campaign=' + campaign
+        if(urlParsingNode.search) {
+            urlParsingNode.search += queryString
+        } else {
+            urlParsingNode.search = '?' + queryString.substr(1)
+        }
+        return urlParsingNode.href
+    }
+
+    /**
+     * Parses the current URL search string into key value pairs.
+     * @param {string} [url=location.href] The URL to parse. Defaults to the current url.
+     * @return {object} The key/value pairs of URL paramaters.
+     */
+    util.parseURLParams = function(url) {
+        url = url || location.href
+        var parsedParameters = {}
+        url = util.parseURL(url)
+        if(url.search && url.search.length > 0) {
+            var uriParameters = url.search.split('&')
+            uriParameters.forEach(function(v) {
+                var parameter = v.split('=')
+                if(parameter.length === 2) {
+                    parsedParameters[parameter[0]] = decodeURIComponent(parameter[1])
+                }
+            })
+        }
+        return parsedParameters
+    }
+
 }(stc.util = stc.util || {}))
 
 var stc = stc || {};
@@ -140,7 +228,7 @@ var stc = stc || {};
             '<div class="stc-popup-modal-content-body" id="stc-popup-content"><p>' + popupText + '</p>' +
             '<p>' +
             '<a href="javascript:stc.modal.close(\'Stay\')" class="btn btn-empty btn-lg" id="stc-popup-stay">' + lng.stayBtn + '</a>' +
-            '<a href="' + toMember['url'] + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>'
+            '<a href="' + stc.util.addUTM(toMember['url'], 'sciweb', 'web', 'member_popup') + '" class="btn btn-primary btn-lg" id="stc-popup-continue">' + goBtn.replace('{country}', stc.geo.prefix(toCountry)) + '</a></p>'
 
         document.getElementById('stc-popup-continue').addEventListener('click', stc.modal.trackOutbound)
     }

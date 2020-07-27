@@ -179,7 +179,8 @@
   .stc-popup-modal pre {
     margin-top: 0;
     margin-bottom: 1rem;
-    overflow: auto; }
+    overflow: auto;
+    -ms-overflow-style: scrollbar; }
   .stc-popup-modal figure {
     margin: 0 0 1rem; }
   .stc-popup-modal img {
@@ -221,6 +222,8 @@
   .stc-popup-modal button,
   .stc-popup-modal select {
     text-transform: none; }
+  .stc-popup-modal [role="button"] {
+    cursor: pointer; }
   .stc-popup-modal select {
     word-wrap: normal; }
   .stc-popup-modal button,
@@ -243,11 +246,6 @@
   .stc-popup-modal input[type="checkbox"] {
     box-sizing: border-box;
     padding: 0; }
-  .stc-popup-modal input[type="date"],
-  .stc-popup-modal input[type="time"],
-  .stc-popup-modal input[type="datetime-local"],
-  .stc-popup-modal input[type="month"] {
-    -webkit-appearance: listbox; }
   .stc-popup-modal textarea {
     overflow: auto;
     resize: vertical; }
@@ -383,7 +381,6 @@
     color: #212529;
     text-align: center;
     vertical-align: middle;
-    cursor: pointer;
     user-select: none;
     background-color: transparent;
     border: 1px solid transparent;
@@ -403,6 +400,8 @@
       box-shadow: 0 0 0 0.2rem rgba(218, 41, 28, 0.25); }
     .stc-popup-modal .btn.disabled, .stc-popup-modal .btn:disabled {
       opacity: 0.65; }
+    .stc-popup-modal .btn:not(:disabled):not(.disabled) {
+      cursor: pointer; }
   .stc-popup-modal a.btn.disabled,
   .stc-popup-modal fieldset:disabled a.btn {
     pointer-events: none; }
@@ -774,8 +773,7 @@
       color: #9A3324;
       text-decoration: none; }
     .stc-popup-modal .btn-link:focus, .stc-popup-modal .btn-link.focus {
-      text-decoration: none;
-      box-shadow: none; }
+      text-decoration: none; }
     .stc-popup-modal .btn-link:disabled, .stc-popup-modal .btn-link.disabled {
       color: #6c757d;
       pointer-events: none; }

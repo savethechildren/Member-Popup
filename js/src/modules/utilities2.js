@@ -1,4 +1,3 @@
-
 /**
  * Adds a stylesheet and calls back when complete.
  * @param {string} href The URL of the stylesheet.
